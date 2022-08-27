@@ -9,20 +9,20 @@
     <ImageView
         android:id="@+id/id_onboarding_image"
         android:layout_width="0dp"
-        android:layout_height="250dp"
+        android:layout_height="450dp"
         android:scaleType="fitCenter"
         android:contentDescription="@string/text_onboarding_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        tools:src="@drawable/sneaker4" />
+        tools:src="@drawable/air_jordan_mid_college" />
 
     <TextView
         android:id="@+id/id_title_onboarding"
         style="@style/OnboardingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/id_onboarding_image"
         app:layout_constraintStart_toStartOf="@+id/id_onboarding_image"
         app:layout_constraintTop_toBottomOf="@+id/id_onboarding_image"
@@ -33,7 +33,7 @@
         style="@style/OnboardingMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_title_onboarding"
@@ -44,6 +44,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.05" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

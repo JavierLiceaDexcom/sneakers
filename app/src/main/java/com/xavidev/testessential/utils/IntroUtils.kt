@@ -14,28 +14,39 @@ class IntroUtils : Onboarding {
     override fun getIntroItems(): List<IntroItem> {
         return listOf(
             IntroItem(
-                R.drawable.sneaker1,
-                "Train to your own peace",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                        "Donec porta pulvinar mi, id sollicitudin tortor tempus ut."
+                image = R.drawable.air_jordan_mid_college,
+                title = "Find the hottest sneakers",
+                message = "Are you a sneakerhead? " +
+                        "Then, you are in the right place",
+                backgroundColor = R.color.white,
             ),
             IntroItem(
-                R.drawable.sneaker2,
-                "Plan your routine",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                        "Donec porta pulvinar mi, id sollicitudin tortor tempus ut."
+                image = R.drawable.adidas_forum_bad_bunny,
+                title = "The best offers",
+                message = "Daily offers in all the brands. " +
+                        "Become a member to get exclusive offers",
+                backgroundColor = R.color.gray_soft2,
             ),
             IntroItem(
-                R.drawable.sneaker3,
-                "Reach your goals",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                        "Donec porta pulvinar mi, id sollicitudin tortor tempus ut."
+                image = R.drawable.puma_sneaker,
+                title = "Latest releases",
+                message = "Fond the newest models, pre-order before the release date " +
+                        "to be the first one to get them",
+                backgroundColor = R.color.gray_soft,
             ),
             IntroItem(
-                R.drawable.sneaker4,
-                "Reach your goals",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                        "Donec porta pulvinar mi, id sollicitudin tortor tempus ut."
+                image = R.drawable.vans_old_school,
+                title = "Exclusive models",
+                message = "Exclusive models only in Sneakers App " +
+                        "that you cannot fin in another place..",
+                backgroundColor = R.color.gray_soft,
+            ),
+            IntroItem(
+                image = R.drawable.sneaker_brands,
+                title = "The best brands",
+                message = "The best brands in the market in a single place. " +
+                        "Guarantee of quality.",
+                backgroundColor = R.color.white,
             ),
         )
     }

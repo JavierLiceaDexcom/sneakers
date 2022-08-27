@@ -1,7 +1,7 @@
 package com.xavidev.testessential.ui.intro
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.xavidev.testessential.R
@@ -48,6 +48,7 @@ class IntroActivity : AppCompatActivity() {
 
                 introUtils.setCurrentIndicator(position, binding.lytIndicators, this@IntroActivity)
                 currentPosition = position
+                binding.rootScreen.setBackgroundResource(introAdapter.getList()[position].backgroundColor)
                 val isLastItem = currentPosition == introAdapter.itemCount.minus(1)
                 setButtonText(isLastItem)
             }

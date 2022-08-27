@@ -15,5 +15,5 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/text_sneaker_image"
         app:imageUrl="@{url}"
-        tools:src="@drawable/sneaker1" />
+        tools:src="@drawable/adidas_forum_bad_bunny" />
 </layout>

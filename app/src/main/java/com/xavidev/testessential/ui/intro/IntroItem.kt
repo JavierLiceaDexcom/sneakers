@@ -4,4 +4,5 @@ data class IntroItem(
     val image: Int,
     val title: String,
     val message: String,
+    val backgroundColor: Int
 )

@@ -8,4 +8,7 @@
     <color name="primaryDark">#c66900</color>
     <color name="surface">#FFF0CB</color>
     <color name="red">#D62727</color>
+
+    <color name="gray_soft">#F7F7F7</color>
+    <color name="gray_soft2">#F4F4F4</color>
 </resources>

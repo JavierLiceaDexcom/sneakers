@@ -29,5 +29,7 @@ class IntroAdapter(private val list: List<IntroItem>) :
         holder.bindItem(list[position])
     }
 
+    fun getList() = this.list
+
     override fun getItemCount(): Int = list.size
 }
