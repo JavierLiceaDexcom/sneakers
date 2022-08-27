@@ -1,0 +1,28 @@
+{
+  "catalog": [
+    {
+      "id:": "fe8b8e2c-2272-11ed-861d-0242ac120002",
+      "name": "",
+      "model": "",
+      "thumbnail": "",
+      "price": "",
+      "description": "",
+      "sizes": [23.5, 25, 27],
+      "discountPercentage": 0,
+      "colors": [12356789, 12125478],
+      "type": "",
+      "brand": {
+        "id": "",
+        "name": "",
+        "logo": ""
+      },
+      "currency": {
+        "id": "",
+        "name": "",
+        "type": "",
+        "region": "",
+        "logo": ""
+      }
+    }
+  ]
+}

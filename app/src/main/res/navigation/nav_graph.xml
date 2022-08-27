@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/sneakersListFragment">
+
+    <fragment
+        android:id="@+id/sneakersListFragment"
+        android:name="com.xavidev.testessential.ui.sneakers.SneakersListFragment"
+        android:label="fragment_sneakers_list"
+        tools:layout="@layout/fragment_sneakers_list">
+        <action
+            android:id="@+id/action_sneakersListFragment_to_sneakerDetailDialogFragment"
+            app:destination="@id/sneakerDetailDialogFragment">
+            <argument
+                android:name="sneaker"
+                app:argType="com.xavidev.testessential.data.entity.Sneaker" />
+
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.xavidev.testessential.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.xavidev.testessential.ui.cart.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
+    <dialog
+        android:id="@+id/sneakerDetailDialogFragment"
+        android:name="com.xavidev.testessential.ui.sneakers.SneakerDetailDialogFragment"
+        android:label="fragment_sneaker_detail_dialog"
+        tools:layout="@layout/fragment_sneaker_detail_dialog" />
+    <fragment
+        android:id="@+id/purchasesFragment"
+        android:name="com.xavidev.testessential.ui.purchases.PurchasesFragment"
+        android:label="fragment_purchases"
+        tools:layout="@layout/fragment_purchases" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.xavidev.testessential.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+</navigation>

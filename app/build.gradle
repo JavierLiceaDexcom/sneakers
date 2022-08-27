@@ -1,0 +1,84 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    compileSdk build_versions.compileSdk
+
+    defaultConfig {
+        applicationId build_versions.applicationId
+        minSdk build_versions.minSdk
+        targetSdk build_versions.targetSdk
+        versionCode build_versions.versionCode
+        versionName build_versions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
+    configurations {
+        implementation.exclude group: 'org.jetbrains', module: 'annotations'
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDirs += 'build/generated/source/navigation-args'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation deps.core_ktx
+    implementation deps.appcompat
+    implementation deps.material
+    implementation deps.constraintlayout
+    implementation deps.navigation
+    implementation deps.navigation_ui
+    implementation deps.moshi
+    implementation deps.room_runtime
+    implementation deps.paging
+    implementation deps.viewmodel
+    implementation deps.livedata
+    implementation deps.coroutines
+    implementation deps.letterview
+    implementation deps.picasso
+
+    //Testing libraries
+    testImplementation deps.junit
+    //testImplementation deps.jupiter
+    testImplementation deps.truth
+    androidTestImplementation deps.junit_ext
+    androidTestImplementation deps.espresso
+    testImplementation deps.hamcrest
+    testImplementation deps.room_test
+    testImplementation deps.livedata_test
+    testImplementation deps.mockito
+    testImplementation deps.mockk
+
+    //Annotations
+    annotationProcessor(deps.room_compiler)
+    kapt deps.livedata_kapt
+
+}

@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.xavidev.testessential.ui.MainActivity">
+
+    <item
+        android:id="@+id/sneakersListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_sneakers_home"
+        android:orderInCategory="100"
+        android:title="@string/text_sneakers" />
+
+    <item
+        android:id="@+id/searchFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="100"
+        android:title="@string/text_search" />
+
+    <item
+        android:id="@+id/purchasesFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_shopping_bag"
+        android:orderInCategory="100"
+        android:title="@string/text_purchases" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_account_outlined"
+        android:orderInCategory="100"
+        android:title="@string/text_profile" />
+</menu>
