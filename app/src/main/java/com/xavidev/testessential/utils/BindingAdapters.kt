@@ -8,7 +8,7 @@ import com.xavidev.testessential.R
 @BindingAdapter("imageUrl")
 fun loadImageUrl(view: ImageView, url: String?) {
     url?.let {
-        Picasso.get().load(it).placeholder(R.drawable.ic_sneaker_placeholder)
+        Picasso.get().load(it).placeholder(R.drawable.ic_loading_placeholder)
             .error(R.drawable.ic_sneaker_error)
             .into(view)
     }
