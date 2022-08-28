@@ -68,7 +68,7 @@ object DummyData {
                 id = UUID.randomUUID().toString(),
                 name = SneakerType.CASUAL
             ),
-            colors = listOf(255125147, 241698214),
+            colors = listOf(249235234, 127179213, 210040051),
             thumbnail = nikeImages[0],
             photos = nikeImages,
             price = 3200.0,
@@ -126,7 +126,7 @@ object DummyData {
             price = 200.50,
             currency = Currency(
                 id = UUID.randomUUID().toString(),
-                name = CurrencyType.DOLLAR,
+                name = CurrencyType.USD,
                 region = "US",
                 icon = CURRENCY_USD_LOGO
             ),
@@ -204,7 +204,7 @@ object DummyData {
             price = 189.99,
             currency = Currency(
                 id = UUID.randomUUID().toString(),
-                name = CurrencyType.DOLLAR,
+                name = CurrencyType.USD,
                 region = "US",
                 icon = CURRENCY_USD_LOGO
             ),
@@ -230,7 +230,7 @@ object DummyData {
             price = 320.0,
             currency = Currency(
                 id = UUID.randomUUID().toString(),
-                name = CurrencyType.DOLLAR,
+                name = CurrencyType.USD,
                 region = "US",
                 icon = CURRENCY_USD_LOGO
             ),
@@ -282,7 +282,7 @@ object DummyData {
             price = 124.0,
             currency = Currency(
                 id = UUID.randomUUID().toString(),
-                name = CurrencyType.DOLLAR,
+                name = CurrencyType.USD,
                 region = "US",
                 icon = CURRENCY_MXN_LOGO
             ),
@@ -308,7 +308,7 @@ object DummyData {
             price = 80.0,
             currency = Currency(
                 id = UUID.randomUUID().toString(),
-                name = CurrencyType.DOLLAR,
+                name = CurrencyType.USD,
                 region = "US",
                 icon = CURRENCY_USD_LOGO
             ),
@@ -334,7 +334,7 @@ object DummyData {
             price = 50.0,
             currency = Currency(
                 id = UUID.randomUUID().toString(),
-                name = CurrencyType.DOLLAR,
+                name = CurrencyType.USD,
                 region = "US",
                 icon = CURRENCY_USD_LOGO
             ),
@@ -360,7 +360,7 @@ object DummyData {
             price = 322.0,
             currency = Currency(
                 id = UUID.randomUUID().toString(),
-                name = CurrencyType.DOLLAR,
+                name = CurrencyType.USD,
                 region = "US",
                 icon = CURRENCY_USD_LOGO
             ),
@@ -412,7 +412,7 @@ object DummyData {
             price = 100.0,
             currency = Currency(
                 id = UUID.randomUUID().toString(),
-                name = CurrencyType.DOLLAR,
+                name = CurrencyType.USD,
                 region = "US",
                 icon = CURRENCY_USD_LOGO
             ),

@@ -6,5 +6,5 @@ import androidx.room.Entity
 data class Currency(val id: String, val name: CurrencyType, val region: String, val icon: String)
 
 enum class CurrencyType(name: String) {
-    MXN("mxn"), DOLLAR("usd")
+    MXN("mxn"), USD("usd")
 }

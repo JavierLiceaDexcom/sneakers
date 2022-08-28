@@ -35,7 +35,7 @@ data class Sneaker(
 
     fun Sneaker.getPriceByCurrency(currency: Currency): Double {
         return when (currency.name) {
-            CurrencyType.DOLLAR -> price
+            CurrencyType.USD -> price
             CurrencyType.MXN -> price * 20.2
         }
     }

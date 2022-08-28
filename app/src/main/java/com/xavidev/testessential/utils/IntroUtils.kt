@@ -63,7 +63,6 @@ class IntroUtils : Onboarding {
         val layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        layoutParams.setMargins(8, 0, 8, 0)
         for (i in 0 until adapter.itemCount) {
             indicators[i] = ImageView(context)
             indicators[i].setImageDrawable(
@@ -72,6 +71,7 @@ class IntroUtils : Onboarding {
                     R.drawable.onbording_indicator_active
                 )
             )
+            layoutParams.setMargins(8, 0, 8, 0)
             indicators[i].layoutParams = layoutParams
             layoutIndicators.addView(indicators[i])
         }

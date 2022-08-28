@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -12,7 +13,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.databinding.FragmentSneakerDetailDialogBinding
 import com.xavidev.testessential.ui.sneakers.adapters.SneakerCarouselAdapter
+import com.xavidev.testessential.ui.sneakers.adapters.SneakerColorsAdapter
+import com.xavidev.testessential.ui.sneakers.adapters.SneakerSizesAdapter
 import com.xavidev.testessential.utils.SneakerCarouselUtils
+import com.xavidev.testessential.utils.toast
 
 class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
 
@@ -20,9 +24,20 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
         FragmentSneakerDetailDialogBinding.inflate(layoutInflater)
     }
 
+    private val viewModel: SneakersViewModel by viewModels<SneakersViewModel>()
     private lateinit var carouselAdapter: SneakerCarouselAdapter
     private var currentPosition = 0
     private val carouselUtils = SneakerCarouselUtils()
+    private val sneakerSizesAdapter = SneakerSizesAdapter(object : (Double, Int) -> Unit {
+        override fun invoke(size: Double, pos: Int) {
+            requireContext().toast("Size $size in position $pos")
+        }
+    })
+    private val sneakerColorsAdapter = SneakerColorsAdapter(object : (Int, Int) -> Unit {
+        override fun invoke(color: Int, pos: Int) {
+            requireContext().toast("Color $color in position $pos")
+        }
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +52,44 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+        }
+
         val bundle = arguments?.getSerializable("sneaker") as Sneaker
+        viewModel.setSneaker(bundle)
+
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             sneaker = bundle
         }
+
+        setCarouselAdapter(bundle)
+        setSizesAdapter(bundle)
+        setColorsAdapter(bundle)
+        setupListeners()
+    }
+
+    private fun setColorsAdapter(bundle: Sneaker) {
+        binding.recyclerSneakerColors.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = sneakerColorsAdapter
+        }
+        sneakerColorsAdapter.submitList(bundle.colors)
+    }
+
+    private fun setSizesAdapter(bundle: Sneaker) {
+        binding.recyclerSneakerSizes.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = sneakerSizesAdapter
+        }
+        sneakerSizesAdapter.submitList(bundle.sizes)
+    }
+
+    private fun setCarouselAdapter(bundle: Sneaker) {
         val photos = bundle.photos.toList().toMutableList()
         photos.add(0, bundle.thumbnail)
         carouselAdapter = SneakerCarouselAdapter(photos)
@@ -51,7 +99,6 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
             binding.lytItemIndicators,
             requireContext()
         )
-        setupListeners()
     }
 
     private fun setupListeners() {
