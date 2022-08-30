@@ -47,4 +47,19 @@
         <item name="android:hint">@string/text_search</item>
         <item name="android:drawableStart">@drawable/ic_search</item>
     </style>
+
+    <style name="FilledCardView" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <style name="ChipCheckedStyle" parent="Widget.Material3.Chip.Assist">
+        <item name="chipBackgroundColor">@color/surface</item>
+        <item name="chipCornerRadius">12dp</item>
+        <item name="chipIcon">@drawable/ic_check</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="android:textColor">@color/primaryDark</item>
+        <item name="chipIconTint">@color/primaryDark</item>
+    </style>
 </resources>

@@ -20,6 +20,7 @@
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_address_selection.xml" value="0.25" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_addresses.xml" value="0.3421875" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_card_form.xml" value="0.32708333333333334" />
+        <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_cart.xml" value="0.3421875" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_payment_method.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_payment_methods.xml" value="0.3421875" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_profile.xml" value="0.3421875" />
@@ -30,6 +31,7 @@
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/item_address.xml" value="0.3411458333333333" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/item_brand_list.xml" value="0.1" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/item_onboarding_container.xml" value="0.165" />
+        <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/item_payment_method.xml" value="0.3411458333333333" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/item_purchase.xml" value="0.3411458333333333" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/item_sneaker_color.xml" value="0.375" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/item_sneaker_sizes.xml" value="0.25" />

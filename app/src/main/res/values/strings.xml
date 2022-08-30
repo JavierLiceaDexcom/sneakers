@@ -89,4 +89,9 @@
     <string name="text_sign_out">Sign out</string>
     <string name="text_manage_addresses_title">Manage your addresses</string>
     <string name="text_default">Default</string>
+    <string name="text_address_icon">Address icon</string>
+    <string name="text_address_options">Address options</string>
+    <string name="text_payment_methods">Payment methods</string>
+    <string name="text_credit_card_icon">Credit card icon</string>
+    <string name="text_remove_card">Remove card</string>
 </resources>

@@ -2,14 +2,11 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.Material3.CardView.Filled"
+    style="@style/FilledCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
-    android:layout_marginVertical="2dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="0dp">
+    android:layout_marginVertical="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_address_item"
@@ -23,6 +20,7 @@
             android:id="@+id/img_address_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/text_address_icon"
             android:src="@drawable/ic_home"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,6 +45,7 @@
             style="@style/ClickableImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/text_address_options"
             android:padding="4dp"
             android:src="@drawable/ic_arrow_drop_down"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,15 +63,12 @@
             tools:text="Av Zoquipan 1959, Lomas de Zapopan, 45178, Zapopan, Jalico" />
 
         <com.google.android.material.chip.Chip
-            style="@style/Widget.Material3.Chip.Assist"
+            style="@style/ChipCheckedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/text_default"
-            android:textColor="@color/primaryDark"
-            app:chipBackgroundColor="@color/surface"
-            app:chipStrokeWidth="0dp"
-            app:chipSurfaceColor="@color/surface"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="@+id/tv_address_complete"
             app:layout_constraintTop_toBottomOf="@+id/tv_address_complete" />
 
