@@ -30,4 +30,16 @@
         <item name="navigationIconTint">@color/primaryDark</item>
         <item name="navigationIcon">@drawable/ic_back</item>
     </style>
+
+    <style name="SearchInputStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bg_search</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">8dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:drawableTint">@color/gray_darker</item>
+        <item name="android:inputType">text</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:hint">@string/text_search</item>
+        <item name="android:drawableStart">@drawable/ic_search</item>
+    </style>
 </resources>

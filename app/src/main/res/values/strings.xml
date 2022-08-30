@@ -75,4 +75,9 @@
     <string name="text_pay_order">Pay order</string>
     <string name="text_select_payment_method">Select payment method</string>
     <string name="text_add_payment_method">Add payment method</string>
+    <string name="text_filters">Filters</string>
+    <string name="text_buy_again">Buy again</string>
+    <string name="text_all">All</string>
+    <string name="text_this_month">This month</string>
+    <string name="text_this_year">This year</string>
 </resources>
