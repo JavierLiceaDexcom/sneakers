@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSneakerColorItem"
+        android:checkable="true"
         style="@style/SelectableCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

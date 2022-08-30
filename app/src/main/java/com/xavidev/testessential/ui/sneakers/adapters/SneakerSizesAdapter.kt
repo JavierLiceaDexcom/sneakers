@@ -23,7 +23,7 @@ class SneakerSizesAdapter(private val itemClickListener: (Double, Int) -> Unit) 
                     this@ViewHolder.adapterPosition
                 )
             }
-            executePendingBindings()
+             executePendingBindings()
         }
     }
 

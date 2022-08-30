@@ -22,13 +22,13 @@ class BrandsAdapter(
             itemClickListener: (Brand, Int) -> Unit,
         ) = with(binding) {
             brand = brandItem
-            binding.brandItemCard.setOnClickListener {
+            brandItemCard.setOnClickListener {
                 itemClickListener(
                     brandItem,
                     this@ViewHolder.adapterPosition
                 )
-                binding.cardContainer.isCheckable = true
-                binding.cardContainer.isChecked = brandItem.selected
+                cardContainer.isCheckable = true
+                cardContainer.isChecked = brandItem.selected
             }
             executePendingBindings()
         }

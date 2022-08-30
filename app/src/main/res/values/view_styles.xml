@@ -24,4 +24,10 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerRadius">12dp</item>
     </style>
+
+    <style name="ToolbarStyle" parent="Widget.Material3.Toolbar">
+        <item name="titleTextColor">@color/primaryDark</item>
+        <item name="navigationIconTint">@color/primaryDark</item>
+        <item name="navigationIcon">@drawable/ic_back</item>
+    </style>
 </resources>

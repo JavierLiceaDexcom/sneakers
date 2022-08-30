@@ -11,6 +11,10 @@
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/drawable/sneaker_color.xml" value="0.15" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/drawable/splash_background.xml" value="0.155" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/activity_intro.xml" value="0.1" />
+        <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/activity_sale.xml" value="0.25" />
+        <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_address_selection.xml" value="0.25" />
+        <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_payment_method.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_purchase_finished_dialog.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/fragment_sneaker_detail_dialog.xml" value="0.335" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/item_brand_list.xml" value="0.1" />
         <entry key="..\:/Users/pacop/AndroidStudioProjects/sneakers/app/src/main/res/layout/item_onboarding_container.xml" value="0.165" />
