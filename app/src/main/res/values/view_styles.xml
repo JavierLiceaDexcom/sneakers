@@ -28,6 +28,11 @@
     <style name="ToolbarStyle" parent="Widget.Material3.Toolbar">
         <item name="titleTextColor">@color/primaryDark</item>
         <item name="navigationIconTint">@color/primaryDark</item>
+        <item name="titleCentered">true</item>
+        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+
+    <style name="ToolbarStyleBack" parent="ToolbarStyle">
         <item name="navigationIcon">@drawable/ic_back</item>
     </style>
 

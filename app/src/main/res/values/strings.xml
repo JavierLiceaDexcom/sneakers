@@ -80,4 +80,13 @@
     <string name="text_all">All</string>
     <string name="text_this_month">This month</string>
     <string name="text_this_year">This year</string>
+    <string name="text_update_profile">Update profile</string>
+    <string name="text_add_or_update_your_addresses">Add or update your addresses</string>
+    <string name="text_address_information">Address information</string>
+    <string name="text_chevron_right">Chevron right</string>
+    <string name="text_payment_method">Payment methods</string>
+    <string name="text_payment_method_subtitle">Manage your cards for payment</string>
+    <string name="text_sign_out">Sign out</string>
+    <string name="text_manage_addresses_title">Manage your addresses</string>
+    <string name="text_default">Default</string>
 </resources>
