@@ -61,6 +61,10 @@ class SneakersListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+
+        }
+
         binding.recyclerSneakers.apply {
             adapter = sneakersAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)

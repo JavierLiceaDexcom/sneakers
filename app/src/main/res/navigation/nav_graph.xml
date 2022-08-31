@@ -20,11 +20,6 @@
         </action>
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.xavidev.testessential.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
         android:id="@+id/cartFragment"
         android:name="com.xavidev.testessential.ui.cart.CartFragment"
         android:label="fragment_cart"
@@ -44,11 +39,28 @@
         android:name="com.xavidev.testessential.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <dialog
+        android:id="@+id/purchaseFilterBottomSheetFragment"
+        android:name="com.xavidev.testessential.ui.purchases.PurchaseFilterBottomSheetFragment"
+        android:label="fragment_purchase_filter_bottom_sheet"
+        tools:layout="@layout/fragment_purchase_filter_bottom_sheet" />
+    <dialog
+        android:id="@+id/purchaseFinishedDialogFragment"
+        android:name="com.xavidev.testessential.ui.sale.PurchaseFinishedDialogFragment"
+        android:label="fragment_purchase_finished_dialog"
+        tools:layout="@layout/fragment_purchase_finished_dialog" />
     <fragment
-        android:id="@+id/addressFormFragment"
-        android:name="com.xavidev.testessential.ui.profile.AddressFormFragment"
-        android:label="fragment_address_form"
-        tools:layout="@layout/fragment_address_form" />
+        android:id="@+id/paymentMethodsFragment"
+        android:name="com.xavidev.testessential.ui.profile.PaymentMethodsFragment"
+        android:label="fragment_payment_methods"
+        tools:layout="@layout/fragment_payment_methods">
+        <action
+            android:id="@+id/action_paymentMethodsFragment_to_cardFormFragment"
+            app:destination="@id/cardFormFragment" />
+        <action
+            android:id="@+id/action_paymentMethodsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addressSelectionFragment"
         android:name="com.xavidev.testessential.ui.sale.AddressSelectionFragment"
@@ -58,7 +70,14 @@
         android:id="@+id/addressesFragment"
         android:name="com.xavidev.testessential.ui.profile.AddressesFragment"
         android:label="fragment_addresses"
-        tools:layout="@layout/fragment_addresses" />
+        tools:layout="@layout/fragment_addresses">
+        <action
+            android:id="@+id/action_addressesFragment_to_addressFormFragment"
+            app:destination="@id/addressFormFragment" />
+        <action
+            android:id="@+id/action_addressesFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cardFormFragment"
         android:name="com.xavidev.testessential.ui.profile.CardFormFragment"
@@ -69,19 +88,21 @@
         android:name="com.xavidev.testessential.ui.sale.PaymentMethodFragment"
         android:label="fragment_payment_method"
         tools:layout="@layout/fragment_payment_method" />
-    <dialog
-        android:id="@+id/purchaseFilterBottomSheetFragment"
-        android:name="com.xavidev.testessential.ui.purchases.PurchaseFilterBottomSheetFragment"
-        android:label="fragment_purchase_filter_bottom_sheet"
-        tools:layout="@layout/fragment_purchase_filter_bottom_sheet" />
     <fragment
-        android:id="@+id/paymentMethodsFragment"
-        android:name="com.xavidev.testessential.ui.profile.PaymentMethodsFragment"
-        android:label="fragment_payment_methods"
-        tools:layout="@layout/fragment_payment_methods" />
-    <dialog
-        android:id="@+id/purchaseFinishedDialogFragment"
-        android:name="com.xavidev.testessential.ui.sale.PurchaseFinishedDialogFragment"
-        android:label="fragment_purchase_finished_dialog"
-        tools:layout="@layout/fragment_purchase_finished_dialog" />
+        android:id="@+id/addressFormFragment"
+        android:name="com.xavidev.testessential.ui.profile.AddressFormFragment"
+        android:label="fragment_address_form"
+        tools:layout="@layout/fragment_address_form" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.xavidev.testessential.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_addressesFragment"
+            app:destination="@id/addressesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_paymentMethodsFragment"
+            app:destination="@id/paymentMethodsFragment" />
+    </fragment>
 </navigation>

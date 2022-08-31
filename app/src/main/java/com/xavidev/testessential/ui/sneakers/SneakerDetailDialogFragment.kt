@@ -52,16 +52,12 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            vm = viewModel
-        }
-
         val bundle = arguments?.getSerializable("sneaker") as Sneaker
         viewModel.setSneaker(bundle)
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
             sneaker = bundle
         }
 
