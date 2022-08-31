@@ -1,9 +1,11 @@
 package com.xavidev.testessential.ui.profile
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.xavidev.testessential.R
@@ -23,7 +25,13 @@ class AddressFormFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ) = binding.root
 
-    override fun getTheme() = R.style.FullscreenDialogTheme_Primary
+   // override fun getTheme() = R.style.FullscreenDialogTheme_Primary
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        return dialog
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
