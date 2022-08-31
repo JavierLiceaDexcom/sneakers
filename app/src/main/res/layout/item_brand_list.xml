@@ -11,7 +11,7 @@
 
         <variable
             name="vm"
-            type="com.xavidev.testessential.ui.sneakers.SneakersViewModel" />
+            type="com.xavidev.testessential.ui.search.SneakersViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

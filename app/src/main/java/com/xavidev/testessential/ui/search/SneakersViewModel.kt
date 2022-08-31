@@ -1,4 +1,4 @@
-package com.xavidev.testessential.ui.sneakers
+package com.xavidev.testessential.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

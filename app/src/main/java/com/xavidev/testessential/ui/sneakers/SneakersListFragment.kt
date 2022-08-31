@@ -1,24 +1,21 @@
 package com.xavidev.testessential.ui.sneakers
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
 import com.xavidev.testessential.data.entity.Brand
 import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.databinding.FragmentSneakersListBinding
+import com.xavidev.testessential.ui.search.SneakersViewModel
 import com.xavidev.testessential.ui.sneakers.adapters.BrandsAdapter
 import com.xavidev.testessential.ui.sneakers.adapters.SneakersAdapter
-import com.xavidev.testessential.utils.toast
 
 
 class SneakersListFragment : Fragment() {

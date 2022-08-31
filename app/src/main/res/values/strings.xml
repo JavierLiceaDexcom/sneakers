@@ -94,4 +94,16 @@
     <string name="text_payment_methods">Payment methods</string>
     <string name="text_credit_card_icon">Credit card icon</string>
     <string name="text_remove_card">Remove card</string>
+    <string name="text_empty_list">Empty list</string>
+    <string name="text_save_address">Save address</string>
+    <string name="text_enter_zip_code_title">Enter a zip code</string>
+    <string name="text_zip_code">Zip code</string>
+    <string name="text_name_last_name">Nombre y apellido</string>
+    <string name="text_enter_zip_code">Enter zip code</string>
+    <string name="text_state">State</string>
+    <string name="text_municipality">Municipality/City hall</string>
+    <string name="text_suburb">Suburb</string>
+    <string name="text_street">Street</string>
+    <string name="text_int_number">Internal number</string>
+    <string name="text_contact_number">Contact number</string>
 </resources>
