@@ -65,4 +65,8 @@
         <item name="android:textColor">@color/primaryDark</item>
         <item name="chipIconTint">@color/primaryDark</item>
     </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import com.google.android.material.textfield.TextInputLayout
 
@@ -60,6 +61,11 @@ private fun View.hide(hidingStrategy: Int, animate: Boolean = true) {
 fun Context.toast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
 fun Activity.startNewActivity(targetActivity: Activity, finish: Boolean = true) {
+    this.startActivity(Intent(this, targetActivity::class.java))
+    if (finish) this.finish()
+}
+
+fun FragmentActivity.startNewActivity(targetActivity: Activity, finish: Boolean = true) {
     this.startActivity(Intent(this, targetActivity::class.java))
     if (finish) this.finish()
 }

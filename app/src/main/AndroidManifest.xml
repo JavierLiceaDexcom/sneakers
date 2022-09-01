@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.xavidev.testessential">
+    package="com.xavidev.testessential" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,10 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TestEssential"
-        tools:targetApi="31">
+        tools:targetApi="31" >
         <activity
-            android:name=".SaleActivity"
-            android:exported="false" />
+            android:name=".ui.sale.SaleOrderActivity"
+            android:exported="false"
+            android:label="@string/title_activity_sale_order"
+            android:theme="@style/Theme.TestEssential.NoActionBar" />
         <activity
             android:name=".ui.intro.IntroActivity"
             android:exported="false"
@@ -31,7 +33,7 @@
         <activity
             android:name=".ui.intro.SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/SplashScreen">
+            android:theme="@style/SplashScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

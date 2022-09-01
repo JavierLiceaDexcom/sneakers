@@ -1,5 +1,7 @@
 package com.xavidev.testessential.ui.search
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.xavidev.testessential.R
@@ -8,6 +10,7 @@ import com.xavidev.testessential.data.entity.Brand
 import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.utils.App
 import com.xavidev.testessential.utils.NavigationViewModel
+import com.xavidev.testessential.utils.startNewActivity
 
 class SneakersViewModel : NavigationViewModel() {
 
@@ -32,4 +35,8 @@ class SneakersViewModel : NavigationViewModel() {
             sneaker.value?.currency?.name
         )
     )
+
+    fun onBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
+        fragment.startNewActivity(targetActivity = destiny, finish = false)
+    }
 }

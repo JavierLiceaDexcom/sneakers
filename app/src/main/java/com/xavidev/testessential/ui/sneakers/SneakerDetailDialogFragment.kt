@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.databinding.FragmentSneakerDetailDialogBinding
+import com.xavidev.testessential.ui.sale.SaleOrderActivity
 import com.xavidev.testessential.ui.search.SneakersViewModel
 import com.xavidev.testessential.ui.sneakers.adapters.SneakerCarouselAdapter
 import com.xavidev.testessential.ui.sneakers.adapters.SneakerColorsAdapter
@@ -60,6 +61,10 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
             sneaker = bundle
+        }
+
+        binding.btnBuyNow.setOnClickListener {
+            viewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
         }
 
         setCarouselAdapter(bundle)

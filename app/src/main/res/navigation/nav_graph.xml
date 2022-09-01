@@ -44,11 +44,6 @@
         android:name="com.xavidev.testessential.ui.purchases.PurchaseFilterBottomSheetFragment"
         android:label="fragment_purchase_filter_bottom_sheet"
         tools:layout="@layout/fragment_purchase_filter_bottom_sheet" />
-    <dialog
-        android:id="@+id/purchaseFinishedDialogFragment"
-        android:name="com.xavidev.testessential.ui.sale.PurchaseFinishedDialogFragment"
-        android:label="fragment_purchase_finished_dialog"
-        tools:layout="@layout/fragment_purchase_finished_dialog" />
     <fragment
         android:id="@+id/paymentMethodsFragment"
         android:name="com.xavidev.testessential.ui.profile.PaymentMethodsFragment"
@@ -61,11 +56,6 @@
             android:id="@+id/action_paymentMethodsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/addressSelectionFragment"
-        android:name="com.xavidev.testessential.ui.sale.AddressSelectionFragment"
-        android:label="fragment_address_selection"
-        tools:layout="@layout/fragment_address_selection" />
     <fragment
         android:id="@+id/addressesFragment"
         android:name="com.xavidev.testessential.ui.profile.AddressesFragment"
@@ -86,12 +76,10 @@
         <action
             android:id="@+id/action_cardFormFragment_to_paymentMethodsFragment"
             app:destination="@id/paymentMethodsFragment" />
+        <action
+            android:id="@+id/action_cardFormFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/paymentMethodFragment"
-        android:name="com.xavidev.testessential.ui.sale.PaymentMethodFragment"
-        android:label="fragment_payment_method"
-        tools:layout="@layout/fragment_payment_method" />
     <fragment
         android:id="@+id/addressFormFragment"
         android:name="com.xavidev.testessential.ui.profile.AddressFormFragment"

@@ -57,4 +57,11 @@
         <item name="android:windowEnterAnimation">@anim/enter_slide_up</item>
         <item name="android:windowExitAnimation">@anim/exit_slide_down</item>
     </style>
+    <style name="Theme.TestEssential.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.TestEssential.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.TestEssential.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

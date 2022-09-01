@@ -110,4 +110,25 @@
     <string name="text_card_beneficiary">Beneficiary</string>
     <string name="text_card_expiration">Expiration</string>
     <string name="text_card_cvv">CVV</string>
+    <string name="text_check_done">Check done</string>
+    <string name="text_purchase_completed">Purchase completed</string>
+    <string name="text_you_bought">You bought</string>
+    <string name="text_product_image">product image</string>
+    <string name="text_purchase_finished_sent">Your sneakers are in the way</string>
+    <string name="text_close">Close</string>
+    <string name="title_activity_sale_order">SaleOrderActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="text_delivery_method">Method of delivery</string>
+    <string name="text_you_pay">You pay</string>
+    <string name="text_address_and_phone">Address and phone</string>
+    <string name="text_edit_or_choose_address">Edit or choose another</string>
+    <string name="text_arrive_tomorrow_description">Arrive tomorrow at your home</string>
+    <string name="text_pick_it_up_description">Pick it up in our stores</string>
+    <string name="text_free">Free</string>
+    <string name="text_confirm_order">Confirm order</string>
 </resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sales_graph"
+    app:startDestination="@id/orderAddressFragment">
+
+    <fragment
+        android:id="@+id/orderAddressFragment"
+        android:name="com.xavidev.testessential.ui.sale.OrderAddressFragment"
+        android:label="fragment_order_address"
+        tools:layout="@layout/fragment_order_address" >
+        <action
+            android:id="@+id/action_orderAddressFragment_to_addressSelectionFragment"
+            app:destination="@id/addressSelectionFragment" />
+        <action
+            android:id="@+id/action_orderAddressFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/purchaseFinishedDialogFragment2"
+        android:name="com.xavidev.testessential.ui.sale.PurchaseFinishedDialogFragment"
+        android:label="fragment_purchase_finished_dialog"
+        tools:layout="@layout/fragment_purchase_finished_dialog" />
+    <fragment
+        android:id="@+id/addressSelectionFragment"
+        android:name="com.xavidev.testessential.ui.sale.AddressSelectionFragment"
+        android:label="fragment_address_selection"
+        tools:layout="@layout/fragment_address_selection" >
+        <action
+            android:id="@+id/action_addressSelectionFragment2_to_orderAddressFragment2"
+            app:destination="@id/orderAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentMethodFragment"
+        android:name="com.xavidev.testessential.ui.sale.PaymentMethodFragment"
+        android:label="fragment_payment_method"
+        tools:layout="@layout/fragment_payment_method" >
+        <action
+            android:id="@+id/action_paymentMethodFragment2_to_orderConfirmationFragment"
+            app:destination="@id/orderConfirmationFragment" />
+        <action
+            android:id="@+id/action_paymentMethodFragment2_to_orderAddressFragment2"
+            app:destination="@id/orderAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderConfirmationFragment"
+        android:name="com.xavidev.testessential.ui.sale.OrderConfirmationFragment"
+        android:label="fragment_order_confirmation"
+        tools:layout="@layout/fragment_order_confirmation" >
+        <action
+            android:id="@+id/action_orderConfirmationFragment_to_purchaseFinishedDialogFragment2"
+            app:destination="@id/purchaseFinishedDialogFragment2" />
+        <action
+            android:id="@+id/action_orderConfirmationFragment_to_paymentMethodFragment2"
+            app:destination="@id/paymentMethodFragment" />
+    </fragment>
+</navigation>
