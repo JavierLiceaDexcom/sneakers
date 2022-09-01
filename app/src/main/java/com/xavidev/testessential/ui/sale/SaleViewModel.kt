@@ -24,6 +24,16 @@ class SaleViewModel : NavigationViewModel() {
         _deliveryType.value = DeliveryType.PICK_UP
         navigateTo(view, R.id.action_orderAddressFragment_to_paymentMethodFragment)
     }
+
+    fun onConfirmOrder(view: View) {
+        //Extra code here
+        navigateTo(view, R.id.action_orderConfirmationFragment_to_purchaseFinishedDialogFragment2)
+    }
+
+    fun onOrderCompleteClose(view: View){
+        //Code here
+
+    }
 }
 
 enum class DeliveryType {
