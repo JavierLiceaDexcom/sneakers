@@ -23,12 +23,17 @@ class SneakersListFragment : Fragment() {
         FragmentSneakersListBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SneakersViewModel by activityViewModels()
+    private val viewModel: SneakersViewModel by activityViewModels { SneakersViewModel.Factory() }
+
     private val sneakersAdapter = SneakersAdapter(
         object : (Sneaker, Int) -> Unit {
             override fun invoke(sneaker: Sneaker, pos: Int) {
                 val bundle = bundleOf("sneaker" to sneaker)
-                viewModel.navigateTo(view!!, R.id.action_sneakersListFragment_to_sneakerDetailDialogFragment, bundle)
+                viewModel.navigateTo(
+                    view!!,
+                    R.id.action_sneakersListFragment_to_sneakerDetailDialogFragment,
+                    bundle
+                )
             }
         },
         object : (Sneaker, Int) -> Unit {
