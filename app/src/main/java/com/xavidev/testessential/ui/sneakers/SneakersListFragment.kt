@@ -13,7 +13,6 @@ import com.xavidev.testessential.R
 import com.xavidev.testessential.data.entity.Brand
 import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.databinding.FragmentSneakersListBinding
-import com.xavidev.testessential.ui.search.SneakersViewModel
 import com.xavidev.testessential.ui.sneakers.adapters.BrandsAdapter
 import com.xavidev.testessential.ui.sneakers.adapters.SneakersAdapter
 
@@ -71,14 +70,6 @@ class SneakersListFragment : Fragment() {
             adapter = brandsAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        }
-
-        viewModel.getSneakersList().observe(viewLifecycleOwner) { sneakers ->
-            sneakersAdapter.submitList(sneakers)
-        }
-
-        viewModel.getBrandList().observe(viewLifecycleOwner) { brands ->
-            brandsAdapter.submitList(brands)
         }
     }
 }

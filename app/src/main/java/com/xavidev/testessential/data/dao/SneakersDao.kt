@@ -10,8 +10,14 @@ import com.xavidev.testessential.data.entity.Sneaker
 interface SneakersDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(sneaker: Sneaker)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(sneakers: List<Sneaker>)
+
+    @Query("SELECT * FROM sneakers")
+    suspend fun getAllSneakers(): List<Sneaker>
+
+    @Query("SELECT * FROM sneaker WHERE brandId =:id")
+    suspend fun getSneakersByBrand(id: String): List<Sneaker>
+
+    @Query("SELECT * FROM sneaker WHERE id =:id")
+    suspend fun getSneaker(id: String): Sneaker
 }

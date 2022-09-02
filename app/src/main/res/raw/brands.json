@@ -1,0 +1,52 @@
+{
+  "brands": [
+    {
+      "id": "0d4f8df4-2a3f-11ed-a261-0242ac120002",
+      "name": "Nike",
+      "logo": "https://nikecompanyblog.files.wordpress.com/2015/05/nike1.jpg",
+      "selected": false
+    },
+    {
+      "id": "0d4f90ba-2a3f-11ed-a261-0242ac120002",
+      "name": "Adidas",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/2560px-Adidas_Logo.svg.png",
+      "selected": false
+    },
+    {
+      "id": "0d4f91fa-2a3f-11ed-a261-0242ac120002",
+      "name": "Converse",
+      "logo": "https://assets.simon.com/tenantlogos/13410.png",
+      "selected": false
+    },
+    {
+      "id": "0d4f9312-2a3f-11ed-a261-0242ac120002",
+      "name": "New Balace",
+      "logo": "https://logos-world.net/wp-content/uploads/2020/09/New-Balance-Emblem.png",
+      "selected": false
+    },
+    {
+      "id": "0d4f9434-2a3f-11ed-a261-0242ac120002",
+      "name": "Puma",
+      "logo": "https://1000logos.net/wp-content/uploads/2017/05/PUMA-logo.jpg",
+      "selected": false
+    },
+    {
+      "id": "0d4f9542-2a3f-11ed-a261-0242ac120002",
+      "name": "Reebok",
+      "logo": "https://preview.thenewsmarket.com/Previews/RBOK/StillAssets/1920x1080/551064.png",
+      "selected": false
+    },
+    {
+      "id": "0d4f9646-2a3f-11ed-a261-0242ac120002",
+      "name": "Yeezy",
+      "logo": "https://i.pinimg.com/originals/53/96/37/5396379804fae3dffdcc887102f223e1.png",
+      "selected": false
+    },
+    {
+      "id": "0d4f99c0-2a3f-11ed-a261-0242ac120002",
+      "name": "Vans",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Vans-logo.svg/2560px-Vans-logo.svg.png",
+      "selected": false
+    }
+  ]
+}

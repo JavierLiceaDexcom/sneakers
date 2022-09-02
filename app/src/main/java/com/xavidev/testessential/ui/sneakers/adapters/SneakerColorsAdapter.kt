@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.xavidev.testessential.databinding.ItemSneakerColorBinding
 
-class SneakerColorsAdapter(private val itemClickListener: (Int, Int) -> Unit) :
-    ListAdapter<Int, SneakerColorsAdapter.ViewHolder>(SneakerSizeCallback) {
+class SneakerColorsAdapter(private val itemClickListener: (String, Int) -> Unit) :
+    ListAdapter<String, SneakerColorsAdapter.ViewHolder>(SneakerSizeCallback) {
 
     inner class ViewHolder(val binding: ItemSneakerColorBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            sneakerColor: Int,
-            itemClickListener: (Int, Int) -> Unit,
+            sneakerColor: String,
+            itemClickListener: (String, Int) -> Unit,
         ) = with(binding) {
             itemSneakerColor.setOnClickListener {
                 itemClickListener(
@@ -23,29 +23,16 @@ class SneakerColorsAdapter(private val itemClickListener: (Int, Int) -> Unit) :
                     this@ViewHolder.adapterPosition
                 )
             }
-            itemSneakerColor.setCardBackgroundColor(integerToRGB(sneakerColor).toArgb())
+            itemSneakerColor.setCardBackgroundColor(Color.parseColor(sneakerColor))
             executePendingBindings()
-        }
-
-        private fun integerToRGB(color: Int): Color {
-            val strColor = color.toString()
-            val red = strColor.substring(0, 2).toInt()
-            val green = strColor.substring(3, 5).toInt()
-            val blue = strColor.substring(6, 8).toInt()
-
-            return if (strColor.length < 9) {
-                Color.valueOf(Color.rgb(0, 0, 0))
-            } else {
-                Color.valueOf(Color.rgb(red, green, blue))
-            }
         }
     }
 
     companion object {
-        object SneakerSizeCallback : DiffUtil.ItemCallback<Int>() {
-            override fun areItemsTheSame(oldItem: Int, newItem: Int) = oldItem == newItem
+        object SneakerSizeCallback : DiffUtil.ItemCallback<String>() {
+            override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
 
-            override fun areContentsTheSame(oldItem: Int, newItem: Int) = oldItem == newItem
+            override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
         }
     }
 

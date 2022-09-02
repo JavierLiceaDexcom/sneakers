@@ -2,7 +2,7 @@ package com.xavidev.testessential.data.entity
 
 import java.util.*
 
-data class PurchaseItem(
+data class Cart(
     val id: String = UUID.randomUUID().toString(),
     val sneakerId: String,
     val purchaseDate: Long,

@@ -9,7 +9,7 @@ import com.xavidev.testessential.R
 fun loadImageUrl(view: ImageView, url: String?) {
     url?.let {
         Picasso.get().load(it).placeholder(R.drawable.ic_loading_placeholder)
-            .error(R.drawable.ic_sneaker_error)
+            .error(R.drawable.ic_no_image)
             .into(view)
     }
 }

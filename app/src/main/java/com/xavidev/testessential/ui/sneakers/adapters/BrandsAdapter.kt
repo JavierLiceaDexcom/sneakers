@@ -5,15 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
-import com.squareup.picasso.Picasso
 import com.xavidev.testessential.data.entity.Brand
 import com.xavidev.testessential.databinding.ItemBrandListBinding
 
 class BrandsAdapter(
     private val itemClickListener: (Brand, Int) -> Unit
 ) :
-    ListAdapter<Brand, BrandsAdapter.ViewHolder>(brandsCallback) {
+    ListAdapter<Brand, BrandsAdapter.ViewHolder>(BrandsCallback) {
 
     inner class ViewHolder(val binding: ItemBrandListBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -35,7 +33,7 @@ class BrandsAdapter(
     }
 
     companion object {
-        object brandsCallback : DiffUtil.ItemCallback<Brand>() {
+        object BrandsCallback : DiffUtil.ItemCallback<Brand>() {
             override fun areItemsTheSame(oldItem: Brand, newItem: Brand) =
                 oldItem.id == newItem.id
 

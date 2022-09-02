@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.xavidev.testessential.ui.search.SneakersViewModel" />
+            type="com.xavidev.testessential.ui.sneakers.SneakersViewModel" />
 
         <variable
             name="sneaker"
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{sneaker.brand.name}"
+                android:text="TODO"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

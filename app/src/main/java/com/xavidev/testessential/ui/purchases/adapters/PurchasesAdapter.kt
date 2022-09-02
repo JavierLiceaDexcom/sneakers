@@ -5,34 +5,34 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.xavidev.testessential.data.entity.PurchaseItem
+import com.xavidev.testessential.data.entity.Cart
 import com.xavidev.testessential.databinding.ItemPurchaseBinding
 
 class PurchasesAdapter(
-    private val itemClickListener: (PurchaseItem, Int) -> Unit,
-    private val buyAgainClickListener: (PurchaseItem, Int) -> Unit,
+    private val itemClickListener: (Cart, Int) -> Unit,
+    private val buyAgainClickListener: (Cart, Int) -> Unit,
 ) :
-    ListAdapter<PurchaseItem, PurchasesAdapter.ViewHolder>(SneakerPurchaseCallback) {
+    ListAdapter<Cart, PurchasesAdapter.ViewHolder>(SneakerPurchaseCallback) {
 
     inner class ViewHolder(val binding: ItemPurchaseBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            purchaseItem: PurchaseItem,
-            itemClickListener: (PurchaseItem, Int) -> Unit,
-            buyAgainClickListener: (PurchaseItem, Int) -> Unit,
+            cart: Cart,
+            itemClickListener: (Cart, Int) -> Unit,
+            buyAgainClickListener: (Cart, Int) -> Unit,
         ) = with(binding) {
-            clPurchaseItem.setOnClickListener {  itemClickListener(purchaseItem, this@ViewHolder.adapterPosition) }
-            btnBuyAgain.setOnClickListener { buyAgainClickListener(purchaseItem, this@ViewHolder.adapterPosition) }
+            clPurchaseItem.setOnClickListener {  itemClickListener(cart, this@ViewHolder.adapterPosition) }
+            btnBuyAgain.setOnClickListener { buyAgainClickListener(cart, this@ViewHolder.adapterPosition) }
             executePendingBindings()
         }
     }
 
     companion object {
-        object SneakerPurchaseCallback : DiffUtil.ItemCallback<PurchaseItem>() {
-            override fun areItemsTheSame(oldItem: PurchaseItem, newItem: PurchaseItem) =
+        object SneakerPurchaseCallback : DiffUtil.ItemCallback<Cart>() {
+            override fun areItemsTheSame(oldItem: Cart, newItem: Cart) =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: PurchaseItem, newItem: PurchaseItem) = oldItem == newItem
+            override fun areContentsTheSame(oldItem: Cart, newItem: Cart) = oldItem == newItem
         }
     }
 

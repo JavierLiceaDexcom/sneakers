@@ -1,4 +1,4 @@
-package com.xavidev.testessential.ui.search
+package com.xavidev.testessential.ui.sneakers
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
@@ -20,21 +20,6 @@ class SneakersViewModel : NavigationViewModel() {
     fun setSneaker(sneaker: Sneaker) {
         _sneaker.value = sneaker
     }
-
-    fun getSneakersList(): LiveData<List<Sneaker>> = MutableLiveData(DummyData.sneakers)
-
-    fun getBrandList(): LiveData<List<Brand>> {
-        val brands = DummyData.sneakers.map { sneaker -> sneaker.brand }.sortedBy { it.name }
-        return MutableLiveData(brands.distinctBy { it.name })
-    }
-
-    fun getPriceWithCurrency() = MutableLiveData(
-        App.getContext().getString(
-            R.string.text_price_currency,
-            sneaker.value?.price,
-            sneaker.value?.currency?.name
-        )
-    )
 
     fun onBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
         fragment.startNewActivity(targetActivity = destiny, finish = false)

@@ -13,7 +13,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.databinding.FragmentSneakerDetailDialogBinding
 import com.xavidev.testessential.ui.sale.SaleOrderActivity
-import com.xavidev.testessential.ui.search.SneakersViewModel
 import com.xavidev.testessential.ui.sneakers.adapters.SneakerCarouselAdapter
 import com.xavidev.testessential.ui.sneakers.adapters.SneakerColorsAdapter
 import com.xavidev.testessential.ui.sneakers.adapters.SneakerSizesAdapter
@@ -35,8 +34,8 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
             requireContext().toast("Size $size in position $pos")
         }
     })
-    private val sneakerColorsAdapter = SneakerColorsAdapter(object : (Int, Int) -> Unit {
-        override fun invoke(color: Int, pos: Int) {
+    private val sneakerColorsAdapter = SneakerColorsAdapter(object : (String, Int) -> Unit {
+        override fun invoke(color: String, pos: Int) {
             requireContext().toast("Color $color in position $pos")
         }
     })
@@ -92,7 +91,8 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun setCarouselAdapter(bundle: Sneaker) {
-        val photos = bundle.photos.toList().toMutableList()
+        //TODO: Add list of images
+        val photos = mutableListOf<String>()
         photos.add(0, bundle.thumbnail)
         carouselAdapter = SneakerCarouselAdapter(photos)
         binding.sneakerCarouselViewPager.adapter = carouselAdapter

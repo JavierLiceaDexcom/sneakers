@@ -16,11 +16,11 @@ object DummyData {
     const val REEBOK_LOGO =
         "https://preview.thenewsmarket.com/Previews/RBOK/StillAssets/1920x1080/551064.png"
     const val NEW_BALANCE_LOGO =
-        "https://brandslogos.com/wp-content/uploads/images/new-balance-logo-vector.svg"
+        "https://logos-world.net/wp-content/uploads/2020/09/New-Balance-Emblem.png"
     const val PUMA_LOGO = "https://1000logos.net/wp-content/uploads/2017/05/PUMA-logo.jpg"
     const val YEEZY_LOGO =
         "https://i.pinimg.com/originals/53/96/37/5396379804fae3dffdcc887102f223e1.png"
-    const val VANS_LOGO = " https://1000logos.net/wp-content/uploads/2017/06/Vans-Logo-1966.jpg"
+    const val VANS_LOGO = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Vans-logo.svg/2560px-Vans-logo.svg.png"
 
     private val nikeImages = listOf(
         "https://media.gq.com/photos/61ae8b7ba5f2a6e20a63d30e/master/w_1280,c_limit/Nike-Killshot-2-sneakers.jpg",
@@ -54,7 +54,7 @@ object DummyData {
         "https://media.gq.com/photos/6284ff8a1e7f4591bdbc275f/master/w_1280,c_limit/shoe-8.jpg"
     )
 
-    val sneakers = listOf(
+    /*val sneakers = listOf(
         Sneaker(
             id = UUID.randomUUID().toString(),
             model = "Nike Jordan One",
@@ -419,5 +419,5 @@ object DummyData {
             relatedIds = listOf(),
             discountPercentage = 15
         ),
-    )
+    )*/
 }

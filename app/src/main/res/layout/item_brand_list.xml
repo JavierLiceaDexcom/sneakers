@@ -11,7 +11,7 @@
 
         <variable
             name="vm"
-            type="com.xavidev.testessential.ui.search.SneakersViewModel" />
+            type="com.xavidev.testessential.ui.sneakers.SneakersViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -39,7 +39,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/vans_old_school" />
+                tools:src="@drawable/ic_andy" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

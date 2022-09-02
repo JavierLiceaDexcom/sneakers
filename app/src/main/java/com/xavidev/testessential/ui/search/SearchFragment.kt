@@ -1,11 +1,11 @@
 package com.xavidev.testessential.ui.search
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.data.entity.Brand
@@ -17,7 +17,7 @@ class SearchFragment : Fragment() {
         FragmentSearchBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SneakersViewModel by activityViewModels()
+    private val viewModel: SearchViewModel by activityViewModels()
 
     private val brandsAdapter = BrandsAdapter(object : (Brand, Int) -> Unit {
         override fun invoke(brand: Brand, pos: Int) {
@@ -39,9 +39,6 @@ class SearchFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        viewModel.getBrandList().observe(viewLifecycleOwner) { brands ->
-            brandsAdapter.submitList(brands)
-        }
         setupListeners()
     }
 

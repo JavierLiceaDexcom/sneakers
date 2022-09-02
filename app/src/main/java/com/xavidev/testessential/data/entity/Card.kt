@@ -1,7 +1,9 @@
 package com.xavidev.testessential.data.entity
 
+import androidx.room.Entity
 import java.util.*
 
+@Entity(tableName = "card")
 data class Card(
     val id: String = UUID.randomUUID().toString(),
     val institutionName: String,
