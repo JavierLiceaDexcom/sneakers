@@ -38,5 +38,4 @@ class UserResources(private val userDao: UserDao) : UserRepository {
             emit(Response.Error(ex.localizedMessage))
         }
     }
-
 }

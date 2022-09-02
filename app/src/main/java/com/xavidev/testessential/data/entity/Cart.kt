@@ -7,4 +7,5 @@ data class Cart(
     val sneakerId: String,
     val purchaseDate: Long,
     val sneakerThumbnail: String,
+    val quantity: Int = 1
 )

@@ -7,7 +7,7 @@ import com.xavidev.testessential.data.entity.Card
 interface CardDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCard(card: Card)
+    suspend fun insertCard(card: Card): Int
 
     @Delete
     suspend fun deleteCard(card: Card): Int
@@ -17,4 +17,13 @@ interface CardDao {
 
     @Query("SELECT * FROM card WHERE id :=id")
     suspend fun getCard(id: String): Card
+
+    @Query("UPDATE card SET isDefault =:value")
+    suspend fun setDefaultCard(card: Card, value: Boolean): Int
+
+    @Transaction
+    suspend fun updateDefaultCard(oldCard: Card, newCard: Card) {
+        setDefaultCard(oldCard, false)
+        setDefaultCard(newCard, true)
+    }
 }

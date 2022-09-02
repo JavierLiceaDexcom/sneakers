@@ -10,5 +10,6 @@ data class Card(
     val expirationDate: String,
     val ownerName: String,
     val cardNumber: String,
-    val cardCVV: Int
+    val cardCVV: Int,
+    val isDefault: Boolean
 )
