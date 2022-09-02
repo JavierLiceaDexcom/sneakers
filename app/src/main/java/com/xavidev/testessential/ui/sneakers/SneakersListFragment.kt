@@ -16,7 +16,6 @@ import com.xavidev.testessential.databinding.FragmentSneakersListBinding
 import com.xavidev.testessential.ui.sneakers.adapters.BrandsAdapter
 import com.xavidev.testessential.ui.sneakers.adapters.SneakersAdapter
 
-
 class SneakersListFragment : Fragment() {
 
     private val binding by lazy(LazyThreadSafetyMode.NONE) {

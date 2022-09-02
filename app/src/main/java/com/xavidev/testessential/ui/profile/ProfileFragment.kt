@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.xavidev.testessential.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -13,7 +13,7 @@ class ProfileFragment : Fragment() {
         FragmentProfileBinding.inflate(layoutInflater)
     }
 
-    private val viewModel : ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by activityViewModels { ProfileViewModel.Factory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
