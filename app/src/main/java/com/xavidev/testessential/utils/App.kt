@@ -2,6 +2,7 @@ package com.xavidev.testessential.utils
 
 import android.app.Application
 import android.content.Context
+import com.xavidev.testessential.data.db.DatabaseManager
 
 class App : Application() {
 
@@ -17,5 +18,6 @@ class App : Application() {
     override fun onCreate() {
         instance = this
         super.onCreate()
+        DatabaseManager.instance.initDatabase(applicationContext)
     }
 }
