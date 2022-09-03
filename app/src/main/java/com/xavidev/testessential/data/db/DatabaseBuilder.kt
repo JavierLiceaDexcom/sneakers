@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Room
 
 
-class DatabaseManager {
+class DatabaseBuilder {
 
     lateinit var database: AppDatabase
 
     companion object {
-        val instance = DatabaseManager()
+        val instance = DatabaseBuilder()
     }
 
     fun initDatabase(context: Context) {

@@ -36,10 +36,6 @@ android {
         dataBinding true
     }
 
-    configurations {
-        implementation.exclude group: 'org.jetbrains', module: 'annotations'
-    }
-
     sourceSets {
         main {
             java {
@@ -58,6 +54,8 @@ dependencies {
     implementation deps.navigation_ui
     implementation deps.moshi
     implementation deps.room_runtime
+    implementation deps.room
+    kapt deps.room_compiler
     implementation deps.paging
     implementation deps.viewmodel
     implementation deps.livedata
@@ -78,7 +76,5 @@ dependencies {
     testImplementation deps.mockk
 
     //Annotations
-    annotationProcessor(deps.room_compiler)
     kapt deps.livedata_kapt
-
 }

@@ -3,10 +3,11 @@ package com.xavidev.testessential.data.dao
 import androidx.room.*
 import com.xavidev.testessential.data.entity.Cart
 
+@Dao
 interface CartDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertItem(cart: Cart): Int
+    suspend fun insertItem(cart: Cart): Long
 
     @Delete
     suspend fun deleteItem(cart: Cart): Int
@@ -17,7 +18,7 @@ interface CartDao {
     @Query("UPDATE cart SET quantity =:quantity")
     suspend fun setQuantity(quantity: Int): Int
 
-    @Query("SELECT quantity WHERE id =:id")
+    @Query("SELECT quantity FROM cart WHERE id =:id")
     suspend fun getCartItemQuantity(id: String): Int
 
     @Transaction

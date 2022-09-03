@@ -11,7 +11,18 @@ const val DB_EXPORT_SCHEMA = false
 
 @Database(
     version = DB_VERSION,
-    entities = [Brand::class, Type::class, Sneaker::class, KeyValue::class, Address::class, Card::class, Currency::class, Cart::class],
+    entities = [
+        Brand::class,
+        Type::class,
+        Sneaker::class,
+        KeyValue::class,
+        Address::class,
+        Card::class,
+        Currency::class,
+        Cart::class,
+        Images::class,
+        User::class
+    ],
     exportSchema = DB_EXPORT_SCHEMA
 )
 abstract class AppDatabase : RoomDatabase() {

@@ -1,23 +1,30 @@
 package com.xavidev.testessential.data.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.xavidev.testessential.data.ColorsTypeConverter
+import com.xavidev.testessential.data.SizesTypeConverter
 import java.io.Serializable
 
+@TypeConverters(SizesTypeConverter::class, ColorsTypeConverter::class)
 @Entity(tableName = "sneaker")
 data class Sneaker(
+    @PrimaryKey
     val id: String,
     val model: String,
     val sizes: List<Double>,
-    val brandId: String,
-    val typeId: String,
+    @ColumnInfo(name = "brand_id") val brandId: String,
+    @ColumnInfo(name = "type_id") val typeId: String,
     val colors: List<String>,
     val thumbnail: String,
     val photosId: String,
     val price: Double,
     val currencyId: String,
-    val discountPercentage: Int,
+    @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
     val favorite: Boolean = false
-) : Serializable {
+): Serializable {
     fun List<Sneaker>.filterWithPercentage(percentage: Int = 0): List<Sneaker> =
         this.filter { it.discountPercentage == percentage }.sortedBy { it.id }
 

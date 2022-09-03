@@ -13,7 +13,7 @@ class KeyValueResource(private val keyValueDao: KeyValueDao) : KeyValueRepositor
         emit(Response.Loading())
         try {
             val response = keyValueDao.insertKeyValue(keyValue)
-            emit(Response.Success(response == 1))
+            emit(Response.Success(response == 1L))
         } catch (ex: IOException) {
             emit(Response.Error(ex.localizedMessage))
         }

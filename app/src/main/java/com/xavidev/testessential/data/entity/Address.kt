@@ -1,15 +1,17 @@
 package com.xavidev.testessential.data.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
-import java.util.*
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "address")
 data class Address(
-    val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey
+    val id: String,
     val street: String,
     val zip: Int,
     val city: String,
     val state: String,
-    val extNumber: String,
-    val intNumber: String?,
+    @ColumnInfo(name = "ext_number") val extNumber: String,
+    @ColumnInfo(name = "int_number") val intNumber: String?,
 )

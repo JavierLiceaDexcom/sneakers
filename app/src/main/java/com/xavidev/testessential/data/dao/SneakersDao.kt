@@ -18,16 +18,16 @@ interface SneakersDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(sneakers: List<Sneaker>)
 
-    @Query("DELETE FROM sneakers")
+    @Query("DELETE FROM sneaker")
     suspend fun clearSneakerTable()
 
-    @Query("SELECT * FROM sneakers")
+    @Query("SELECT * FROM sneaker")
     suspend fun getAllSneakers(): List<Sneaker>
 
-    @Query("SELECT * FROM sneaker WHERE brandId =:id")
+    @Query("SELECT * FROM sneaker WHERE brand_id =:id")
     suspend fun getSneakersByBrand(id: String): List<Sneaker>
 
-    @Query("SELECT * FROM sneaker WHERE typeId =:id")
+    @Query("SELECT * FROM sneaker WHERE type_id =:id")
     suspend fun getSneakersByType(id: String): List<Sneaker>
 
     @Query("SELECT * FROM sneaker WHERE id =:id")

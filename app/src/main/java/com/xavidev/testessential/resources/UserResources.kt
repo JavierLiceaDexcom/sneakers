@@ -13,7 +13,7 @@ class UserResources(private val userDao: UserDao) : UserRepository {
         emit(Response.Loading())
         try {
             val response = userDao.insertUser(user)
-            emit(Response.Success(response == 1))
+            emit(Response.Success(response == 1L))
         } catch (ex: IOException) {
             emit(Response.Error(ex.localizedMessage))
         }

@@ -13,7 +13,7 @@ class CardResources(private val cardDao: CardDao) : CardRepository {
         emit(Response.Loading())
         try {
             val response = cardDao.insertCard(card)
-            emit(Response.Success(response == 1))
+            emit(Response.Success(response == 1L))
         } catch (ex: IOException) {
             emit(Response.Error(ex.localizedMessage))
         }

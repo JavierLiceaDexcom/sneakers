@@ -1,8 +1,8 @@
 package com.xavidev.testessential.ui.intro
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.xavidev.testessential.R
 import com.xavidev.testessential.databinding.ActivityIntroBinding
@@ -10,6 +10,7 @@ import com.xavidev.testessential.ui.MainActivity
 import com.xavidev.testessential.ui.intro.adapters.IntroAdapter
 import com.xavidev.testessential.utils.IntroUtils
 import com.xavidev.testessential.utils.startNewActivity
+import com.xavidev.testessential.utils.toast
 
 class IntroActivity : AppCompatActivity() {
 
@@ -19,20 +20,33 @@ class IntroActivity : AppCompatActivity() {
 
     private lateinit var introAdapter: IntroAdapter
     private var currentPosition = 0
-    private lateinit var viewModel: IntroViewModel
+    private val viewModel: IntroViewModel by viewModels { IntroViewModel.Factory() }
     val introUtils = IntroUtils()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val factory = IntroViewModel.IntroViewModelFactory()
-        viewModel = ViewModelProvider(this, factory)[IntroViewModel::class.java]
-
         introAdapter = IntroAdapter(introUtils.getIntroItems())
         binding.onboardingViewPager.adapter = introAdapter
         introUtils.setupIntroIndicator(introAdapter, binding.lytIndicators, this)
         setupListeners()
+        viewModelObservers()
+    }
+
+    private fun viewModelObservers() = with(viewModel) {
+        introPassedLoader.observe(this@IntroActivity) { loading ->
+            if (loading) {
+                toast("Loading...")
+            }
+        }
+
+        introPassed.observe(this@IntroActivity) { passed ->
+            if (passed) {
+                toast("Intro passed")
+                startNewActivity(targetActivity = MainActivity(), finish = true)
+            }
+        }
     }
 
     private fun setButtonText(isLastItem: Boolean) {
@@ -60,7 +74,7 @@ class IntroActivity : AppCompatActivity() {
                 introUtils.setCurrentIndicator(currentPosition.plus(1), binding.lytIndicators, this)
                 binding.onboardingViewPager.currentItem = currentPosition.plus(1)
             } else {
-                startNewActivity(MainActivity(), finish = true)
+                viewModel.setIntroPassed()
             }
         }
     }

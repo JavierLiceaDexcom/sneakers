@@ -1,6 +1,13 @@
 package com.xavidev.testessential.data.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "user")
-data class User(val id: String, val name: String, val currency: Currency, val size: Double)
+data class User(
+    @PrimaryKey val id: String,
+    val name: String,
+    @ColumnInfo(name = "currency_id") val currencyId: String,
+    val size: Double
+)

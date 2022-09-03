@@ -7,7 +7,7 @@ import com.xavidev.testessential.data.entity.Images
 interface ImagesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertImages(images: List<Images>): Int
+    suspend fun insertImages(images: List<Images>)
 
     @Query("DELETE FROM images")
     suspend fun deleteImages(): Int

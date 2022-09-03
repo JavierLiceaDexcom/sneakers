@@ -3,10 +3,11 @@ package com.xavidev.testessential.ui.cart
 import androidx.lifecycle.*
 import com.xavidev.testessential.data.State
 import com.xavidev.testessential.data.dao.Action
-import com.xavidev.testessential.data.db.DatabaseManager
+import com.xavidev.testessential.data.db.DatabaseBuilder
 import com.xavidev.testessential.data.entity.Cart
 import com.xavidev.testessential.repository.CartRepository
 import com.xavidev.testessential.resources.CartResources
+import com.xavidev.testessential.utils.App
 import com.xavidev.testessential.utils.NavigationViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -79,7 +80,7 @@ class CartViewModel(private val cartRepository: CartRepository) : NavigationView
     class Factory() : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(CartViewModel::class.java)) {
-                return CartResources(DatabaseManager.instance.database.cartDao()) as T
+                return CartResources(DatabaseBuilder.instance.database.cartDao()) as T
             }
             throw Exception("No class supported")
         }

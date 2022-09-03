@@ -14,7 +14,7 @@ class CartResources(private val cartDao: CartDao) : CartRepository {
         emit(Response.Loading())
         try {
             val response = cartDao.insertItem(cart)
-            emit(Response.Success(response == 1))
+            emit(Response.Success(response == 1L))
         } catch (ex: IOException) {
             emit(Response.Error(ex.localizedMessage))
         }

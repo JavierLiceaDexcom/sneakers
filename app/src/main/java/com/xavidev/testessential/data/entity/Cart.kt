@@ -1,11 +1,15 @@
 package com.xavidev.testessential.data.entity
 
-import java.util.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "cart")
 data class Cart(
-    val id: String = UUID.randomUUID().toString(),
-    val sneakerId: String,
-    val purchaseDate: Long,
-    val sneakerThumbnail: String,
+    @PrimaryKey
+    val id: String,
+    @ColumnInfo(name = "sneaker_id") val sneakerId: String,
+    @ColumnInfo(name = "purchase_date") val purchaseDate: Long,
+    @ColumnInfo(name = "sneaker_thumbnail") val sneakerThumbnail: String,
     val quantity: Int = 1
 )
