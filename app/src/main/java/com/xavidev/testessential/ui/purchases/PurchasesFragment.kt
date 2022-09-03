@@ -1,16 +1,15 @@
 package com.xavidev.testessential.ui.purchases
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.xavidev.testessential.databinding.FragmentPurchasesBinding
-import com.xavidev.testessential.ui.BaseFragment
 
 
-class PurchasesFragment :  BaseFragment() {
+class PurchasesFragment :  Fragment() {
 
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentPurchasesBinding.inflate(layoutInflater)

@@ -3,8 +3,6 @@ package com.xavidev.testessential.utils
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import com.xavidev.testessential.data.entity.Brand
-import com.xavidev.testessential.data.entity.Images
 import java.io.FileNotFoundException
 import java.nio.charset.Charset
 
@@ -24,28 +22,11 @@ object JsonParserUtils {
         }
     }
 
-    fun getBrandListFromJSON(): List<Brand> {
-        val resultType = Types.newParameterizedType(List::class.java, Brand::class.java)
-        val json = loadJSONFormAssets("brands") ?: ""
-        val moshi = Moshi.Builder().build()
-        val jsonAdapter: JsonAdapter<List<Brand>> = moshi.adapter(resultType)
-        return jsonAdapter.fromJson(json) ?: listOf()
-    }
-
-    fun getImagesListFromJSON(): List<Images> {
-        val resultType = Types.newParameterizedType(List::class.java, Images::class.java)
-        val json = loadJSONFormAssets("images") ?: ""
-        val moshi = Moshi.Builder().build()
-        val jsonAdapter: JsonAdapter<List<Images>> = moshi.adapter(resultType)
-        return jsonAdapter.fromJson(json) ?: listOf()
-    }
-
-    fun <T: Any> getObjectListFromJSON(objectType: T, fileName: String): List<T> {
-        val resultType = Types.newParameterizedType(List::class.java, objectType::class.java)
+    fun <T : Any> getObjectListFromJSON(objectType: Class<T>, fileName: String): List<T> {
+        val resultType = Types.newParameterizedType(List::class.java, objectType)
         val json = loadJSONFormAssets(fileName) ?: ""
-        val moshi = Moshi.Builder().build()
+        val moshi = Moshi.Builder().add(com.squareup.moshi.KotlinJsonAdapterFactory()).build()
         val jsonAdapter: JsonAdapter<List<T>> = moshi.adapter(resultType)
         return jsonAdapter.fromJson(json) ?: listOf()
     }
-
 }

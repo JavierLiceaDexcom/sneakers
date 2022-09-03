@@ -1,7 +1,9 @@
 package com.xavidev.testessential.repository
 
 import com.xavidev.testessential.data.Response
+import com.xavidev.testessential.data.entity.Currency
 import com.xavidev.testessential.data.entity.Sneaker
+import com.xavidev.testessential.data.entity.Type
 import kotlinx.coroutines.flow.Flow
 
 interface SneakersRepository {

@@ -4,10 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.squareup.moshi.JsonClass
 import com.xavidev.testessential.data.ColorsTypeConverter
 import com.xavidev.testessential.data.SizesTypeConverter
 import java.io.Serializable
 
+@JsonClass(generateAdapter = true)
 @TypeConverters(SizesTypeConverter::class, ColorsTypeConverter::class)
 @Entity(tableName = "sneaker")
 data class Sneaker(

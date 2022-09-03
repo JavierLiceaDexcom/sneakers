@@ -62,6 +62,7 @@ dependencies {
     implementation deps.coroutines
     implementation deps.letterview
     implementation deps.picasso
+    implementation deps.moshi_kotlin
 
     //Testing libraries
     testImplementation deps.junit

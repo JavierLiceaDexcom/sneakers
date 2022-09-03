@@ -1,0 +1,16 @@
+[
+  {
+    "id": "0d4f9eca-2a3f-11ed-a261-0242ac120002",
+    "name": "Mexican Peso",
+    "region": "MX",
+    "icon": "https://cdn.pixabay.com/photo/2012/04/10/23/24/mexico-26989__480.png",
+    "abbreviation": "MXN"
+  },
+  {
+    "id": "0d4f9fce-2a3f-11ed-a261-0242ac120002",
+    "name": "Dollar",
+    "region": "US",
+    "icon": "https://eabc-online.com/wp-content/uploads/2021/11/Flags.jpg",
+    "abbreviation": "USD"
+  }
+]
