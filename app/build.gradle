@@ -63,7 +63,7 @@ dependencies {
     implementation deps.letterview
     implementation deps.picasso
     implementation deps.moshi_kotlin
-
+    implementation deps.gson
     //Testing libraries
     testImplementation deps.junit
     //testImplementation deps.jupiter

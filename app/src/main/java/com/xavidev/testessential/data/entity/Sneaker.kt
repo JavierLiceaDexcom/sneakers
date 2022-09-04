@@ -10,7 +10,6 @@ import com.xavidev.testessential.data.SizesTypeConverter
 import java.io.Serializable
 
 @JsonClass(generateAdapter = true)
-@TypeConverters(SizesTypeConverter::class, ColorsTypeConverter::class)
 @Entity(tableName = "sneaker")
 data class Sneaker(
     @PrimaryKey
@@ -26,7 +25,7 @@ data class Sneaker(
     val currencyId: String,
     @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
     val favorite: Boolean = false
-): Serializable {
+) : Serializable {
     fun List<Sneaker>.filterWithPercentage(percentage: Int = 0): List<Sneaker> =
         this.filter { it.discountPercentage == percentage }.sortedBy { it.id }
 
@@ -43,8 +42,9 @@ data class Sneaker(
 
     fun Sneaker.getPriceByCurrency(currency: Currency): Double {
         return when (currency.name) {
-            CurrencyType.USD -> price
-            CurrencyType.MXN -> price * 20.2
+            CurrencyType.USD.name -> price
+            CurrencyType.MXN.name -> price * 20.2
+            else -> price
         }
     }
 }

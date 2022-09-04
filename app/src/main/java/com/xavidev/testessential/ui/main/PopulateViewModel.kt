@@ -53,14 +53,14 @@ class PopulateViewModel(
 
     fun populateDatabase() = viewModelScope.launch {
         // TODO: Fix this
-        //val sneakerTypes = JsonParserUtils.getObjectListFromJSON(Type::class.java, "types")
-        //val currencies = JsonParserUtils.getObjectListFromJSON(Currency::class.java, "currency")
+        val sneakerTypes = JsonParserUtils.getObjectListFromJSON(Type::class.java, "types")
+        val currencies = JsonParserUtils.getObjectListFromJSON(Currency::class.java, "currency")
         val brands = JsonParserUtils.getObjectListFromJSON(Brand::class.java, "brands")
         val images = JsonParserUtils.getObjectListFromJSON(Images::class.java, "images")
         val sneakers = JsonParserUtils.getObjectListFromJSON(Sneaker::class.java, "sneakers")
 
-        //insertSneakerCurrencies(currencies)
-        //insertSneakerTypes(sneakerTypes)
+        insertSneakerCurrencies(currencies)
+        insertSneakerTypes(sneakerTypes)
         insertBrands(brands)
         insertSneakers(sneakers)
         insertImages(images)

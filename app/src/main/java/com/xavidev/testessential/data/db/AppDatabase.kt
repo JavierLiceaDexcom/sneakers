@@ -2,12 +2,17 @@ package com.xavidev.testessential.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.xavidev.testessential.data.ColorsTypeConverter
+import com.xavidev.testessential.data.SizesTypeConverter
 import com.xavidev.testessential.data.dao.*
 import com.xavidev.testessential.data.entity.*
 
 const val DB_NAME = "sneakers_db"
 const val DB_VERSION = 1
 const val DB_EXPORT_SCHEMA = false
+
+@TypeConverters(SizesTypeConverter::class, ColorsTypeConverter::class)
 
 @Database(
     version = DB_VERSION,

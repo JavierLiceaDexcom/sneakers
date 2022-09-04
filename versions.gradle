@@ -29,6 +29,7 @@ versions.mockito = ".7.0"
 versions.mockk = "1.12.7"
 versions.picasso = "2.8"
 versions.moshi_kotlin = "1.12.0"
+versions.gson= "2.9.0"
 
 //Dependencies
 deps.core_ktx = "androidx.core:core-ktx:$versions.core_ktx"
@@ -61,6 +62,7 @@ deps.mockito_kotlin = "org.mockito.kotlin:mockito-kotlin:$versions.mockito"
 deps.mockk = "io.mockk:mockk:$versions.mockk"
 deps.picasso = "com.squareup.picasso:picasso:$versions.picasso"
 deps.moshi_kotlin = "com.squareup.moshi:moshi-kotlin:$versions.moshi_kotlin"
+deps.gson = "com.google.code.gson:gson:$versions.gson"
 
 //Build versions
 build_versions.compileSdk = 32

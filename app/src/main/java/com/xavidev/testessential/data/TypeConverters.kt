@@ -1,58 +1,26 @@
 package com.xavidev.testessential.data
 
 import androidx.room.TypeConverter
-import com.xavidev.testessential.data.entity.CurrencyType
-import com.xavidev.testessential.data.entity.SneakerType
-
-object SneakerTypeConverter {
-    @TypeConverter
-    @JvmStatic
-    fun toSneakerType(value: String) = enumValueOf<SneakerType>(value)
-
-    @TypeConverter
-    @JvmStatic
-    fun fromSneakerType(value: SneakerType) = value.name
-}
-
-object CurrencyTypeConverter {
-    @TypeConverter
-    @JvmStatic
-    fun toCurrencyType(value: String) = enumValueOf<CurrencyType>(value)
-
-    @TypeConverter
-    @JvmStatic
-    fun fromCurrencyType(value: CurrencyType) = value.name
-}
+import com.google.gson.Gson
 
 object SizesTypeConverter {
     @TypeConverter
     @JvmStatic
-    fun toSizesType(value: String): MutableList<Double> =
-        value.split(", ").map { it.toDouble() }.toMutableList()
+    fun toSizesType(value: String): List<Double> =
+        Gson().fromJson(value, Array<Double>::class.java).toList()
 
     @TypeConverter
     @JvmStatic
-    fun fromSizesType(value: List<Double>): String = value.map { it }.joinToString { ", " }
+    fun fromSizesType(value: List<Double>): String = Gson().toJson(value)
 }
 
 object ColorsTypeConverter {
     @TypeConverter
     @JvmStatic
-    fun toColorsType(value: String): MutableList<String> =
-        value.split(", ").map { it }.toMutableList()
+    fun jsonToList(value: String): List<String> =
+        Gson().fromJson(value, Array<String>::class.java).toList()
 
     @TypeConverter
     @JvmStatic
-    fun fromColorsType(value: List<String>): String = value.map { it }.joinToString { ", " }
-}
-
-object ImagesTypeConverter {
-    @TypeConverter
-    @JvmStatic
-    fun toImagessType(value: String): MutableList<String> =
-        value.split(", ").map { it }.toMutableList()
-
-    @TypeConverter
-    @JvmStatic
-    fun fromImagesType(value: List<String>): String = value.map { it }.joinToString { ", " }
+    fun listToJson(value: List<String>): String = Gson().toJson(value)
 }
