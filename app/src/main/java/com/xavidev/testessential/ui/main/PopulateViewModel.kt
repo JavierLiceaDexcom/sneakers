@@ -18,41 +18,25 @@ class PopulateViewModel(
 
     private fun insertBrands(brands: List<Brand>) = viewModelScope.launch {
         populateRepository.insertBrands(brands).flowOn(Dispatchers.IO)
-            .collect { response ->
-
-            }
     }
 
     private fun insertImages(images: List<Images>) = viewModelScope.launch {
         populateRepository.insertImages(images).flowOn(Dispatchers.IO)
-            .collect { response ->
-
-            }
     }
 
     private fun insertSneakers(sneakers: List<Sneaker>) = viewModelScope.launch {
         populateRepository.populateSneakersTable(sneakers).flowOn(Dispatchers.IO)
-            .collect { response ->
-
-            }
     }
 
     private fun insertSneakerTypes(types: List<Type>) = viewModelScope.launch {
         populateRepository.populateTypesTable(types).flowOn(Dispatchers.IO)
-            .collect { response ->
-
-            }
     }
 
     private fun insertSneakerCurrencies(currencies: List<Currency>) = viewModelScope.launch {
         populateRepository.populateCurrenciesTable(currencies).flowOn(Dispatchers.IO)
-            .collect { response ->
-
-            }
     }
 
     fun populateDatabase() = viewModelScope.launch {
-        // TODO: Fix this
         val sneakerTypes = JsonParserUtils.getObjectListFromJSON(Type::class.java, "types")
         val currencies = JsonParserUtils.getObjectListFromJSON(Currency::class.java, "currency")
         val brands = JsonParserUtils.getObjectListFromJSON(Brand::class.java, "brands")

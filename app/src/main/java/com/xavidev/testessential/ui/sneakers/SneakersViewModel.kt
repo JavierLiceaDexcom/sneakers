@@ -10,7 +10,6 @@ import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.repository.BrandsRepository
 import com.xavidev.testessential.repository.SneakersRepository
 import com.xavidev.testessential.resources.SneakersResources
-import com.xavidev.testessential.utils.App
 import com.xavidev.testessential.utils.NavigationViewModel
 import com.xavidev.testessential.utils.startNewActivity
 import kotlinx.coroutines.Dispatchers
@@ -22,35 +21,38 @@ class SneakersViewModel(
     private val brandsRepository: BrandsRepository
 ) : NavigationViewModel() {
 
+    private val _sneakersListLoading = MutableLiveData(false)
+    val sneakersListLoading: LiveData<Boolean> get() = _sneakersListLoading
+
+    private val _sneakersList = MutableLiveData<List<Sneaker>>()
+    val sneakersList: LiveData<List<Sneaker>> get() = _sneakersList
+
+    private val _sneakerLoading = MutableLiveData(false)
+    val sneakerLoading: LiveData<Boolean> get() = _sneakerLoading
+
     private val _sneaker = MutableLiveData<Sneaker>()
     val sneaker: LiveData<Sneaker> get() = _sneaker
 
+    private val _brandsListLoading = MutableLiveData(false)
+    val brandsListLoading: LiveData<Boolean> get() = _brandsListLoading
+
+    private val _brandsList = MutableLiveData<List<Brand>>()
+    val brandsList: LiveData<List<Brand>> get() = _brandsList
+
     fun setSneaker(sneaker: Sneaker) {
         _sneaker.value = sneaker
-    }
-
-    fun onBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
-        fragment.startNewActivity(targetActivity = destiny, finish = false)
-    }
-
-    fun insertSneakers(sneakers: List<Sneaker>) = viewModelScope.launch {
-        sneakersRepository.populateSneakersTable(sneakers).flowOn(Dispatchers.IO)
-            .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> {}
-                    State.SUCCESS -> {}
-                    State.ERROR -> {}
-                }
-            }
     }
 
     fun getAllSneakers() = viewModelScope.launch {
         sneakersRepository.getAllSneakers().flowOn(Dispatchers.IO)
             .collect { response ->
                 when (response.status!!) {
-                    State.LOADING -> {}
-                    State.SUCCESS -> {}
-                    State.ERROR -> {}
+                    State.LOADING -> _sneakersListLoading.postValue(true)
+                    State.SUCCESS -> {
+                        _sneakersListLoading.postValue(false)
+                        _sneakersList.postValue(response.data ?: listOf())
+                    }
+                    State.ERROR -> _sneakersListLoading.postValue(false)
                 }
             }
     }
@@ -59,9 +61,12 @@ class SneakersViewModel(
         sneakersRepository.getSneakersByBrand(brandId).flowOn(Dispatchers.IO)
             .collect { response ->
                 when (response.status!!) {
-                    State.LOADING -> {}
-                    State.SUCCESS -> {}
-                    State.ERROR -> {}
+                    State.LOADING -> _sneakersListLoading.postValue(true)
+                    State.SUCCESS -> {
+                        _sneakersListLoading.postValue(false)
+                        _sneakersList.postValue(response.data ?: listOf())
+                    }
+                    State.ERROR -> _sneakersListLoading.postValue(false)
                 }
             }
     }
@@ -70,9 +75,12 @@ class SneakersViewModel(
         sneakersRepository.getSneakersByType(typeId).flowOn(Dispatchers.IO)
             .collect { response ->
                 when (response.status!!) {
-                    State.LOADING -> {}
-                    State.SUCCESS -> {}
-                    State.ERROR -> {}
+                    State.LOADING -> _sneakersListLoading.postValue(true)
+                    State.SUCCESS -> {
+                        _sneakersListLoading.postValue(false)
+                        _sneakersList.postValue(response.data ?: listOf())
+                    }
+                    State.ERROR -> _sneakersListLoading.postValue(false)
                 }
             }
     }
@@ -81,20 +89,12 @@ class SneakersViewModel(
         sneakersRepository.getSneaker(sneakerId).flowOn(Dispatchers.IO)
             .collect { response ->
                 when (response.status!!) {
-                    State.LOADING -> {}
-                    State.SUCCESS -> {}
-                    State.ERROR -> {}
-                }
-            }
-    }
-
-    fun insertBrands(brands: List<Brand>) = viewModelScope.launch {
-        brandsRepository.insertBrands(brands).flowOn(Dispatchers.IO)
-            .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> {}
-                    State.SUCCESS -> {}
-                    State.ERROR -> {}
+                    State.LOADING -> _sneakerLoading.postValue(true)
+                    State.SUCCESS -> {
+                        _sneakerLoading.postValue(false)
+                        response.data?.let { sneaker -> _sneaker.postValue(sneaker) }
+                    }
+                    State.ERROR -> _sneakerLoading.postValue(false)
                 }
             }
     }
@@ -103,19 +103,32 @@ class SneakersViewModel(
         brandsRepository.getBrands().flowOn(Dispatchers.IO)
             .collect { response ->
                 when (response.status!!) {
-                    State.LOADING -> {}
-                    State.SUCCESS -> {}
-                    State.ERROR -> {}
+                    State.LOADING -> _brandsListLoading.postValue(true)
+                    State.SUCCESS -> {
+                        _brandsListLoading.postValue(false)
+                        response.data?.let { brands -> _brandsList.postValue(brands) }
+                    }
+                    State.ERROR -> _brandsListLoading.postValue(false)
                 }
             }
+    }
+
+    fun onBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
+        fragment.startNewActivity(targetActivity = destiny, finish = false)
     }
 
     class Factory : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SneakersViewModel::class.java)) {
-                return SneakersResources(
-                    DatabaseBuilder.instance.database.sneakerDao(),
-                    DatabaseBuilder.instance.database.brandsDao(),
+                return SneakersViewModel(
+                    SneakersResources(
+                        DatabaseBuilder.instance.database.sneakerDao(),
+                        DatabaseBuilder.instance.database.brandsDao(),
+                    ),
+                    SneakersResources(
+                        DatabaseBuilder.instance.database.sneakerDao(),
+                        DatabaseBuilder.instance.database.brandsDao(),
+                    )
                 ) as T
             }
             throw Exception("Class not supported")

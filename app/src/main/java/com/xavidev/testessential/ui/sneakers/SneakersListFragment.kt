@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,22 +26,21 @@ class SneakersListFragment : Fragment() {
     private val sneakersAdapter = SneakersAdapter(
         object : (Sneaker, Int) -> Unit {
             override fun invoke(sneaker: Sneaker, pos: Int) {
-                val bundle = bundleOf("sneaker" to sneaker)
+                viewModel.setSneaker(sneaker)
                 viewModel.navigateTo(
                     view!!,
-                    R.id.action_sneakersListFragment_to_sneakerDetailDialogFragment,
-                    bundle
+                    R.id.action_sneakersListFragment_to_sneakerDetailDialogFragment
                 )
             }
         },
         object : (Sneaker, Int) -> Unit {
             override fun invoke(sneaker: Sneaker, pos: Int) {
-                // Code here
+                // Code here for favorite
             }
         },
         object : (Sneaker, Int) -> Unit {
             override fun invoke(sneaker: Sneaker, pos: Int) {
-                // Code here
+                // Code here to add to the cart
             }
         },
     )
@@ -62,18 +60,36 @@ class SneakersListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
         }
 
+        getSneakersBrands()
+        getSneakersList()
+    }
+
+    private fun getSneakersList() {
+        viewModel.getAllSneakers()
         binding.recyclerSneakers.apply {
             adapter = sneakersAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
+        viewModel.sneakersList.observe(viewLifecycleOwner) { sneakers ->
+            sneakersAdapter.submitList(sneakers)
+        }
+    }
+
+    private fun getSneakersBrands() {
+        viewModel.getBrands()
         binding.recyclerSneakerBrands.apply {
             adapter = brandsAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        }
+
+        viewModel.brandsList.observe(viewLifecycleOwner) { brands ->
+            brandsAdapter.submitList(brands)
         }
     }
 }
