@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
 import com.xavidev.testessential.data.entity.Brand
-import com.xavidev.testessential.data.entity.Sneaker
+import com.xavidev.testessential.data.entity.SneakerComplete
+import com.xavidev.testessential.data.entity.toCart
 import com.xavidev.testessential.databinding.FragmentSneakersListBinding
 import com.xavidev.testessential.ui.sneakers.adapters.BrandsAdapter
 import com.xavidev.testessential.ui.sneakers.adapters.SneakersAdapter
+import com.xavidev.testessential.utils.toast
 
 class SneakersListFragment : Fragment() {
 
@@ -24,26 +26,40 @@ class SneakersListFragment : Fragment() {
     private val viewModel: SneakersViewModel by activityViewModels { SneakersViewModel.Factory() }
 
     private val sneakersAdapter = SneakersAdapter(
-        object : (Sneaker, Int) -> Unit {
-            override fun invoke(sneaker: Sneaker, pos: Int) {
-                viewModel.setSneaker(sneaker)
+        object : (SneakerComplete, Int) -> Unit {
+            override fun invoke(sneaker: SneakerComplete, pos: Int) {
+                //viewModel.setSneaker(sneaker)
                 viewModel.navigateTo(
                     view!!,
                     R.id.action_sneakersListFragment_to_sneakerDetailDialogFragment
                 )
             }
         },
-        object : (Sneaker, Int) -> Unit {
-            override fun invoke(sneaker: Sneaker, pos: Int) {
-                // Code here for favorite
+        object : (SneakerComplete, Int) -> Unit {
+            override fun invoke(sneaker: SneakerComplete, pos: Int) {
+                setSneakerFavorite(sneaker, pos)
             }
         },
-        object : (Sneaker, Int) -> Unit {
-            override fun invoke(sneaker: Sneaker, pos: Int) {
-                // Code here to add to the cart
+        object : (SneakerComplete, Int) -> Unit {
+            override fun invoke(sneaker: SneakerComplete, pos: Int) {
+                viewModel.addSneakerToCart(sneaker.toCart())
             }
         },
     )
+
+    private fun setSneakerFavorite(sneaker: SneakerComplete, pos: Int) {
+        sneakersAdapter.updateItem(sneaker, pos)
+        val value = sneaker.favorite.not()
+        sneaker.favorite = value
+        viewModel.setFavorite(sneaker.id, value)
+        showFavoriteUpdateToast(value)
+    }
+
+    private fun showFavoriteUpdateToast(value: Boolean) {
+        val message =
+            if (value) getString(R.string.text_favorites_added) else getString(R.string.text_favorite_removed)
+        requireActivity().toast(message)
+    }
 
     private val brandsAdapter = BrandsAdapter(object : (Brand, Int) -> Unit {
         override fun invoke(brand: Brand, pos: Int) {
@@ -69,7 +85,8 @@ class SneakersListFragment : Fragment() {
     }
 
     private fun getSneakersList() {
-        viewModel.getAllSneakers()
+        //viewModel.getAllSneakers()
+        viewModel.getAllSneakersComplete()
         binding.recyclerSneakers.apply {
             adapter = sneakersAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)

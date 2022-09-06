@@ -1,14 +1,14 @@
 package com.xavidev.testessential.ui.main
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.xavidev.testessential.data.State
 import com.xavidev.testessential.data.db.DatabaseBuilder
 import com.xavidev.testessential.data.entity.*
 import com.xavidev.testessential.repository.PopulateRepository
 import com.xavidev.testessential.resources.PopulateResources
 import com.xavidev.testessential.utils.JsonParserUtils
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
@@ -16,24 +16,40 @@ class PopulateViewModel(
     private val populateRepository: PopulateRepository,
 ) : ViewModel() {
 
+    private val _sneakersCount = MutableLiveData<Int>()
+    val sneakersCount: LiveData<Int> get() = _sneakersCount
+
+    fun getSneakersCount() = viewModelScope.launch {
+        populateRepository.getSneakersCount().flowOn(Dispatchers.IO)
+            .collect { response ->
+                when (response.status!!) {
+                    State.LOADING -> {}
+                    State.SUCCESS -> {
+                        response.data?.let { count -> _sneakersCount.postValue(count) }
+                    }
+                    State.ERROR -> {}
+                }
+            }
+    }
+
     private fun insertBrands(brands: List<Brand>) = viewModelScope.launch {
-        populateRepository.insertBrands(brands).flowOn(Dispatchers.IO)
+        populateRepository.insertBrands(brands).flowOn(Dispatchers.IO).collect()
     }
 
     private fun insertImages(images: List<Images>) = viewModelScope.launch {
-        populateRepository.insertImages(images).flowOn(Dispatchers.IO)
+        populateRepository.insertImages(images).flowOn(Dispatchers.IO).collect()
     }
 
     private fun insertSneakers(sneakers: List<Sneaker>) = viewModelScope.launch {
-        populateRepository.populateSneakersTable(sneakers).flowOn(Dispatchers.IO)
+        populateRepository.populateSneakersTable(sneakers).flowOn(Dispatchers.IO).collect()
     }
 
     private fun insertSneakerTypes(types: List<Type>) = viewModelScope.launch {
-        populateRepository.populateTypesTable(types).flowOn(Dispatchers.IO)
+        populateRepository.populateTypesTable(types).flowOn(Dispatchers.IO).collect()
     }
 
     private fun insertSneakerCurrencies(currencies: List<Currency>) = viewModelScope.launch {
-        populateRepository.populateCurrenciesTable(currencies).flowOn(Dispatchers.IO)
+        populateRepository.populateCurrenciesTable(currencies).flowOn(Dispatchers.IO).collect()
     }
 
     fun populateDatabase() = viewModelScope.launch {

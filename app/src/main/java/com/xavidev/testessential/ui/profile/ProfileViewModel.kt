@@ -11,7 +11,6 @@ import com.xavidev.testessential.data.db.DatabaseBuilder
 import com.xavidev.testessential.data.entity.User
 import com.xavidev.testessential.repository.UserRepository
 import com.xavidev.testessential.resources.UserResources
-import com.xavidev.testessential.utils.App
 import com.xavidev.testessential.utils.NavigationViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -64,7 +63,9 @@ class ProfileViewModel(private val userRepository: UserRepository) : NavigationV
     class Factory : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
-                return UserResources(DatabaseBuilder.instance.database.userDao()) as T
+                return ProfileViewModel(
+                    UserResources(DatabaseBuilder.instance.database.userDao())
+                ) as T
             }
             throw Exception("Class not supported")
         }

@@ -131,4 +131,6 @@
     <string name="text_pick_it_up_description">Pick it up in our stores</string>
     <string name="text_free">Free</string>
     <string name="text_confirm_order">Confirm order</string>
+    <string name="text_favorites_added">Sneaker added to favorites</string>
+    <string name="text_favorite_removed">Sneaker removed from favorites</string>
 </resources>

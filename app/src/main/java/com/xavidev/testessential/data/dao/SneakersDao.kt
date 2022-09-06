@@ -3,6 +3,7 @@ package com.xavidev.testessential.data.dao
 import androidx.room.*
 import com.xavidev.testessential.data.entity.Currency
 import com.xavidev.testessential.data.entity.Sneaker
+import com.xavidev.testessential.data.entity.SneakerComplete
 import com.xavidev.testessential.data.entity.Type
 
 @Dao
@@ -26,6 +27,15 @@ interface SneakersDao {
     @Query("SELECT * FROM sneaker")
     suspend fun getAllSneakers(): List<Sneaker>
 
+    @Query("SELECT sneaker.id, sneaker.model, sneaker.colors, sneaker.thumbnail, sneaker.price, " +
+            "sneaker.discount_percentage, sneaker.favorite, brand.name AS brand, type.name AS type, currency.abbreviation AS currency " +
+            "FROM sneaker INNER JOIN brand ON sneaker.brand_id = brand.id INNER JOIN type ON sneaker.type_id = type.id " +
+            "INNER JOIN currency ON sneaker.currency_id = currency.id")
+    suspend fun getAllCompleteSneakers(): List<SneakerComplete>
+
+    @Query("SELECT count(*) FROM sneaker")
+    suspend fun getSneakersCount(): Int
+
     @Query("SELECT * FROM sneaker WHERE brand_id =:id")
     suspend fun getSneakersByBrand(id: String): List<Sneaker>
 
@@ -34,6 +44,9 @@ interface SneakersDao {
 
     @Query("SELECT * FROM sneaker WHERE id =:id")
     suspend fun getSneaker(id: String): Sneaker
+
+    @Query("UPDATE sneaker SET favorite =:value WHERE id =:id")
+    suspend fun updateFavoriteValue(id: String, value: Boolean): Int
 
     // Queries for currency
     @Transaction

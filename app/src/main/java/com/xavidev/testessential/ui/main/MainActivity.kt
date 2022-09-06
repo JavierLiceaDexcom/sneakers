@@ -3,11 +3,11 @@ package com.xavidev.testessential.ui.main
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.xavidev.testessential.R
 import com.xavidev.testessential.databinding.ActivityMainBinding
+import com.xavidev.testessential.utils.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigation.setupWithNavController(navController)
 
@@ -29,6 +30,11 @@ class MainActivity : AppCompatActivity() {
         badge.isVisible = true
         badge.number = 99
 
-        viewModel.populateDatabase()
+        viewModel.getSneakersCount()
+        viewModel.sneakersCount.observe(this) { count ->
+            if (count == 0) {
+                viewModel.populateDatabase()
+            }
+        }
     }
 }

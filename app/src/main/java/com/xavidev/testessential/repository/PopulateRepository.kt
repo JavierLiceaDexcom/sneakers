@@ -5,6 +5,7 @@ import com.xavidev.testessential.data.entity.*
 import kotlinx.coroutines.flow.Flow
 
 interface PopulateRepository {
+    suspend fun getSneakersCount(): Flow<Response<Int>>
     suspend fun insertBrands(brands: List<Brand>): Flow<Response<Unit>>
     suspend fun insertImages(images: List<Images>): Flow<Response<Unit>>
     suspend fun populateSneakersTable(sneakers: List<Sneaker>): Flow<Response<Unit>>

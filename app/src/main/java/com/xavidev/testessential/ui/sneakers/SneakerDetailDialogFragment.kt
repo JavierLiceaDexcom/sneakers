@@ -25,7 +25,7 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
         FragmentSneakerDetailDialogBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SneakersViewModel by viewModels<SneakersViewModel>()
+    private val viewModel: SneakersViewModel by viewModels { SneakersViewModel.Factory() }
     private lateinit var carouselAdapter: SneakerCarouselAdapter
     private var currentPosition = 0
     private val carouselUtils = SneakerCarouselUtils()
@@ -53,22 +53,21 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bundle = arguments?.getSerializable("sneaker") as Sneaker
-        viewModel.setSneaker(bundle)
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
-            sneaker = bundle
         }
 
         binding.btnBuyNow.setOnClickListener {
             viewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
         }
 
-        setCarouselAdapter(bundle)
-        setSizesAdapter(bundle)
-        setColorsAdapter(bundle)
+        viewModel.sneaker.observe(viewLifecycleOwner) { sneaker ->
+            setCarouselAdapter(sneaker)
+            setSizesAdapter(sneaker)
+            setColorsAdapter(sneaker)
+        }
         setupListeners()
     }
 

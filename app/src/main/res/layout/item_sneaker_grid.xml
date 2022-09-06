@@ -11,7 +11,7 @@
 
         <variable
             name="sneaker"
-            type="com.xavidev.testessential.data.entity.Sneaker" />
+            type="com.xavidev.testessential.data.entity.SneakerComplete" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -31,25 +31,25 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="24dp">
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="12dp">
 
             <ImageView
                 android:id="@+id/imgAddFavorite"
+                style="@style/ClickableImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/ClickableImageView"
                 android:contentDescription="@string/text_add_to_favorites"
                 android:padding="4dp"
-                android:src="@drawable/ic_favorite_outlined"
+                android:src="@{sneaker.favorite ? @drawable/ic_favorite_filled : @drawable/ic_favorite_outlined}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imgAddCart"
+                style="@style/ClickableImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/ClickableImageView"
                 android:contentDescription="@string/text_add_to_cart"
                 android:padding="4dp"
                 android:src="@drawable/ic_add"
@@ -73,8 +73,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{sneaker.model}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="@{sneaker.brand}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2"
@@ -82,10 +82,13 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="@{sneaker.model}"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +96,7 @@
                 tools:text="Forum 84" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/rv_colors"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -109,11 +112,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="@{@string/text_price_currency(sneaker.price, sneaker.currency)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/rv_colors"
                 tools:text="$2,600.00 MXN" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

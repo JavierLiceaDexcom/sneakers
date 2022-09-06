@@ -1,13 +1,9 @@
 package com.xavidev.testessential.data.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
+import androidx.room.*
 import com.squareup.moshi.JsonClass
-import com.xavidev.testessential.data.ColorsTypeConverter
-import com.xavidev.testessential.data.SizesTypeConverter
 import java.io.Serializable
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "sneaker")
@@ -20,11 +16,11 @@ data class Sneaker(
     @ColumnInfo(name = "type_id") val typeId: String,
     val colors: List<String>,
     val thumbnail: String,
-    val photosId: String,
+    @ColumnInfo(name = "photos_id") val photosId: String,
     val price: Double,
-    val currencyId: String,
+    @ColumnInfo(name = "currency_id") val currencyId: String,
     @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
-    val favorite: Boolean = false
+    var favorite: Boolean = false
 ) : Serializable {
     fun List<Sneaker>.filterWithPercentage(percentage: Int = 0): List<Sneaker> =
         this.filter { it.discountPercentage == percentage }.sortedBy { it.id }
@@ -47,4 +43,27 @@ data class Sneaker(
             else -> price
         }
     }
+}
+
+data class SneakerComplete(
+    val id: String,
+    val model: String,
+    val brand: String,
+    val type: String,
+    val colors: List<String>,
+    val thumbnail: String,
+    val price: Double,
+    val currency: String,
+    @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
+    var favorite: Boolean = false
+)
+
+fun SneakerComplete.toCart(): Cart {
+    return Cart(
+        id = UUID.randomUUID().toString(),
+        sneakerId = id,
+        purchaseDate = Date().time,
+        sneakerThumbnail = thumbnail,
+        quantity = 1
+    )
 }

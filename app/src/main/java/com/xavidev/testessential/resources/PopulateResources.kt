@@ -15,6 +15,15 @@ class PopulateResources(
     private val sneakersDao: SneakersDao,
     private val imagesDao: ImagesDao,
 ) : PopulateRepository {
+    override suspend fun getSneakersCount(): Flow<Response<Int>> = flow {
+        emit(Response.Loading())
+        try {
+            val result = sneakersDao.getSneakersCount()
+            emit(Response.Success(result))
+        } catch (ex: Exception) {
+            emit(Response.Error(ex.localizedMessage))
+        }
+    }
 
     override suspend fun insertBrands(brands: List<Brand>): Flow<Response<Unit>> = flow {
         emit(Response.Loading())
