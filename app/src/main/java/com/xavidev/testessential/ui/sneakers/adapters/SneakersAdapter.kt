@@ -3,10 +3,12 @@ package com.xavidev.testessential.ui.sneakers.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.xavidev.testessential.data.entity.SneakerComplete
 import com.xavidev.testessential.databinding.ItemSneakerGridBinding
+import com.xavidev.testessential.utils.App
 
 class SneakersAdapter(
     private val itemClickListener: (SneakerComplete, Int) -> Unit,
@@ -42,7 +44,20 @@ class SneakersAdapter(
                     this@ViewHolder.adapterPosition
                 )
             }
+            loadColors(sneakerItem.colors, rvColors)
             executePendingBindings()
+        }
+
+        private fun loadColors(colors: List<String>, rvColors: RecyclerView) {
+            val colorsAdapter = SneakerColorsAdapter(object : (String, Int) -> Unit {
+                override fun invoke(p1: String, p2: Int) {}
+            })
+            val linearLayoutManager = LinearLayoutManager(App.getContext(), LinearLayoutManager.HORIZONTAL, false)
+            rvColors.apply {
+                layoutManager = linearLayoutManager
+                adapter = colorsAdapter
+            }
+            colorsAdapter.submitList(colors)
         }
     }
 
