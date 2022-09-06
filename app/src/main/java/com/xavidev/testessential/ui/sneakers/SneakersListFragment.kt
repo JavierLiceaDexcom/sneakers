@@ -28,7 +28,7 @@ class SneakersListFragment : Fragment() {
     private val sneakersAdapter = SneakersAdapter(
         object : (SneakerComplete, Int) -> Unit {
             override fun invoke(sneaker: SneakerComplete, pos: Int) {
-                //viewModel.setSneaker(sneaker)
+                viewModel.setSneakerComplete(sneaker)
                 viewModel.navigateTo(
                     view!!,
                     R.id.action_sneakersListFragment_to_sneakerDetailDialogFragment
@@ -42,28 +42,15 @@ class SneakersListFragment : Fragment() {
         },
         object : (SneakerComplete, Int) -> Unit {
             override fun invoke(sneaker: SneakerComplete, pos: Int) {
+                requireActivity().toast(getString(R.string.text_sneaker_added_to_cart))
                 viewModel.addSneakerToCart(sneaker.toCart())
             }
         },
     )
 
-    private fun setSneakerFavorite(sneaker: SneakerComplete, pos: Int) {
-        sneakersAdapter.updateItem(sneaker, pos)
-        val value = sneaker.favorite.not()
-        sneaker.favorite = value
-        viewModel.setFavorite(sneaker.id, value)
-        showFavoriteUpdateToast(value)
-    }
-
-    private fun showFavoriteUpdateToast(value: Boolean) {
-        val message =
-            if (value) getString(R.string.text_favorites_added) else getString(R.string.text_favorite_removed)
-        requireActivity().toast(message)
-    }
-
     private val brandsAdapter = BrandsAdapter(object : (Brand, Int) -> Unit {
         override fun invoke(brand: Brand, pos: Int) {
-            brand.selected = !brand.selected
+            viewModel.getSneakersByBrand(brand.id)
         }
     })
 
@@ -82,10 +69,15 @@ class SneakersListFragment : Fragment() {
 
         getSneakersBrands()
         getSneakersList()
+
+        viewModel.clearResults.observe(viewLifecycleOwner) { clear ->
+            if (!clear) {
+                brandsAdapter.clearSelectedItem()
+            }
+        }
     }
 
     private fun getSneakersList() {
-        //viewModel.getAllSneakers()
         viewModel.getAllSneakersComplete()
         binding.recyclerSneakers.apply {
             adapter = sneakersAdapter
@@ -108,5 +100,19 @@ class SneakersListFragment : Fragment() {
         viewModel.brandsList.observe(viewLifecycleOwner) { brands ->
             brandsAdapter.submitList(brands)
         }
+    }
+
+    private fun setSneakerFavorite(sneaker: SneakerComplete, pos: Int) {
+        sneakersAdapter.updateItem(sneaker, pos)
+        val value = sneaker.favorite.not()
+        sneaker.favorite = value
+        viewModel.setFavorite(sneaker.id, value)
+        showFavoriteUpdateToast(value)
+    }
+
+    private fun showFavoriteUpdateToast(value: Boolean) {
+        val message =
+            if (value) getString(R.string.text_favorites_added) else getString(R.string.text_favorite_removed)
+        requireActivity().toast(message)
     }
 }

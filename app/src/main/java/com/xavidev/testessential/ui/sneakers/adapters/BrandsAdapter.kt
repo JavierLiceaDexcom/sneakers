@@ -5,13 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.xavidev.testessential.R
 import com.xavidev.testessential.data.entity.Brand
 import com.xavidev.testessential.databinding.ItemBrandListBinding
+import com.xavidev.testessential.utils.App
 
 class BrandsAdapter(
     private val itemClickListener: (Brand, Int) -> Unit
 ) :
     ListAdapter<Brand, BrandsAdapter.ViewHolder>(BrandsCallback) {
+
+    var selectedItemPos = -1
+    var lastItemSelectedPos = -1
 
     inner class ViewHolder(val binding: ItemBrandListBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -20,15 +25,26 @@ class BrandsAdapter(
             itemClickListener: (Brand, Int) -> Unit,
         ) = with(binding) {
             brand = brandItem
-            brandItemCard.setOnClickListener {
-                itemClickListener(
-                    brandItem,
-                    this@ViewHolder.adapterPosition
-                )
-                cardContainer.isCheckable = true
-                cardContainer.isChecked = brandItem.selected
+            clItemCard.setOnClickListener {
+                itemClickListener(brandItem, adapterPosition)
+                selectedItemPos = adapterPosition
+                lastItemSelectedPos = if (lastItemSelectedPos == -1)
+                    selectedItemPos
+                else {
+                    notifyItemChanged(lastItemSelectedPos)
+                    selectedItemPos
+                }
+                notifyItemChanged(selectedItemPos)
             }
             executePendingBindings()
+        }
+
+        fun checkCard() {
+            binding.cardContainer.isChecked = true
+        }
+
+        fun uncheckCard() {
+            binding.cardContainer.isChecked = false
         }
     }
 
@@ -41,6 +57,12 @@ class BrandsAdapter(
         }
     }
 
+    fun clearSelectedItem() {
+        notifyItemChanged(lastItemSelectedPos)
+        selectedItemPos = -1
+        lastItemSelectedPos = -1
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemBrandListBinding.inflate(inflater, parent, false)
@@ -48,9 +70,7 @@ class BrandsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(
-            currentList[position],
-            itemClickListener,
-        )
+        if (position == selectedItemPos) holder.checkCard() else holder.uncheckCard()
+        holder.bind(currentList[position], itemClickListener)
     }
 }

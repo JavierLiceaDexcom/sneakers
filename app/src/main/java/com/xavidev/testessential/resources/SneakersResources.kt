@@ -27,16 +27,6 @@ class SneakersResources(private val sneakersDao: SneakersDao, private val brands
             }
         }
 
-    override suspend fun getAllSneakers(): Flow<Response<List<Sneaker>>> = flow {
-        emit(Response.Loading())
-        try {
-            val response = sneakersDao.getAllSneakers()
-            emit(Response.Success(response))
-        } catch (ex: IOException) {
-            emit(Response.Error(ex.localizedMessage))
-        }
-    }
-
     override suspend fun getAllCompleteSneakers(): Flow<Response<List<SneakerComplete>>> = flow {
         emit(Response.Loading())
         try {
@@ -47,7 +37,7 @@ class SneakersResources(private val sneakersDao: SneakersDao, private val brands
         }
     }
 
-    override suspend fun getSneakersByBrand(brandId: String): Flow<Response<List<Sneaker>>> = flow {
+    override suspend fun getSneakersByBrand(brandId: String): Flow<Response<List<SneakerComplete>>> = flow {
         emit(Response.Loading())
         try {
             val response = sneakersDao.getSneakersByBrand(brandId)

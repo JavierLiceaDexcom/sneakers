@@ -15,7 +15,7 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardContainer"
+        android:id="@+id/card_container"
         style="@style/SelectableCardView"
         android:layout_width="90dp"
         android:layout_height="80dp"
@@ -23,13 +23,13 @@
         app:cardBackgroundColor="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/brandItemCard"
+            android:id="@+id/cl_item_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             style="@style/ClickableLayout">
 
             <ImageView
-                android:id="@+id/imgBrandLogo"
+                android:id="@+id/img_brand_logo"
                 android:padding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

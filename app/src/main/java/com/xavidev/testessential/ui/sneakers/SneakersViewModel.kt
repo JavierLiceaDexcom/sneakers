@@ -35,6 +35,9 @@ class SneakersViewModel(
     private val _sneakerLoading = MutableLiveData(false)
     val sneakerLoading: LiveData<Boolean> get() = _sneakerLoading
 
+    private val _sneakerComplete = MutableLiveData<SneakerComplete>()
+    val sneakerComplete: LiveData<SneakerComplete> get() = _sneakerComplete
+
     private val _sneaker = MutableLiveData<Sneaker>()
     val sneaker: LiveData<Sneaker> get() = _sneaker
 
@@ -44,22 +47,15 @@ class SneakersViewModel(
     private val _brandsList = MutableLiveData<List<Brand>>()
     val brandsList: LiveData<List<Brand>> get() = _brandsList
 
-    fun setSneaker(sneaker: Sneaker) {
-        _sneaker.value = sneaker
+    private val _clearResults = MutableLiveData(false)
+    val clearResults: LiveData<Boolean> get() = _clearResults
+
+    fun setSneakerComplete(sneaker: SneakerComplete) {
+        _sneakerComplete.value = sneaker
     }
 
-    fun getAllSneakers() = viewModelScope.launch {
-        sneakersRepository.getAllSneakers().flowOn(Dispatchers.IO)
-            .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> _sneakersListLoading.postValue(true)
-                    State.SUCCESS -> {
-                        _sneakersListLoading.postValue(false)
-                        //_sneakersList.postValue(response.data ?: listOf())
-                    }
-                    State.ERROR -> _sneakersListLoading.postValue(false)
-                }
-            }
+    private fun setClearResults(value: Boolean){
+        _clearResults.value = value
     }
 
     fun getAllSneakersComplete() = viewModelScope.launch {
@@ -69,6 +65,7 @@ class SneakersViewModel(
                 State.SUCCESS -> {
                     _sneakersListLoading.postValue(false)
                     _sneakersList.postValue(response.data ?: listOf())
+                    setClearResults(false)
                 }
                 State.ERROR -> _sneakersListLoading.postValue(false)
             }
@@ -82,7 +79,8 @@ class SneakersViewModel(
                     State.LOADING -> _sneakersListLoading.postValue(true)
                     State.SUCCESS -> {
                         _sneakersListLoading.postValue(false)
-                        //_sneakersList.postValue(response.data ?: listOf())
+                        _sneakersList.postValue(response.data ?: listOf())
+                        setClearResults(true)
                     }
                     State.ERROR -> _sneakersListLoading.postValue(false)
                 }
@@ -167,6 +165,10 @@ class SneakersViewModel(
 
     fun onBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
         fragment.startNewActivity(targetActivity = destiny, finish = false)
+    }
+
+    fun onClearResult(){
+        getAllSneakersComplete()
     }
 
     class Factory : ViewModelProvider.Factory {

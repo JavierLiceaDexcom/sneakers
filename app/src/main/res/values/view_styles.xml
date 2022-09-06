@@ -15,7 +15,7 @@
 
     <style name="SelectableCardView" parent="Widget.Material3.CardView.Outlined">
         <item name="android:focusable">true</item>
-        <item name="android:checkable">false</item>
+        <item name="android:checkable">true</item>
         <item name="android:clickable">true</item>
     </style>
 
