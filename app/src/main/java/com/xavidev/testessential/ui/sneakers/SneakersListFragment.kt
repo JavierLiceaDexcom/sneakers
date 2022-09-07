@@ -40,13 +40,7 @@ class SneakersListFragment : Fragment() {
             override fun invoke(sneaker: SneakerComplete, pos: Int) {
                 setSneakerFavorite(sneaker, pos)
             }
-        },
-        object : (SneakerComplete, Int) -> Unit {
-            override fun invoke(sneaker: SneakerComplete, pos: Int) {
-                requireActivity().toast(getString(R.string.text_sneaker_added_to_cart))
-                viewModel.addSneakerToCart(sneaker.toCart())
-            }
-        },
+        }
     )
 
     private val brandsAdapter = BrandsAdapter(object : (Brand, Int) -> Unit {

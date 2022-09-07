@@ -38,9 +38,6 @@ class SneakersViewModel(
     private val _sneaker = MutableLiveData<SneakerComplete>()
     val sneaker: LiveData<SneakerComplete> get() = _sneaker
 
-    private val _brandsListLoading = MutableLiveData(false)
-    val brandsListLoading: LiveData<Boolean> get() = _brandsListLoading
-
     private val _brandsList = MutableLiveData<List<Brand>>()
     val brandsList: LiveData<List<Brand>> get() = _brandsList
 
@@ -150,17 +147,14 @@ class SneakersViewModel(
         brandsRepository.getBrands().flowOn(Dispatchers.IO)
             .collect { response ->
                 when (response.status!!) {
-                    State.LOADING -> _brandsListLoading.postValue(true)
-                    State.SUCCESS -> {
-                        _brandsListLoading.postValue(false)
-                        response.data?.let { brands -> _brandsList.postValue(brands) }
-                    }
-                    State.ERROR -> _brandsListLoading.postValue(false)
+                    State.LOADING -> {}
+                    State.SUCCESS -> response.data?.let { brands -> _brandsList.postValue(brands) }
+                    State.ERROR -> {}
                 }
             }
     }
 
-    fun addSneakerToCart(cart: Cart) = viewModelScope.launch {
+    private fun addSneakerToCart(cart: Cart) = viewModelScope.launch {
         cartRepository.insertCartItem(cart).flowOn(Dispatchers.IO)
             .collect { response ->
                 when (response.status!!) {

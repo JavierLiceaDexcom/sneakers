@@ -13,7 +13,6 @@ import com.xavidev.testessential.utils.App
 class SneakersAdapter(
     private val itemClickListener: (SneakerComplete, Int) -> Unit,
     private val favoriteClickListener: (SneakerComplete, Int) -> Unit,
-    private val addClickListener: (SneakerComplete, Int) -> Unit,
 ) :
     ListAdapter<SneakerComplete, SneakersAdapter.ViewHolder>(SneakersCallback) {
 
@@ -23,7 +22,6 @@ class SneakersAdapter(
             sneakerItem: SneakerComplete,
             itemClickListener: (SneakerComplete, Int) -> Unit,
             favoriteClickListener: (SneakerComplete, Int) -> Unit,
-            addClickListener: (SneakerComplete, Int) -> Unit
         ) = with(binding) {
             sneaker = sneakerItem
             sneakerGridItem.setOnClickListener {
@@ -38,12 +36,6 @@ class SneakersAdapter(
                     this@ViewHolder.adapterPosition
                 )
             }
-            imgAddCart.setOnClickListener {
-                addClickListener(
-                    sneakerItem,
-                    this@ViewHolder.adapterPosition
-                )
-            }
             loadColors(sneakerItem.colors, rvColors)
             executePendingBindings()
         }
@@ -52,7 +44,8 @@ class SneakersAdapter(
             val colorsAdapter = SneakerColorsAdapter(object : (String, Int) -> Unit {
                 override fun invoke(p1: String, p2: Int) {}
             })
-            val linearLayoutManager = LinearLayoutManager(App.getContext(), LinearLayoutManager.HORIZONTAL, false)
+            val linearLayoutManager =
+                LinearLayoutManager(App.getContext(), LinearLayoutManager.HORIZONTAL, false)
             rvColors.apply {
                 layoutManager = linearLayoutManager
                 adapter = colorsAdapter
@@ -78,12 +71,7 @@ class SneakersAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(
-            currentList[position],
-            itemClickListener,
-            favoriteClickListener,
-            addClickListener
-        )
+        holder.bind(currentList[position], itemClickListener, favoriteClickListener)
     }
 
     fun updateItem(sneakerItem: SneakerComplete, position: Int) {
