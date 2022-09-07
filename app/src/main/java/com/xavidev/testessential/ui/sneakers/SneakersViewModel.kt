@@ -47,6 +47,9 @@ class SneakersViewModel(
     private val _clearResults = MutableLiveData(false)
     val clearResults: LiveData<Boolean> get() = _clearResults
 
+    private val _showEmptyState = MutableLiveData(false)
+    val showEmptyState: LiveData<Boolean> get() = _showEmptyState
+
     //Sneaker images
     private val _sneakerImages = MutableLiveData<Images>()
     val sneakerImages: LiveData<Images> get() = _sneakerImages
@@ -72,7 +75,9 @@ class SneakersViewModel(
                 State.LOADING -> _sneakersListLoading.postValue(true)
                 State.SUCCESS -> {
                     _sneakersListLoading.postValue(false)
-                    _sneakersList.postValue(response.data ?: listOf())
+                    val result = response.data ?: listOf()
+                    _showEmptyState.postValue(result.isEmpty())
+                    _sneakersList.postValue(result)
                     setClearResults(false)
                 }
                 State.ERROR -> _sneakersListLoading.postValue(false)
@@ -87,7 +92,9 @@ class SneakersViewModel(
                     State.LOADING -> _sneakersListLoading.postValue(true)
                     State.SUCCESS -> {
                         _sneakersListLoading.postValue(false)
-                        _sneakersList.postValue(response.data ?: listOf())
+                        val result = response.data ?: listOf()
+                        _showEmptyState.postValue(result.isEmpty())
+                        _sneakersList.postValue(result)
                         setClearResults(true)
                     }
                     State.ERROR -> _sneakersListLoading.postValue(false)
