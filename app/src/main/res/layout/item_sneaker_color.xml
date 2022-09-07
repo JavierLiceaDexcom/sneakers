@@ -5,9 +5,9 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/itemSneakerColor"
         style="@style/Widget.Material3.CardView.Filled"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_margin="8dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="4dp"
         android:background="@drawable/sneaker_color"
         app:cardCornerRadius="50dp" />
 </layout>

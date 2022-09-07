@@ -5,10 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
 import com.xavidev.testessential.data.State
 import com.xavidev.testessential.data.db.DatabaseBuilder
-import com.xavidev.testessential.data.entity.Brand
-import com.xavidev.testessential.data.entity.Cart
-import com.xavidev.testessential.data.entity.Sneaker
-import com.xavidev.testessential.data.entity.SneakerComplete
+import com.xavidev.testessential.data.entity.*
 import com.xavidev.testessential.repository.BrandsRepository
 import com.xavidev.testessential.repository.CartRepository
 import com.xavidev.testessential.repository.SneakersRepository
@@ -38,8 +35,8 @@ class SneakersViewModel(
     private val _sneakerComplete = MutableLiveData<SneakerComplete>()
     val sneakerComplete: LiveData<SneakerComplete> get() = _sneakerComplete
 
-    private val _sneaker = MutableLiveData<Sneaker>()
-    val sneaker: LiveData<Sneaker> get() = _sneaker
+    private val _sneaker = MutableLiveData<SneakerComplete>()
+    val sneaker: LiveData<SneakerComplete> get() = _sneaker
 
     private val _brandsListLoading = MutableLiveData(false)
     val brandsListLoading: LiveData<Boolean> get() = _brandsListLoading
@@ -49,6 +46,10 @@ class SneakersViewModel(
 
     private val _clearResults = MutableLiveData(false)
     val clearResults: LiveData<Boolean> get() = _clearResults
+
+    //Sneaker images
+    private val _sneakerImages = MutableLiveData<Images>()
+    val sneakerImages: LiveData<Images> get() = _sneakerImages
 
     fun setSneakerComplete(sneaker: SneakerComplete) {
         _sneakerComplete.value = sneaker
@@ -157,6 +158,17 @@ class SneakersViewModel(
                 when (response.status!!) {
                     State.LOADING -> {}
                     State.SUCCESS -> {}
+                    State.ERROR -> {}
+                }
+            }
+    }
+
+    fun getSneakerImages(imagesId: String) = viewModelScope.launch {
+        sneakersRepository.getSneakerImages(imagesId).flowOn(Dispatchers.IO)
+            .collect { response ->
+                when (response.status!!) {
+                    State.LOADING -> {}
+                    State.SUCCESS -> response.data?.let { images-> _sneakerImages.postValue(images) }
                     State.ERROR -> {}
                 }
             }

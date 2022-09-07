@@ -4,6 +4,7 @@ import com.xavidev.testessential.data.Response
 import com.xavidev.testessential.data.dao.BrandsDao
 import com.xavidev.testessential.data.dao.SneakersDao
 import com.xavidev.testessential.data.entity.Brand
+import com.xavidev.testessential.data.entity.Images
 import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.data.entity.SneakerComplete
 import com.xavidev.testessential.repository.BrandsRepository
@@ -57,7 +58,7 @@ class SneakersResources(private val sneakersDao: SneakersDao, private val brands
         }
     }
 
-    override suspend fun getSneaker(sneakerId: String): Flow<Response<Sneaker>> = flow {
+    override suspend fun getSneaker(sneakerId: String): Flow<Response<SneakerComplete>> = flow {
         emit(Response.Loading())
         try {
             val response = sneakersDao.getSneaker(sneakerId)
@@ -93,6 +94,16 @@ class SneakersResources(private val sneakersDao: SneakersDao, private val brands
             val result = brandsDao.getAllBrands()
             emit(Response.Success(result))
         } catch (ex: Exception) {
+            emit(Response.Error(ex.localizedMessage))
+        }
+    }
+
+    override suspend fun getSneakerImages(imagesId: String): Flow<Response<Images>> = flow {
+        emit(Response.Loading())
+        try {
+            val response = sneakersDao.getSneakerImages(imagesId)
+            emit(Response.Success(response))
+        } catch (ex: IOException) {
             emit(Response.Error(ex.localizedMessage))
         }
     }

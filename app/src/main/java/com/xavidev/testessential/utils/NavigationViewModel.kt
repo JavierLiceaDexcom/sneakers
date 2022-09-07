@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 
 abstract class NavigationViewModel : ViewModel() {
@@ -21,5 +22,10 @@ abstract class NavigationViewModel : ViewModel() {
     open fun navigateTo(view: View, @IdRes destinationId: Int, bundle: Bundle) {
         view.findNavController().navigate(destinationId, bundle)
         Log.i(TAG, "Navigate from ${view.id} to $destinationId")
+    }
+
+    open fun navigateTo(view: View, destination: NavDirections) {
+        view.findNavController().navigate(destination)
+        Log.i(TAG, "Navigate from ${view.id} to ${destination.actionId}")
     }
 }

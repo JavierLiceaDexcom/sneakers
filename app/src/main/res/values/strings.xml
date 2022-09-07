@@ -46,7 +46,9 @@
     <string name="text_sneakers">Sneakers</string>
     <string name="text_search">Search</string>
     <string name="text_sizes">Sizes</string>
+    <string name="text_available_sizes">Available sizes</string>
     <string name="text_color">Color</string>
+    <string name="text_available_colors">Available colors</string>
     <string name="text_cart">Cart</string>
     <string name="text_check_out">Check out</string>
     <string name="text_remove_one">Remove one</string>

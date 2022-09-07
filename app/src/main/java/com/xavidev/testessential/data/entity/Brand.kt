@@ -10,5 +10,4 @@ data class Brand(
     @PrimaryKey val id: String,
     val name: String,
     val logo: String,
-    var selected: Boolean = false
 )

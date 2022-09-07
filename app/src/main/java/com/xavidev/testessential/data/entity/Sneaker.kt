@@ -54,6 +54,8 @@ data class SneakerComplete(
     val thumbnail: String,
     val price: Double,
     val currency: String,
+    @ColumnInfo(name = "photos_id") val photosId: String,
+    val sizes: List<Double>,
     @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
     var favorite: Boolean = false
 )

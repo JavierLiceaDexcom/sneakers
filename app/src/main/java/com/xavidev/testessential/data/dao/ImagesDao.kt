@@ -17,7 +17,4 @@ interface ImagesDao {
         deleteImages()
         insertImages(images)
     }
-
-    @Query("SELECT * FROM images WHERE id =:imagesId")
-    suspend fun getSneakerImages(imagesId: String): List<Images>
 }

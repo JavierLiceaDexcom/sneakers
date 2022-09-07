@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.xavidev.testessential.data.entity.Images
 import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.databinding.FragmentSneakerDetailDialogBinding
 import com.xavidev.testessential.ui.sale.SaleOrderActivity
@@ -24,6 +26,7 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentSneakerDetailDialogBinding.inflate(layoutInflater)
     }
+    val args: SneakerDetailDialogFragmentArgs by navArgs()
 
     private val viewModel: SneakersViewModel by viewModels { SneakersViewModel.Factory() }
     private lateinit var carouselAdapter: SneakerCarouselAdapter
@@ -53,47 +56,48 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
         }
+
+        val sneakerId = args.sneakerId
+        viewModel.getSneaker(sneakerId)
 
         binding.btnBuyNow.setOnClickListener {
             viewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
         }
 
         viewModel.sneaker.observe(viewLifecycleOwner) { sneaker ->
-            setCarouselAdapter(sneaker)
-            setSizesAdapter(sneaker)
-            setColorsAdapter(sneaker)
+            setSizesAdapter(sneaker.sizes)
+            setColorsAdapter(sneaker.colors)
+            viewModel.getSneakerImages(sneaker.photosId)
         }
+
+        viewModel.sneakerImages.observe(viewLifecycleOwner) { images -> setCarouselAdapter(images) }
         setupListeners()
     }
 
-    private fun setColorsAdapter(bundle: Sneaker) {
+    private fun setColorsAdapter(colors: List<String>) {
         binding.recyclerSneakerColors.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = sneakerColorsAdapter
         }
-        sneakerColorsAdapter.submitList(bundle.colors)
+        sneakerColorsAdapter.submitList(colors)
     }
 
-    private fun setSizesAdapter(bundle: Sneaker) {
+    private fun setSizesAdapter(sizes: List<Double>) {
         binding.recyclerSneakerSizes.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = sneakerSizesAdapter
         }
-        sneakerSizesAdapter.submitList(bundle.sizes)
+        sneakerSizesAdapter.submitList(sizes)
     }
 
-    private fun setCarouselAdapter(bundle: Sneaker) {
-        //TODO: Add list of images
-        val photos = mutableListOf<String>()
-        photos.add(0, bundle.thumbnail)
-        carouselAdapter = SneakerCarouselAdapter(photos)
+    private fun setCarouselAdapter(images: Images) {
+        carouselAdapter = SneakerCarouselAdapter(images.images)
         binding.sneakerCarouselViewPager.adapter = carouselAdapter
         carouselUtils.setupCarouselIndicator(
             carouselAdapter,

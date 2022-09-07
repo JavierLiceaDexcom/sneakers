@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
@@ -29,10 +31,9 @@ class SneakersListFragment : Fragment() {
         object : (SneakerComplete, Int) -> Unit {
             override fun invoke(sneaker: SneakerComplete, pos: Int) {
                 viewModel.setSneakerComplete(sneaker)
-                viewModel.navigateTo(
-                    view!!,
-                    R.id.action_sneakersListFragment_to_sneakerDetailDialogFragment
-                )
+                val action = SneakersListFragmentDirections
+                    .actionSneakersListFragmentToSneakerDetailDialogFragment(sneaker.id)
+                viewModel.navigateTo(view!!, action)
             }
         },
         object : (SneakerComplete, Int) -> Unit {
@@ -70,8 +71,8 @@ class SneakersListFragment : Fragment() {
         getSneakersBrands()
         getSneakersList()
 
-        viewModel.clearResults.observe(viewLifecycleOwner) { clear ->
-            if (!clear) {
+        viewModel.clearResults.observe(viewLifecycleOwner) { filter ->
+            if (!filter) {
                 brandsAdapter.clearSelectedItem()
             }
         }

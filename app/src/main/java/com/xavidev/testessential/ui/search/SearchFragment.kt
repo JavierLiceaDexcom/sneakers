@@ -21,7 +21,6 @@ class SearchFragment : Fragment() {
 
     private val brandsAdapter = BrandsAdapter(object : (Brand, Int) -> Unit {
         override fun invoke(brand: Brand, pos: Int) {
-            brand.selected = !brand.selected
         }
     })
 

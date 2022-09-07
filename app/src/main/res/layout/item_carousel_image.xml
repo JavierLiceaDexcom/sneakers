@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/text_sneaker_image"
+        android:scaleType="centerCrop"
         app:imageUrl="@{url}"
         tools:src="@drawable/adidas_forum_bad_bunny" />
 </layout>
