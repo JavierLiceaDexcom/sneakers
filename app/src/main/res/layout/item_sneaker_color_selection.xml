@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/item_sneaker_color"
+        style="@style/Widget.Material3.CardView.Outlined"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_margin="4dp"
+        android:background="@drawable/sneaker_color_selectable"
+        app:cardCornerRadius="8dp"
+        app:strokeWidth="0dp"
+        app:strokeColor="@color/gray_darker" />
+</layout>

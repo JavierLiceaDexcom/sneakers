@@ -55,6 +55,7 @@
         <entry key="app/src/main/res/drawable/rounded_ripple_effect.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/rounded_top.xml" value="0.23" />
         <entry key="app/src/main/res/drawable/sneaker_color.xml" value="0.23" />
+        <entry key="app/src/main/res/drawable/sneaker_color_selectable.xml" value="0.3195" />
         <entry key="app/src/main/res/drawable/sneaker_size.xml" value="0.23" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.3195" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.409375" />
@@ -73,10 +74,12 @@
         <entry key="app/src/main/res/layout/item_sneaker.xml" value="0.4083333333333333" />
         <entry key="app/src/main/res/layout/item_sneaker_cart.xml" value="0.409375" />
         <entry key="app/src/main/res/layout/item_sneaker_color.xml" value="0.409375" />
+        <entry key="app/src/main/res/layout/item_sneaker_color_selection.xml" value="0.55" />
         <entry key="app/src/main/res/layout/item_sneaker_grid.xml" value="0.409375" />
         <entry key="app/src/main/res/layout/item_sneaker_list.xml" value="0.409375" />
         <entry key="app/src/main/res/layout/item_sneaker_offer.xml" value="0.409375" />
         <entry key="app/src/main/res/layout/item_sneaker_sizes.xml" value="0.409375" />
+        <entry key="app/src/main/res/layout/item_sneaker_sizes_selection.xml" value="0.409375" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.39427083333333335" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.2657407407407407" />
       </map>

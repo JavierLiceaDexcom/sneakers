@@ -9,6 +9,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 
 /** Set the View visibility to VISIBLE and eventually animate the View alpha till 100% */
@@ -75,5 +77,17 @@ fun View.setElementError(errorMessage: String?) {
         is TextInputLayout -> {
             this.error = errorMessage
         }
+    }
+}
+
+fun ChipGroup.addChip(context: Context, label: String) {
+    Chip(context).apply {
+        id = View.generateViewId()
+        text = label
+        isClickable = true
+        isCheckable = true
+        isCheckedIconVisible = true
+        isFocusable = false
+        addView(this)
     }
 }

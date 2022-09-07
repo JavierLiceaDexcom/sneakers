@@ -11,14 +11,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
 import com.xavidev.testessential.data.entity.Images
-import com.xavidev.testessential.data.entity.Sneaker
 import com.xavidev.testessential.databinding.FragmentSneakerDetailDialogBinding
 import com.xavidev.testessential.ui.sale.SaleOrderActivity
+import com.xavidev.testessential.ui.sneakers.adapters.ColorClickListener
 import com.xavidev.testessential.ui.sneakers.adapters.SneakerCarouselAdapter
-import com.xavidev.testessential.ui.sneakers.adapters.SneakerColorsAdapter
-import com.xavidev.testessential.ui.sneakers.adapters.SneakerSizesAdapter
+import com.xavidev.testessential.ui.sneakers.adapters.SneakerColorsSelectionAdapter
 import com.xavidev.testessential.utils.SneakerCarouselUtils
+import com.xavidev.testessential.utils.addChip
 import com.xavidev.testessential.utils.toast
 
 class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
@@ -26,22 +27,21 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentSneakerDetailDialogBinding.inflate(layoutInflater)
     }
-    val args: SneakerDetailDialogFragmentArgs by navArgs()
+
+    private val args: SneakerDetailDialogFragmentArgs by navArgs()
 
     private val viewModel: SneakersViewModel by viewModels { SneakersViewModel.Factory() }
     private lateinit var carouselAdapter: SneakerCarouselAdapter
     private var currentPosition = 0
     private val carouselUtils = SneakerCarouselUtils()
-    private val sneakerSizesAdapter = SneakerSizesAdapter(object : (Double, Int) -> Unit {
-        override fun invoke(size: Double, pos: Int) {
-            requireContext().toast("Size $size in position $pos")
-        }
-    })
-    private val sneakerColorsAdapter = SneakerColorsAdapter(object : (String, Int) -> Unit {
+
+    val listener = object : ColorClickListener {
         override fun invoke(color: String, pos: Int) {
             requireContext().toast("Color $color in position $pos")
         }
-    })
+    }
+
+    private val sneakerColorsAdapter = SneakerColorsSelectionAdapter(listener)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,50 +64,12 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
         val sneakerId = args.sneakerId
         viewModel.getSneaker(sneakerId)
 
-        binding.btnBuyNow.setOnClickListener {
-            viewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
-        }
-
-        viewModel.sneaker.observe(viewLifecycleOwner) { sneaker ->
-            setSizesAdapter(sneaker.sizes)
-            setColorsAdapter(sneaker.colors)
-            viewModel.getSneakerImages(sneaker.photosId)
-        }
-
-        viewModel.sneakerImages.observe(viewLifecycleOwner) { images -> setCarouselAdapter(images) }
-        setupListeners()
+        handleListeners()
+        handleObservers()
     }
 
-    private fun setColorsAdapter(colors: List<String>) {
-        binding.recyclerSneakerColors.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = sneakerColorsAdapter
-        }
-        sneakerColorsAdapter.submitList(colors)
-    }
-
-    private fun setSizesAdapter(sizes: List<Double>) {
-        binding.recyclerSneakerSizes.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = sneakerSizesAdapter
-        }
-        sneakerSizesAdapter.submitList(sizes)
-    }
-
-    private fun setCarouselAdapter(images: Images) {
-        carouselAdapter = SneakerCarouselAdapter(images.images)
-        binding.sneakerCarouselViewPager.adapter = carouselAdapter
-        carouselUtils.setupCarouselIndicator(
-            carouselAdapter,
-            binding.lytItemIndicators,
-            requireContext()
-        )
-    }
-
-    private fun setupListeners() {
-        binding.sneakerCarouselViewPager.registerOnPageChangeCallback(object :
+    private fun handleListeners() = with(binding) {
+        sneakerCarouselViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -120,5 +82,47 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
                 currentPosition = position
             }
         })
+
+        btnBuyNow.setOnClickListener {
+            viewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
+        }
+
+        chpGroupSizes.setOnCheckedChangeListener { chipGroup, checkedId ->
+            val size = chipGroup.findViewById<Chip>(checkedId)?.text
+            requireActivity().toast("Selected size: $size")
+        }
+    }
+
+    private fun handleObservers() {
+        viewModel.sneaker.observe(viewLifecycleOwner) { sneaker ->
+            setSizesListSelection(sneaker.sizes)
+            setColorsAdapter(sneaker.colors)
+            viewModel.getSneakerImages(sneaker.photosId)
+        }
+
+        viewModel.sneakerImages.observe(viewLifecycleOwner) { images -> setCarouselAdapter(images) }
+    }
+
+    private fun setColorsAdapter(colors: List<String>) {
+        binding.recyclerSneakerColors.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = sneakerColorsAdapter
+        }
+        sneakerColorsAdapter.submitList(colors)
+    }
+
+    private fun setSizesListSelection(sizes: List<Double>) {
+        sizes.forEach { size -> binding.chpGroupSizes.addChip(requireContext(), "$size") }
+    }
+
+    private fun setCarouselAdapter(images: Images) {
+        carouselAdapter = SneakerCarouselAdapter(images.images)
+        binding.sneakerCarouselViewPager.adapter = carouselAdapter
+        carouselUtils.setupCarouselIndicator(
+            carouselAdapter,
+            binding.lytItemIndicators,
+            requireContext()
+        )
     }
 }

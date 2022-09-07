@@ -41,9 +41,7 @@ class SneakersAdapter(
         }
 
         private fun loadColors(colors: List<String>, rvColors: RecyclerView) {
-            val colorsAdapter = SneakerColorsAdapter(object : (String, Int) -> Unit {
-                override fun invoke(p1: String, p2: Int) {}
-            })
+            val colorsAdapter = SneakerColorsAdapter()
             val linearLayoutManager =
                 LinearLayoutManager(App.getContext(), LinearLayoutManager.HORIZONTAL, false)
             rvColors.apply {
