@@ -51,11 +51,18 @@ class SneakersViewModel(
     private val _sneakerImages = MutableLiveData<Images>()
     val sneakerImages: LiveData<Images> get() = _sneakerImages
 
+    //Sneaker images
+    private val _sneakerHasDiscount = MutableLiveData<Boolean>()
+    val sneakerHasDiscount: LiveData<Boolean> get() = _sneakerHasDiscount
+
+    private val _sneakerDiscount = MutableLiveData<String>()
+    val sneakerDiscount: LiveData<String> get() = _sneakerDiscount
+
     fun setSneakerComplete(sneaker: SneakerComplete) {
         _sneakerComplete.value = sneaker
     }
 
-    private fun setClearResults(value: Boolean){
+    private fun setClearResults(value: Boolean) {
         _clearResults.value = value
     }
 
@@ -109,7 +116,12 @@ class SneakersViewModel(
                     State.LOADING -> _sneakerLoading.postValue(true)
                     State.SUCCESS -> {
                         _sneakerLoading.postValue(false)
-                        response.data?.let { sneaker -> _sneaker.postValue(sneaker) }
+                        response.data?.let { sneaker ->
+                            _sneaker.postValue(sneaker)
+                            val discount = sneaker.discountPercentage
+                            _sneakerHasDiscount.postValue(discount > 0)
+                            _sneakerDiscount.postValue("- $discount%")
+                        }
                     }
                     State.ERROR -> _sneakerLoading.postValue(false)
                 }
@@ -121,7 +133,7 @@ class SneakersViewModel(
             .collect { response ->
                 when (response.status!!) {
                     State.LOADING -> {}
-                    State.SUCCESS -> {}
+                    State.SUCCESS -> sneaker.value?.id?.let { id -> getSneaker(id) }
                     State.ERROR -> {}
                 }
             }
@@ -146,7 +158,7 @@ class SneakersViewModel(
             .collect { response ->
                 when (response.status!!) {
                     State.LOADING -> {}
-                    State.SUCCESS -> {}
+                    State.SUCCESS -> sneaker.value?.id?.let { id -> getSneaker(id) }
                     State.ERROR -> {}
                 }
             }
@@ -168,7 +180,7 @@ class SneakersViewModel(
             .collect { response ->
                 when (response.status!!) {
                     State.LOADING -> {}
-                    State.SUCCESS -> response.data?.let { images-> _sneakerImages.postValue(images) }
+                    State.SUCCESS -> response.data?.let { images -> _sneakerImages.postValue(images) }
                     State.ERROR -> {}
                 }
             }
@@ -179,8 +191,17 @@ class SneakersViewModel(
         fragment.startNewActivity(targetActivity = destiny, finish = false)
     }
 
-    fun onClearResult(){
+    fun onClearResult() {
         getAllSneakersComplete()
+    }
+
+    fun onSneakerFavorite() {
+        val isFavorite = sneaker.value?.favorite
+        setFavorite(sneaker.value?.id!!, isFavorite!!.not())
+    }
+
+    fun onSneakerToCart() {
+        addSneakerToCart(sneaker.value?.toCart()!!)
     }
 
     class Factory : ViewModelProvider.Factory {
