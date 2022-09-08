@@ -20,7 +20,8 @@ data class Sneaker(
     val price: Double,
     @ColumnInfo(name = "currency_id") val currencyId: String,
     @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
-    var favorite: Boolean = false
+    var favorite: Boolean = false,
+    @ColumnInfo(name = "in_cart") var inCart: Boolean = false
 ) : Serializable {
     fun List<Sneaker>.filterWithPercentage(percentage: Int = 0): List<Sneaker> =
         this.filter { it.discountPercentage == percentage }.sortedBy { it.id }
@@ -57,7 +58,8 @@ data class SneakerComplete(
     @ColumnInfo(name = "photos_id") val photosId: String,
     val sizes: List<Double>,
     @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
-    var favorite: Boolean = false
+    var favorite: Boolean = false,
+    @ColumnInfo(name = "in_cart") var inCart: Boolean = false
 )
 
 fun SneakerComplete.toCart(): Cart {

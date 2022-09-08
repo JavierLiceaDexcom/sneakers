@@ -12,6 +12,9 @@ interface CartDao {
     @Delete
     suspend fun deleteItem(cart: Cart): Int
 
+    @Query("DELETE FROM cart where cart.sneaker_id =:id")
+    suspend fun removeSneakerFromCart(id: String): Int
+
     @Query("SELECT * FROM cart")
     suspend fun getAllItems(): List<Cart>
 

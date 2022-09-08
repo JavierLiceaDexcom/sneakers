@@ -127,7 +127,7 @@
                             android:contentDescription="@string/text_add_to_cart"
                             android:onClick="@{() -> vm.onSneakerToCart()}"
                             android:padding="12dp"
-                            android:src="@drawable/ic_cart_outlined"
+                            android:src="@{vm.sneakerInCart ? @drawable/ic_shopping_cart_remove : @drawable/ic_cart_outlined}"
                             app:icon="@drawable/ic_cart_outlined"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView4" />

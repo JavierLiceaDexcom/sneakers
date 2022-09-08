@@ -1,5 +1,6 @@
 package com.xavidev.testessential.ui.sneakers
 
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
@@ -61,6 +62,9 @@ class SneakersViewModel(
     fun setSneakerComplete(sneaker: SneakerComplete) {
         _sneakerComplete.value = sneaker
     }
+
+    private val _sneakerInCart = MutableLiveData(false)
+    val sneakerInCart: LiveData<Boolean> get() = _sneakerInCart
 
     private fun setClearResults(value: Boolean) {
         _clearResults.value = value
@@ -125,6 +129,7 @@ class SneakersViewModel(
                             val discount = sneaker.discountPercentage
                             _sneakerHasDiscount.postValue(discount > 0)
                             _sneakerDiscount.postValue("- $discount%")
+                            _sneakerInCart.postValue(sneaker.inCart)
                         }
                     }
                     State.ERROR -> _sneakerLoading.postValue(false)
@@ -159,14 +164,14 @@ class SneakersViewModel(
             .collect { response ->
                 when (response.status!!) {
                     State.LOADING -> {}
-                    State.SUCCESS -> sneaker.value?.id?.let { id -> getSneaker(id) }
+                    State.SUCCESS -> {}
                     State.ERROR -> {}
                 }
             }
     }
 
-    fun removeSneakerFromCart(cart: Cart) = viewModelScope.launch {
-        cartRepository.deleteCartItem(cart).flowOn(Dispatchers.IO)
+    private fun removeSneakerFromCart(sneakerId: String) = viewModelScope.launch {
+        cartRepository.deleteSneakerFromCart(sneakerId).flowOn(Dispatchers.IO)
             .collect { response ->
                 when (response.status!!) {
                     State.LOADING -> {}
@@ -187,6 +192,17 @@ class SneakersViewModel(
             }
     }
 
+    private fun updateSneakerInCart(sneakerId: String, value: Boolean) = viewModelScope.launch {
+        sneakersRepository.updateSneakerInCart(sneakerId, value).flowOn(Dispatchers.IO)
+            .collect { response ->
+                when (response.status!!) {
+                    State.LOADING -> {}
+                    State.SUCCESS -> _sneakerInCart.postValue(value)
+                    State.ERROR -> {}
+                }
+            }
+    }
+
 
     fun onBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
         fragment.startNewActivity(targetActivity = destiny, finish = false)
@@ -202,7 +218,11 @@ class SneakersViewModel(
     }
 
     fun onSneakerToCart() {
-        addSneakerToCart(sneaker.value?.toCart()!!)
+        val cartItem = sneaker.value?.toCart()!!
+        sneakerInCart.value?.let { inCart ->
+            updateSneakerInCart(cartItem.sneakerId, !inCart)
+            if (inCart) removeSneakerFromCart(cartItem.sneakerId) else addSneakerToCart(cartItem)
+        }
     }
 
     class Factory : ViewModelProvider.Factory {

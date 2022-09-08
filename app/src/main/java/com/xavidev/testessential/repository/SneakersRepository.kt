@@ -13,5 +13,6 @@ interface SneakersRepository {
     suspend fun getSneakersByType(typeId: String): Flow<Response<List<Sneaker>>>
     suspend fun getSneaker(sneakerId: String): Flow<Response<SneakerComplete>>
     suspend fun setFavorite(sneakerId: String, favorite: Boolean): Flow<Response<Boolean>>
+    suspend fun updateSneakerInCart(sneakerId: String, value: Boolean): Flow<Response<Boolean>>
     suspend fun getSneakerImages(imagesId: String): Flow<Response<Images>>
 }

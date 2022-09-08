@@ -30,6 +30,16 @@ class CartResources(private val cartDao: CartDao) : CartRepository {
         }
     }
 
+    override suspend fun deleteSneakerFromCart(sneakerId: String): Flow<Response<Boolean>> = flow {
+        emit(Response.Loading())
+        try {
+            val response = cartDao.removeSneakerFromCart(sneakerId)
+            emit(Response.Success(response == 1))
+        } catch (ex: IOException) {
+            emit(Response.Error(ex.localizedMessage))
+        }
+    }
+
     override suspend fun getCartItems(): Flow<Response<List<Cart>>> = flow {
         emit(Response.Loading())
         try {

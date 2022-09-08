@@ -38,15 +38,16 @@ class SneakersResources(private val sneakersDao: SneakersDao, private val brands
         }
     }
 
-    override suspend fun getSneakersByBrand(brandId: String): Flow<Response<List<SneakerComplete>>> = flow {
-        emit(Response.Loading())
-        try {
-            val response = sneakersDao.getSneakersByBrand(brandId)
-            emit(Response.Success(response))
-        } catch (ex: IOException) {
-            emit(Response.Error(ex.localizedMessage))
+    override suspend fun getSneakersByBrand(brandId: String): Flow<Response<List<SneakerComplete>>> =
+        flow {
+            emit(Response.Loading())
+            try {
+                val response = sneakersDao.getSneakersByBrand(brandId)
+                emit(Response.Success(response))
+            } catch (ex: IOException) {
+                emit(Response.Error(ex.localizedMessage))
+            }
         }
-    }
 
     override suspend fun getSneakersByType(typeId: String): Flow<Response<List<Sneaker>>> = flow {
         emit(Response.Loading())
@@ -72,6 +73,19 @@ class SneakersResources(private val sneakersDao: SneakersDao, private val brands
         emit(Response.Loading())
         try {
             val response = sneakersDao.updateFavoriteValue(sneakerId, favorite)
+            emit(Response.Success(response == INSERTED))
+        } catch (ex: IOException) {
+            emit(Response.Error(ex.localizedMessage))
+        }
+    }
+
+    override suspend fun updateSneakerInCart(
+        sneakerId: String,
+        value: Boolean
+    ): Flow<Response<Boolean>> = flow {
+        emit(Response.Loading())
+        try {
+            val response = sneakersDao.updateSneakerInCart(sneakerId, value)
             emit(Response.Success(response == INSERTED))
         } catch (ex: IOException) {
             emit(Response.Error(ex.localizedMessage))

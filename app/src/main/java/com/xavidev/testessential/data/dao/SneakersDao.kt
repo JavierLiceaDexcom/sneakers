@@ -23,7 +23,7 @@ interface SneakersDao {
 
     @Query(
         "SELECT sneaker.id, sneaker.model, sneaker.colors, sneaker.thumbnail, sneaker.price, sneaker.sizes, sneaker.photos_id, " +
-                "sneaker.discount_percentage, sneaker.favorite, brand.name AS brand, type.name AS type, currency.abbreviation AS currency " +
+                "sneaker.discount_percentage, sneaker.favorite, sneaker.in_cart, brand.name AS brand, type.name AS type, currency.abbreviation AS currency " +
                 "FROM sneaker INNER JOIN brand ON sneaker.brand_id = brand.id INNER JOIN type ON sneaker.type_id = type.id " +
                 "INNER JOIN currency ON sneaker.currency_id = currency.id"
     )
@@ -33,7 +33,7 @@ interface SneakersDao {
     suspend fun getSneakersCount(): Int
 
     @Query("SELECT sneaker.id, sneaker.model, sneaker.colors, sneaker.thumbnail, sneaker.price, sneaker.sizes, sneaker.photos_id, " +
-            "sneaker.discount_percentage, sneaker.favorite, brand.name AS brand, type.name AS type, currency.abbreviation AS currency " +
+            "sneaker.discount_percentage, sneaker.favorite, sneaker.in_cart, brand.name AS brand, type.name AS type, currency.abbreviation AS currency " +
             "FROM sneaker INNER JOIN brand ON sneaker.brand_id = brand.id INNER JOIN type ON sneaker.type_id = type.id " +
             "INNER JOIN currency ON sneaker.currency_id = currency.id WHERE sneaker.brand_id =:id")
     suspend fun getSneakersByBrand(id: String): List<SneakerComplete>
@@ -42,13 +42,16 @@ interface SneakersDao {
     suspend fun getSneakersByType(id: String): List<Sneaker>
 
     @Query("SELECT sneaker.id, sneaker.model, sneaker.colors, sneaker.thumbnail, sneaker.price, sneaker.sizes, sneaker.photos_id, " +
-            "sneaker.discount_percentage, sneaker.favorite, brand.name AS brand, type.name AS type, currency.abbreviation AS currency " +
+            "sneaker.discount_percentage, sneaker.favorite, sneaker.in_cart, brand.name AS brand, type.name AS type, currency.abbreviation AS currency " +
             "FROM sneaker INNER JOIN brand ON sneaker.brand_id = brand.id INNER JOIN type ON sneaker.type_id = type.id " +
             "INNER JOIN currency ON sneaker.currency_id = currency.id WHERE sneaker.id =:id")
     suspend fun getSneaker(id: String): SneakerComplete
 
     @Query("UPDATE sneaker SET favorite =:value WHERE id =:id")
     suspend fun updateFavoriteValue(id: String, value: Boolean): Int
+
+    @Query("UPDATE sneaker SET in_cart =:value WHERE id =:id")
+    suspend fun updateSneakerInCart(id: String, value: Boolean): Int
 
     @Query("SELECT * FROM images WHERE id =:id")
     suspend fun getSneakerImages(id: String): Images
