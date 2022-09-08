@@ -1,15 +1,17 @@
 package com.xavidev.testessential.ui.purchases
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.xavidev.testessential.databinding.FragmentPurchasesBinding
 
 
-class PurchasesFragment :  Fragment() {
+class PurchasesFragment : Fragment() {
 
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentPurchasesBinding.inflate(layoutInflater)
@@ -28,5 +30,14 @@ class PurchasesFragment :  Fragment() {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {}
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 }

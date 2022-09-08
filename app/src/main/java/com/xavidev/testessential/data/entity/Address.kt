@@ -3,6 +3,7 @@ package com.xavidev.testessential.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "address")
 data class Address(
@@ -14,4 +15,7 @@ data class Address(
     val state: String,
     @ColumnInfo(name = "ext_number") val extNumber: String,
     @ColumnInfo(name = "int_number") val intNumber: String?,
-)
+    @ColumnInfo(name = "created_at") override val createdAt: Long?,
+    @ColumnInfo(name = "updated_at") override val updatedAt: Long?,
+    @ColumnInfo(name = "deleted_at") override val deletedAt: Long?,
+) : BaseEntity

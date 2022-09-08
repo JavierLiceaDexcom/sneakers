@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
+import java.util.*
 
 /** Set the View visibility to VISIBLE and eventually animate the View alpha till 100% */
 fun View.visible(animate: Boolean = true) {
@@ -89,5 +90,9 @@ fun ChipGroup.addChip(context: Context, label: String) {
         isCheckedIconVisible = true
         isFocusable = false
         addView(this)
+    }
+
+    fun Long.toDate(): Date {
+        return Date(this)
     }
 }

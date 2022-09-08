@@ -10,6 +10,10 @@
         <variable
             name="vm"
             type="com.xavidev.testessential.ui.sneakers.SneakersViewModel" />
+
+        <variable
+            name="pvm"
+            type="com.xavidev.testessential.ui.purchases.PurchasesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -231,6 +235,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/text_buy_now"
                                     app:elevation="0dp"
+                                    android:onClick="@{() -> pvm.validateSizeAndColor()}"
                                     app:iconTint="@color/black"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"

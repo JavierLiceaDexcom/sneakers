@@ -26,7 +26,8 @@ const val DB_EXPORT_SCHEMA = false
         Currency::class,
         Cart::class,
         Images::class,
-        User::class
+        User::class,
+        Purchase::class
     ],
     exportSchema = DB_EXPORT_SCHEMA
 )
@@ -38,4 +39,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun imagesDao(): ImagesDao
     abstract fun keyValueDao(): KeyValueDao
     abstract fun userDao(): UserDao
+    abstract fun purchasesDao(): PurchasesDao
 }

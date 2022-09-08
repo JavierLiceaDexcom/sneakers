@@ -137,4 +137,6 @@
     <string name="text_favorite_removed">Sneaker removed from favorites</string>
     <string name="text_sneaker_added_to_cart">Sneaker added to your cart</string>
     <string name="text_clear_results">Clear results</string>
+    <string name="text_select_size">Select a size</string>
+    <string name="text_select_color">Select a color</string>
 </resources>

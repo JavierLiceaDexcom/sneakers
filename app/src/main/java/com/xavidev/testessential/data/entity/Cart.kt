@@ -3,6 +3,7 @@ package com.xavidev.testessential.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "cart")
 data class Cart(
@@ -11,5 +12,8 @@ data class Cart(
     @ColumnInfo(name = "sneaker_id") val sneakerId: String,
     @ColumnInfo(name = "purchase_date") val purchaseDate: Long,
     @ColumnInfo(name = "sneaker_thumbnail") val sneakerThumbnail: String,
-    val quantity: Int = 1
-)
+    val quantity: Int = 1,
+    @ColumnInfo(name = "created_at") override val createdAt: Long? ,
+    @ColumnInfo(name = "updated_at") override val updatedAt: Long?,
+    @ColumnInfo(name = "deleted_at") override val deletedAt: Long?,
+) : BaseEntity

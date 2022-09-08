@@ -21,8 +21,11 @@ data class Sneaker(
     @ColumnInfo(name = "currency_id") val currencyId: String,
     @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
     var favorite: Boolean = false,
-    @ColumnInfo(name = "in_cart") var inCart: Boolean = false
-) : Serializable {
+    @ColumnInfo(name = "in_cart") var inCart: Boolean = false,
+    @ColumnInfo(name = "created_at") override val createdAt: Long?,
+    @ColumnInfo(name = "updated_at") override val updatedAt: Long?,
+    @ColumnInfo(name = "deleted_at") override val deletedAt: Long?,
+) : Serializable, BaseEntity {
     fun List<Sneaker>.filterWithPercentage(percentage: Int = 0): List<Sneaker> =
         this.filter { it.discountPercentage == percentage }.sortedBy { it.id }
 
@@ -68,6 +71,9 @@ fun SneakerComplete.toCart(): Cart {
         sneakerId = id,
         purchaseDate = Date().time,
         sneakerThumbnail = thumbnail,
-        quantity = 1
+        quantity = 1,
+        createdAt = Date().time,
+        updatedAt = Date().time,
+        deletedAt = Date().time
     )
 }

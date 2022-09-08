@@ -1,6 +1,7 @@
 package com.xavidev.testessential.ui.sneakers
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.xavidev.testessential.data.entity.Images
 import com.xavidev.testessential.databinding.FragmentSneakerDetailDialogBinding
+import com.xavidev.testessential.ui.purchases.PurchasesViewModel
 import com.xavidev.testessential.ui.sale.SaleOrderActivity
 import com.xavidev.testessential.ui.sneakers.adapters.ColorClickListener
 import com.xavidev.testessential.ui.sneakers.adapters.SneakerCarouselAdapter
@@ -31,13 +33,15 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     private val args: SneakerDetailDialogFragmentArgs by navArgs()
 
     private val viewModel: SneakersViewModel by viewModels { SneakersViewModel.Factory() }
+    private val purchasesViewModel: PurchasesViewModel by viewModels { PurchasesViewModel.Factory() }
+
     private lateinit var carouselAdapter: SneakerCarouselAdapter
     private var currentPosition = 0
     private val carouselUtils = SneakerCarouselUtils()
 
     val listener = object : ColorClickListener {
         override fun invoke(color: String, pos: Int) {
-            requireContext().toast("Color $color in position $pos")
+            purchasesViewModel.setColorSelected()
         }
     }
 
@@ -59,6 +63,7 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
+            pvm = purchasesViewModel
         }
 
         val sneakerId = args.sneakerId
@@ -83,13 +88,9 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
             }
         })
 
-        btnBuyNow.setOnClickListener {
-            viewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
-        }
-
         chpGroupSizes.setOnCheckedChangeListener { chipGroup, checkedId ->
             val size = chipGroup.findViewById<Chip>(checkedId)?.text
-            requireActivity().toast("Selected size: $size")
+            purchasesViewModel.setSizeSelected()
         }
     }
 
@@ -101,6 +102,17 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
         }
 
         viewModel.sneakerImages.observe(viewLifecycleOwner) { images -> setCarouselAdapter(images) }
+
+        purchasesViewModel.errorMessages.observe(viewLifecycleOwner) { errors ->
+            if (errors.isNotEmpty()) {
+                val message = errors.joinToString("\n")
+                requireActivity().toast(message)
+            }
+        }
+
+        purchasesViewModel.isValid.observe(viewLifecycleOwner) { isValid ->
+            if (isValid) purchasesViewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
+        }
     }
 
     private fun setColorsAdapter(colors: List<String>) {

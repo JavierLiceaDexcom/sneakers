@@ -203,11 +203,6 @@ class SneakersViewModel(
             }
     }
 
-
-    fun onBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
-        fragment.startNewActivity(targetActivity = destiny, finish = false)
-    }
-
     fun onClearResult() {
         getAllSneakersComplete()
     }
