@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.xavidev.testessential.ui.sneakers.SneakersListFragmentViewModel" />
@@ -33,6 +35,17 @@
             android:foreground="?attr/selectableItemBackground"
             android:paddingHorizontal="8dp"
             android:paddingVertical="12dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chp_discount"
+                style="@style/ChipDiscountStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text='@{String.valueOf(sneaker.discountPercentage) + "% OFF"}'
+                android:visibility="@{sneaker.discountPercentage > 0 ? View.VISIBLE: View.GONE }"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="18% OFF" />
 
             <ImageView
                 android:id="@+id/imgAddFavorite"
@@ -86,20 +99,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView"
                 tools:text="Forum 84" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_colors"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView23"
-                tools:listitem="@layout/item_sneaker_color" />
-
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="wrap_content"
@@ -113,6 +112,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
                 tools:text="$2,600.00 MXN" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_colors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView23"
+                tools:listitem="@layout/item_sneaker_color" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

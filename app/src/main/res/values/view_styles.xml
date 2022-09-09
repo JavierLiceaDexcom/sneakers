@@ -75,6 +75,16 @@
         <item name="chipIconTint">@color/primaryDark</item>
     </style>
 
+    <style name="ChipDiscountStyle" parent="Widget.Material3.Chip.Assist">
+        <item name="chipBackgroundColor">@color/green_soft</item>
+        <item name="chipSurfaceColor">@color/green_soft</item>
+        <item name="chipCornerRadius">12dp</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="android:textColor">@color/green</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Caption</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
         <item name="cornerSize">50%</item>
     </style>
