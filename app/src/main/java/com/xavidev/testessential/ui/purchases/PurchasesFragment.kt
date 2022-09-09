@@ -16,7 +16,7 @@ class PurchasesFragment : Fragment() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentPurchasesBinding.inflate(layoutInflater)
     }
-    private val viewModel: PurchasesViewModel by viewModels()
+    private val viewModel: PurchasesViewModel by viewModels { PurchasesViewModel.Factory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

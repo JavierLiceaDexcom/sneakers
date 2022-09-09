@@ -10,9 +10,9 @@ import com.xavidev.testessential.data.entity.Brand
 import com.xavidev.testessential.databinding.ItemBrandListBinding
 import com.xavidev.testessential.utils.App
 
-class BrandsAdapter(
-    private val itemClickListener: (Brand, Int) -> Unit
-) :
+typealias BrandItemClickListener = (Brand, Int) -> Unit
+
+class BrandsAdapter(private val itemClickListener: BrandItemClickListener) :
     ListAdapter<Brand, BrandsAdapter.ViewHolder>(BrandsCallback) {
 
     var selectedItemPos = -1
@@ -22,7 +22,7 @@ class BrandsAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             brandItem: Brand,
-            itemClickListener: (Brand, Int) -> Unit,
+            itemClickListener: BrandItemClickListener,
         ) = with(binding) {
             brand = brandItem
             clItemCard.setOnClickListener {

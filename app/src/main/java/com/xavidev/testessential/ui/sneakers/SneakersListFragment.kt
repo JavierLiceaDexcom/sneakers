@@ -4,19 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
 import com.xavidev.testessential.data.entity.Brand
 import com.xavidev.testessential.data.entity.SneakerComplete
-import com.xavidev.testessential.data.entity.toCart
 import com.xavidev.testessential.databinding.FragmentSneakersListBinding
-import com.xavidev.testessential.ui.sneakers.adapters.BrandsAdapter
-import com.xavidev.testessential.ui.sneakers.adapters.SneakersAdapter
+import com.xavidev.testessential.ui.sneakers.adapters.*
 import com.xavidev.testessential.utils.toast
 
 class SneakersListFragment : Fragment() {
@@ -25,29 +21,32 @@ class SneakersListFragment : Fragment() {
         FragmentSneakersListBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SneakersViewModel by activityViewModels { SneakersViewModel.Factory() }
+    private val viewModel: SneakersListFragmentViewModel by activityViewModels { SneakersListFragmentViewModel.Factory() }
 
-    private val sneakersAdapter = SneakersAdapter(
-        object : (SneakerComplete, Int) -> Unit {
-            override fun invoke(sneaker: SneakerComplete, pos: Int) {
-                viewModel.setSneakerComplete(sneaker)
-                val action = SneakersListFragmentDirections
-                    .actionSneakersListFragmentToSneakerDetailDialogFragment(sneaker.id)
-                viewModel.navigateTo(view!!, action)
-            }
-        },
-        object : (SneakerComplete, Int) -> Unit {
-            override fun invoke(sneaker: SneakerComplete, pos: Int) {
-                setSneakerFavorite(sneaker, pos)
-            }
+    private val sneakerItemClickListener = object : SneakerItemClickListener {
+        override fun invoke(sneaker: SneakerComplete, pos: Int) {
+            val action = SneakersListFragmentDirections
+                .actionSneakersListFragmentToSneakerDetailDialogFragment(sneaker.id)
+            viewModel.navigateTo(view!!, action)
         }
-    )
+    }
 
-    private val brandsAdapter = BrandsAdapter(object : (Brand, Int) -> Unit {
+    private val sneakerFavoriteClickListener = object : SneakerFavoriteClickListener {
+        override fun invoke(sneaker: SneakerComplete, pos: Int) {
+            setSneakerFavorite(sneaker, pos)
+        }
+    }
+
+    private val sneakersAdapter =
+        SneakersAdapter(sneakerItemClickListener, sneakerFavoriteClickListener)
+
+    private val brandItemClickListener = object : BrandItemClickListener {
         override fun invoke(brand: Brand, pos: Int) {
             viewModel.getSneakersByBrand(brand.id)
         }
-    })
+    }
+
+    private val brandsAdapter = BrandsAdapter(brandItemClickListener)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -10,9 +10,12 @@ import com.xavidev.testessential.data.entity.SneakerComplete
 import com.xavidev.testessential.databinding.ItemSneakerGridBinding
 import com.xavidev.testessential.utils.App
 
+typealias SneakerItemClickListener = (SneakerComplete, Int) -> Unit
+typealias SneakerFavoriteClickListener = (SneakerComplete, Int) -> Unit
+
 class SneakersAdapter(
-    private val itemClickListener: (SneakerComplete, Int) -> Unit,
-    private val favoriteClickListener: (SneakerComplete, Int) -> Unit,
+    private val itemClickListener: SneakerItemClickListener,
+    private val favoriteClickListener: SneakerFavoriteClickListener,
 ) :
     ListAdapter<SneakerComplete, SneakersAdapter.ViewHolder>(SneakersCallback) {
 
@@ -20,8 +23,8 @@ class SneakersAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             sneakerItem: SneakerComplete,
-            itemClickListener: (SneakerComplete, Int) -> Unit,
-            favoriteClickListener: (SneakerComplete, Int) -> Unit,
+            itemClickListener: SneakerItemClickListener,
+            favoriteClickListener: SneakerFavoriteClickListener,
         ) = with(binding) {
             sneaker = sneakerItem
             sneakerGridItem.setOnClickListener {

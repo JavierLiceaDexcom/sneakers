@@ -4,118 +4,62 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
+import com.xavidev.testessential.R
 import com.xavidev.testessential.data.State
 import com.xavidev.testessential.data.db.DatabaseBuilder
-import com.xavidev.testessential.data.entity.*
-import com.xavidev.testessential.repository.BrandsRepository
+import com.xavidev.testessential.data.entity.Cart
+import com.xavidev.testessential.data.entity.Images
+import com.xavidev.testessential.data.entity.SneakerComplete
+import com.xavidev.testessential.data.entity.toCart
 import com.xavidev.testessential.repository.CartRepository
 import com.xavidev.testessential.repository.SneakersRepository
 import com.xavidev.testessential.resources.CartResources
 import com.xavidev.testessential.resources.SneakersResources
+import com.xavidev.testessential.utils.App
 import com.xavidev.testessential.utils.NavigationViewModel
 import com.xavidev.testessential.utils.startNewActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
-class SneakersViewModel(
+class SneakerDetailDialogFragmentViewModel(
     private val sneakersRepository: SneakersRepository,
-    private val brandsRepository: BrandsRepository,
     private val cartRepository: CartRepository
 ) : NavigationViewModel() {
-
-    private val _sneakersListLoading = MutableLiveData(false)
-    val sneakersListLoading: LiveData<Boolean> get() = _sneakersListLoading
-
-    private val _sneakersList = MutableLiveData<List<SneakerComplete>>()
-    val sneakersList: LiveData<List<SneakerComplete>> get() = _sneakersList
 
     private val _sneakerLoading = MutableLiveData(false)
     val sneakerLoading: LiveData<Boolean> get() = _sneakerLoading
 
-    private val _sneakerComplete = MutableLiveData<SneakerComplete>()
-    val sneakerComplete: LiveData<SneakerComplete> get() = _sneakerComplete
-
     private val _sneaker = MutableLiveData<SneakerComplete>()
     val sneaker: LiveData<SneakerComplete> get() = _sneaker
 
-    private val _brandsList = MutableLiveData<List<Brand>>()
-    val brandsList: LiveData<List<Brand>> get() = _brandsList
-
-    private val _clearResults = MutableLiveData(false)
-    val clearResults: LiveData<Boolean> get() = _clearResults
-
-    private val _showEmptyState = MutableLiveData(false)
-    val showEmptyState: LiveData<Boolean> get() = _showEmptyState
-
-    //Sneaker images
     private val _sneakerImages = MutableLiveData<Images>()
     val sneakerImages: LiveData<Images> get() = _sneakerImages
 
-    //Sneaker images
     private val _sneakerHasDiscount = MutableLiveData<Boolean>()
     val sneakerHasDiscount: LiveData<Boolean> get() = _sneakerHasDiscount
 
     private val _sneakerDiscount = MutableLiveData<String>()
     val sneakerDiscount: LiveData<String> get() = _sneakerDiscount
 
-    fun setSneakerComplete(sneaker: SneakerComplete) {
-        _sneakerComplete.value = sneaker
-    }
-
     private val _sneakerInCart = MutableLiveData(false)
     val sneakerInCart: LiveData<Boolean> get() = _sneakerInCart
 
-    private fun setClearResults(value: Boolean) {
-        _clearResults.value = value
-    }
+    private val _sneakerFavorite = MutableLiveData(false)
+    val sneakerFavorite: LiveData<Boolean> get() = _sneakerFavorite
 
-    fun getAllSneakersComplete() = viewModelScope.launch {
-        sneakersRepository.getAllCompleteSneakers().flowOn(Dispatchers.IO).collect { response ->
-            when (response.status!!) {
-                State.LOADING -> _sneakersListLoading.postValue(true)
-                State.SUCCESS -> {
-                    _sneakersListLoading.postValue(false)
-                    val result = response.data ?: listOf()
-                    _showEmptyState.postValue(result.isEmpty())
-                    _sneakersList.postValue(result)
-                    setClearResults(false)
-                }
-                State.ERROR -> _sneakersListLoading.postValue(false)
-            }
-        }
-    }
+    //Validations
+    private val _errorMessage = MutableLiveData<MutableList<String>>(mutableListOf())
+    val errorMessages: LiveData<MutableList<String>> get() = _errorMessage
 
-    fun getSneakersByBrand(brandId: String) = viewModelScope.launch {
-        sneakersRepository.getSneakersByBrand(brandId).flowOn(Dispatchers.IO)
-            .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> _sneakersListLoading.postValue(true)
-                    State.SUCCESS -> {
-                        _sneakersListLoading.postValue(false)
-                        val result = response.data ?: listOf()
-                        _showEmptyState.postValue(result.isEmpty())
-                        _sneakersList.postValue(result)
-                        setClearResults(true)
-                    }
-                    State.ERROR -> _sneakersListLoading.postValue(false)
-                }
-            }
-    }
+    private val _sizeSelected = MutableLiveData(false)
+    private val sizeSelected: LiveData<Boolean> get() = _sizeSelected
 
-    fun getSneakersByType(typeId: String) = viewModelScope.launch {
-        sneakersRepository.getSneakersByType(typeId).flowOn(Dispatchers.IO)
-            .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> _sneakersListLoading.postValue(true)
-                    State.SUCCESS -> {
-                        _sneakersListLoading.postValue(false)
-                        //_sneakersList.postValue(response.data ?: listOf())
-                    }
-                    State.ERROR -> _sneakersListLoading.postValue(false)
-                }
-            }
-    }
+    private val _colorSelected = MutableLiveData(false)
+    private val colorSelected: LiveData<Boolean> get() = _colorSelected
+
+    private val _isValid = MutableLiveData(false)
+    val isValid: LiveData<Boolean> get() = _isValid
 
     fun getSneaker(sneakerId: String) = viewModelScope.launch {
         sneakersRepository.getSneaker(sneakerId).flowOn(Dispatchers.IO)
@@ -130,6 +74,7 @@ class SneakersViewModel(
                             _sneakerHasDiscount.postValue(discount > 0)
                             _sneakerDiscount.postValue("- $discount%")
                             _sneakerInCart.postValue(sneaker.inCart)
+                            _sneakerFavorite.postValue(sneaker.favorite)
                         }
                     }
                     State.ERROR -> _sneakerLoading.postValue(false)
@@ -137,23 +82,13 @@ class SneakersViewModel(
             }
     }
 
-    fun setFavorite(sneakerId: String, favorite: Boolean) = viewModelScope.launch {
+    private fun setFavorite(sneakerId: String, favorite: Boolean) = viewModelScope.launch {
         sneakersRepository.setFavorite(sneakerId, favorite).flowOn(Dispatchers.IO)
             .collect { response ->
+                Log.i("JAVI", "Fav: $favorite")
                 when (response.status!!) {
                     State.LOADING -> {}
-                    State.SUCCESS -> sneaker.value?.id?.let { id -> getSneaker(id) }
-                    State.ERROR -> {}
-                }
-            }
-    }
-
-    fun getBrands() = viewModelScope.launch {
-        brandsRepository.getBrands().flowOn(Dispatchers.IO)
-            .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> {}
-                    State.SUCCESS -> response.data?.let { brands -> _brandsList.postValue(brands) }
+                    State.SUCCESS -> _sneakerFavorite.postValue(favorite)
                     State.ERROR -> {}
                 }
             }
@@ -203,13 +138,11 @@ class SneakersViewModel(
             }
     }
 
-    fun onClearResult() {
-        getAllSneakersComplete()
-    }
-
     fun onSneakerFavorite() {
-        val isFavorite = sneaker.value?.favorite
-        setFavorite(sneaker.value?.id!!, isFavorite!!.not())
+        val isFavorite = sneakerFavorite.value!!
+        val sneakerId = sneaker.value?.id!!
+        Log.i("JAVI", "Set fav: ${!isFavorite}")
+        setFavorite(sneakerId, !isFavorite)
     }
 
     fun onSneakerToCart() {
@@ -220,14 +153,36 @@ class SneakersViewModel(
         }
     }
 
+    fun validateSizeAndColor() {
+        _errorMessage.value?.clear()
+        if (!sizeSelected.value!!) {
+            _errorMessage.value?.add(App.getContext().getString(R.string.text_select_size))
+            _errorMessage.postValue(_errorMessage.value)
+        }
+
+        if (!colorSelected.value!!) {
+            _errorMessage.value?.add(App.getContext().getString(R.string.text_select_color))
+            _errorMessage.postValue(_errorMessage.value)
+        }
+        _isValid.postValue(errorMessages.value?.isEmpty())
+    }
+
+    fun onBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
+        fragment.startNewActivity(targetActivity = destiny, finish = false)
+    }
+
+    fun setColorSelected() {
+        _colorSelected.postValue(true)
+    }
+
+    fun setSizeSelected() {
+        _sizeSelected.postValue(true)
+    }
+
     class Factory : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SneakersViewModel::class.java)) {
-                return SneakersViewModel(
-                    SneakersResources(
-                        DatabaseBuilder.instance.database.sneakerDao(),
-                        DatabaseBuilder.instance.database.brandsDao(),
-                    ),
+            if (modelClass.isAssignableFrom(SneakerDetailDialogFragmentViewModel::class.java)) {
+                return SneakerDetailDialogFragmentViewModel(
                     SneakersResources(
                         DatabaseBuilder.instance.database.sneakerDao(),
                         DatabaseBuilder.instance.database.brandsDao(),

@@ -9,11 +9,7 @@
 
         <variable
             name="vm"
-            type="com.xavidev.testessential.ui.sneakers.SneakersViewModel" />
-
-        <variable
-            name="pvm"
-            type="com.xavidev.testessential.ui.purchases.PurchasesViewModel" />
+            type="com.xavidev.testessential.ui.sneakers.SneakerDetailDialogFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,8 +18,10 @@
         android:background="@color/white">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="@{vm.sneakerLoading ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +115,7 @@
                             android:contentDescription="@string/text_add_to_favorites"
                             android:onClick="@{() -> vm.onSneakerFavorite()}"
                             android:padding="12dp"
-                            android:src="@{vm.sneaker.favorite ? @drawable/ic_favorite_filled : @drawable/ic_favorite_outlined}"
+                            android:src="@{vm.sneakerFavorite ? @drawable/ic_favorite_filled : @drawable/ic_favorite_outlined}"
                             app:layout_constraintBottom_toBottomOf="@+id/materialButton"
                             app:layout_constraintStart_toEndOf="@+id/materialButton"
                             app:layout_constraintTop_toTopOf="@+id/materialButton" />
@@ -233,9 +231,9 @@
                                     style="@style/PrimaryButtonStyle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:onClick="@{() -> vm.validateSizeAndColor()}"
                                     android:text="@string/text_buy_now"
                                     app:elevation="0dp"
-                                    android:onClick="@{() -> pvm.validateSizeAndColor()}"
                                     app:iconTint="@color/black"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -246,5 +244,17 @@
                 </androidx.core.widget.NestedScrollView>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:visibility="@{vm.sneakerLoading ? View.VISIBLE : View.GONE}"
+            app:indicatorColor="@color/primary"
+            app:indicatorSize="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

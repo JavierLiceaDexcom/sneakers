@@ -1,7 +1,6 @@
 package com.xavidev.testessential.ui.sneakers
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,21 +30,18 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     }
 
     private val args: SneakerDetailDialogFragmentArgs by navArgs()
-
-    private val viewModel: SneakersViewModel by viewModels { SneakersViewModel.Factory() }
-    private val purchasesViewModel: PurchasesViewModel by viewModels { PurchasesViewModel.Factory() }
-
+    private val viewModel: SneakerDetailDialogFragmentViewModel by viewModels { SneakerDetailDialogFragmentViewModel.Factory() }
     private lateinit var carouselAdapter: SneakerCarouselAdapter
     private var currentPosition = 0
     private val carouselUtils = SneakerCarouselUtils()
 
-    val listener = object : ColorClickListener {
+    private val sneakerColorClickListener = object : ColorClickListener {
         override fun invoke(color: String, pos: Int) {
-            purchasesViewModel.setColorSelected()
+            viewModel.setColorSelected()
         }
     }
 
-    private val sneakerColorsAdapter = SneakerColorsSelectionAdapter(listener)
+    private val sneakerColorsAdapter = SneakerColorsSelectionAdapter(sneakerColorClickListener)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +59,6 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
-            pvm = purchasesViewModel
         }
 
         val sneakerId = args.sneakerId
@@ -90,7 +85,7 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
 
         chpGroupSizes.setOnCheckedChangeListener { chipGroup, checkedId ->
             val size = chipGroup.findViewById<Chip>(checkedId)?.text
-            purchasesViewModel.setSizeSelected()
+            viewModel.setSizeSelected()
         }
     }
 
@@ -103,15 +98,15 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
 
         viewModel.sneakerImages.observe(viewLifecycleOwner) { images -> setCarouselAdapter(images) }
 
-        purchasesViewModel.errorMessages.observe(viewLifecycleOwner) { errors ->
+        viewModel.errorMessages.observe(viewLifecycleOwner) { errors ->
             if (errors.isNotEmpty()) {
                 val message = errors.joinToString("\n")
                 requireActivity().toast(message)
             }
         }
 
-        purchasesViewModel.isValid.observe(viewLifecycleOwner) { isValid ->
-            if (isValid) purchasesViewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
+        viewModel.isValid.observe(viewLifecycleOwner) { isValid ->
+            if (isValid) viewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
         }
     }
 

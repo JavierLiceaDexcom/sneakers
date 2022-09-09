@@ -25,29 +25,7 @@ data class Sneaker(
     @ColumnInfo(name = "created_at") override val createdAt: Long?,
     @ColumnInfo(name = "updated_at") override val updatedAt: Long?,
     @ColumnInfo(name = "deleted_at") override val deletedAt: Long?,
-) : Serializable, BaseEntity {
-    fun List<Sneaker>.filterWithPercentage(percentage: Int = 0): List<Sneaker> =
-        this.filter { it.discountPercentage == percentage }.sortedBy { it.id }
-
-    fun List<Sneaker>.filterByColor(color: String): List<Sneaker> =
-        this.filter { it.colors.contains(color) }
-
-    fun List<Sneaker>.getAvailablePercentages(): List<Int> =
-        this.filter { it.discountPercentage > 0.0 }.map { it.discountPercentage }
-
-    fun List<Sneaker>.filterByType(typeId: String): List<Sneaker> =
-        this.filter { it.typeId == typeId }
-
-    fun List<Sneaker>.getRelatedSneakers() = this.map { this.contains(it) }
-
-    fun Sneaker.getPriceByCurrency(currency: Currency): Double {
-        return when (currency.name) {
-            CurrencyType.USD.name -> price
-            CurrencyType.MXN.name -> price * 20.2
-            else -> price
-        }
-    }
-}
+) : Serializable, BaseEntity
 
 data class SneakerComplete(
     val id: String,
@@ -76,4 +54,12 @@ fun SneakerComplete.toCart(): Cart {
         updatedAt = Date().time,
         deletedAt = Date().time
     )
+}
+
+fun Sneaker.getPriceByCurrency(currency: Currency): Double {
+    return when (currency.name) {
+        CurrencyType.USD.name -> price
+        CurrencyType.MXN.name -> price * 20.2
+        else -> price
+    }
 }
