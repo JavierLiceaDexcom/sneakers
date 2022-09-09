@@ -91,7 +91,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text='@{String.valueOf(vm.sneaker.discountPercentage) + "% OFF"}'
-                            android:visibility="@{vm.sneaker.discountPercentage > 0 ? View.VISIBLE: View.GONE }"
+                            android:visibility="@{vm.sneakerHasDiscount ? View.VISIBLE: View.GONE }"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="18% OFF" />
@@ -227,18 +227,6 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     tools:text="$2,600.00 MXN" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:text="@{vm.sneakerDiscount}"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                    android:textStyle="bold"
-                                    android:visibility="@{vm.sneakerHasDiscount ? View.VISIBLE : View.GONE}"
-                                    app:layout_constraintBottom_toBottomOf="@+id/textView21"
-                                    app:layout_constraintStart_toEndOf="@+id/textView21"
-                                    app:layout_constraintTop_toTopOf="@+id/textView21" />
 
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/btn_buy_now"

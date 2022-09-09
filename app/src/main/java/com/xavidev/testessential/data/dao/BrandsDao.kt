@@ -13,7 +13,7 @@ interface BrandsDao {
     suspend fun clearBrandsTable()
 
     @Transaction
-    suspend fun populateBrandsTable(brands: List<Brand>){
+    suspend fun populateBrandsTable(brands: List<Brand>) {
         clearBrandsTable()
         insertBrands(brands)
     }

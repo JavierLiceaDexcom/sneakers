@@ -12,10 +12,10 @@ class IntroAdapter(private val list: List<IntroItem>) :
     inner class IntroViewHolder(private val binding: ItemOnboardingContainerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindItem(item: IntroItem) {
-            binding.idOnboardingImage.setImageResource(item.image)
-            binding.idTitleOnboarding.text = item.title
-            binding.idMessageOnboarding.text = item.message
+        fun bindItem(item: IntroItem) = with(binding) {
+            idOnboardingImage.setImageResource(item.image)
+            idTitleOnboarding.text = item.title
+            idMessageOnboarding.text = item.message
         }
     }
 

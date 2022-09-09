@@ -55,6 +55,8 @@ dependencies {
     implementation deps.moshi
     implementation deps.room_runtime
     implementation deps.room
+    implementation deps.test_core
+    implementation deps.junit_ext
     kapt deps.room_compiler
     implementation deps.paging
     implementation deps.viewmodel
@@ -68,14 +70,14 @@ dependencies {
     testImplementation deps.junit
     //testImplementation deps.jupiter
     testImplementation deps.truth
-    androidTestImplementation deps.junit_ext
     androidTestImplementation deps.espresso
     testImplementation deps.hamcrest
     testImplementation deps.room_test
     testImplementation deps.livedata_test
     testImplementation deps.mockito
     testImplementation deps.mockk
-
+    testImplementation deps.coroutines_test
+    testImplementation 'org.robolectric:robolectric:4.8'
     //Annotations
     kapt deps.livedata_kapt
 }

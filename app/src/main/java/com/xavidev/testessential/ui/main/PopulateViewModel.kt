@@ -52,7 +52,7 @@ class PopulateViewModel(
         populateRepository.populateCurrenciesTable(currencies).flowOn(Dispatchers.IO).collect()
     }
 
-    fun populateDatabase() = viewModelScope.launch {
+    fun populateDatabase() {
         val sneakerTypes = JsonParserUtils.getObjectListFromJSON(Type::class.java, "types")
         val currencies = JsonParserUtils.getObjectListFromJSON(Currency::class.java, "currency")
         val brands = JsonParserUtils.getObjectListFromJSON(Brand::class.java, "brands")
