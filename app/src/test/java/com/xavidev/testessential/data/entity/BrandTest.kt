@@ -18,6 +18,14 @@ import java.io.IOException
 @ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
 class BrandTest {
+    //Constants for expected results
+    companion object {
+        const val EXPECTED_SIZE_TWO = 2
+        val SINGLE_BRAND = DatabaseTestUtil.createBrand(
+            name = "Adidas",
+            logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/2560px-Adidas_Logo.svg.png"
+        )
+    }
 
     private lateinit var brandsDao: BrandsDao
     private lateinit var db: AppDatabase
@@ -36,18 +44,15 @@ class BrandTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun writeBrandAndReadInList() = runTest {
-        val brand = DatabaseTestUtil.createBrand(name = "Nike", logo = "logo_example_url")
-        brandsDao.insertBrands(listOf(brand))
+        brandsDao.insertBrands(listOf(SINGLE_BRAND))
         val insertedBrand = brandsDao.getAllBrands()[0]
-        assertThat(insertedBrand).isEqualTo(brand)
+        assertThat(insertedBrand).isEqualTo(SINGLE_BRAND)
     }
 
     @Test
     fun clearBrandsTableReadEmptyList() = runTest {
-        val brand = DatabaseTestUtil.createBrand(name = "Nike", logo = "logo_example_url")
-        brandsDao.insertBrands(listOf(brand))
+        brandsDao.insertBrands(listOf(SINGLE_BRAND))
         brandsDao.clearBrandsTable()
         val brands = brandsDao.getAllBrands()
         assertThat(brands).isEmpty()
@@ -59,20 +64,16 @@ class BrandTest {
         brandsDao.insertBrands(brands)
         val insertedBrands = brandsDao.getAllBrands()
         assertThat(brands).isEqualTo(insertedBrands)
-        assertThat(brands).hasSize(2)
+        assertThat(brands).hasSize(EXPECTED_SIZE_TWO)
     }
 
     @Test
     fun clearAndPopulateBrandsTableReadBrandsList() = runTest {
-        val brand = DatabaseTestUtil.createBrand(
-            name = "Adidas",
-            logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/2560px-Adidas_Logo.svg.png"
-        )
-        brandsDao.insertBrands(listOf(brand))
+        brandsDao.insertBrands(listOf(SINGLE_BRAND))
         val brands = DatabaseTestUtil.createBrandList()
         brandsDao.populateBrandsTable(brands)
         val insertedBrands = brandsDao.getAllBrands()
         assertThat(brands).isEqualTo(insertedBrands)
-        assertThat(brands).hasSize(2)
+        assertThat(brands).hasSize(EXPECTED_SIZE_TWO)
     }
 }
