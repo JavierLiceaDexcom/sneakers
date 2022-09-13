@@ -6,7 +6,6 @@ import com.xavidev.testessential.data.db.DatabaseBuilder
 
 class App : Application() {
 
-
     companion object {
         private lateinit var instance: App
 

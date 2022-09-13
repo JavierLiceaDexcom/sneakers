@@ -21,10 +21,7 @@ class BrandTest {
     //Constants for expected results
     companion object {
         const val EXPECTED_SIZE_TWO = 2
-        val SINGLE_BRAND = DatabaseTestUtil.createBrand(
-            name = "Adidas",
-            logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/2560px-Adidas_Logo.svg.png"
-        )
+        val SINGLE_BRAND = DatabaseTestUtil.createBrand()
     }
 
     private lateinit var brandsDao: BrandsDao

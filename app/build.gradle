@@ -41,6 +41,16 @@ android {
             java {
                 srcDirs += 'build/generated/source/navigation-args'
             }
+
+            assets {
+                srcDirs 'src\\main\\assets'
+            }
+        }
+
+        test {
+            resources {
+                srcDirs 'src\\test\\assets'
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ import com.xavidev.testessential.data.db.DatabaseBuilder
 import com.xavidev.testessential.data.entity.*
 import com.xavidev.testessential.repository.PopulateRepository
 import com.xavidev.testessential.resources.PopulateResources
+import com.xavidev.testessential.utils.App
 import com.xavidev.testessential.utils.JsonParserUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -53,11 +54,11 @@ class PopulateViewModel(
     }
 
     fun populateDatabase() {
-        val sneakerTypes = JsonParserUtils.getObjectListFromJSON(Type::class.java, "types")
-        val currencies = JsonParserUtils.getObjectListFromJSON(Currency::class.java, "currency")
-        val brands = JsonParserUtils.getObjectListFromJSON(Brand::class.java, "brands")
-        val images = JsonParserUtils.getObjectListFromJSON(Images::class.java, "images")
-        val sneakers = JsonParserUtils.getObjectListFromJSON(Sneaker::class.java, "sneakers")
+        val sneakerTypes = JsonParserUtils.getObjectListFromJSON(Type::class.java, "types", App.getContext())
+        val currencies = JsonParserUtils.getObjectListFromJSON(Currency::class.java, "currency", App.getContext())
+        val brands = JsonParserUtils.getObjectListFromJSON(Brand::class.java, "brands", App.getContext())
+        val images = JsonParserUtils.getObjectListFromJSON(Images::class.java, "images", App.getContext())
+        val sneakers = JsonParserUtils.getObjectListFromJSON(Sneaker::class.java, "sneakers", App.getContext())
 
         insertSneakerCurrencies(currencies)
         insertSneakerTypes(sneakerTypes)
