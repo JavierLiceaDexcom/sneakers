@@ -33,10 +33,8 @@ class SneakerTest {
         const val BRAND_NIKE_COUNT = 1
         const val TYPE_CASUAL_COUNT = 3
         const val SNEAKER_IMAGES_LIST_COUNT = 7
-        const val BRAND_ID_NIKE = "fe8b8e2c-2272-11ed-861d-0242ac120002"
         const val TYPE_ID_CASUAL = "0d4f9ac4-2a3f-11ed-a261-0242ac120002"
         const val TRUE_VALUE = true
-        const val FALSE_VALUE = false
     }
 
     private lateinit var sneakersDao: SneakersDao

@@ -17,4 +17,7 @@ interface ImagesDao {
         deleteImages()
         insertImages(images)
     }
+
+    @Query("SELECT * FROM images")
+    suspend fun getAllImages(): List<Images>
 }
