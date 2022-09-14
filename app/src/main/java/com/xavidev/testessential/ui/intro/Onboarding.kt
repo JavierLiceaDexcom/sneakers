@@ -5,7 +5,7 @@ import android.widget.LinearLayout
 import com.xavidev.testessential.ui.intro.adapters.IntroAdapter
 
 interface Onboarding {
-    fun getIntroItems(): List<IntroItem>
+    fun getIntroItems(context: Context): List<IntroItem>
 
     fun setupIntroIndicator(
         adapter: IntroAdapter,

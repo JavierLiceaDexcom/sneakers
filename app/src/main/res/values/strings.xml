@@ -140,4 +140,14 @@
     <string name="text_select_size">Select a size</string>
     <string name="text_select_color">Select a color</string>
     <string name="text_discount_percentage">%1$d% OFF</string>
+    <string name="text_slide_1_title">Find the hottest sneakers</string>
+    <string name="text_slide_2_title">The best offers</string>
+    <string name="text_slide_2_description">Daily offers in all the brands. Become a member to get exclusive offers</string>
+    <string name="text_slide_1_description">Are you a sneakerhead? Then, you are in the right place</string>
+    <string name="text_slide_3_title">Latest releases</string>
+    <string name="text_slide_3_description">Fond the newest models, pre-order before the release date to be the first one to get them</string>
+    <string name="text_slide_4_title">Exclusive models</string>
+    <string name="text_slide_4_description">Exclusive models only in Sneakers App that you cannot fin in another place..</string>
+    <string name="text_slide_5_title">The best brands</string>
+    <string name="text_slide_5_description">The best brands in the market in a single place. Guarantee of quality.</string>
 </resources>

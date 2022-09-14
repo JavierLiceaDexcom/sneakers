@@ -11,41 +11,36 @@ import com.xavidev.testessential.ui.intro.Onboarding
 import com.xavidev.testessential.ui.intro.adapters.IntroAdapter
 
 class IntroUtils : Onboarding {
-    override fun getIntroItems(): List<IntroItem> {
+    override fun getIntroItems(context: Context): List<IntroItem> {
         return listOf(
             IntroItem(
                 image = R.drawable.air_jordan_mid_college,
-                title = "Find the hottest sneakers",
-                message = "Are you a sneakerhead? " +
-                        "Then, you are in the right place",
+                title = context.getString(R.string.text_slide_1_title),
+                message = context.getString(R.string.text_slide_1_description),
                 backgroundColor = R.color.white,
             ),
             IntroItem(
                 image = R.drawable.adidas_forum_bad_bunny,
-                title = "The best offers",
-                message = "Daily offers in all the brands. " +
-                        "Become a member to get exclusive offers",
+                title = context.getString(R.string.text_slide_2_title),
+                message = context.getString(R.string.text_slide_2_description),
                 backgroundColor = R.color.gray_soft2,
             ),
             IntroItem(
                 image = R.drawable.puma_sneaker,
-                title = "Latest releases",
-                message = "Fond the newest models, pre-order before the release date " +
-                        "to be the first one to get them",
+                title = context.getString(R.string.text_slide_3_title),
+                message = context.getString(R.string.text_slide_3_description),
                 backgroundColor = R.color.gray_soft,
             ),
             IntroItem(
                 image = R.drawable.vans_old_school,
-                title = "Exclusive models",
-                message = "Exclusive models only in Sneakers App " +
-                        "that you cannot fin in another place..",
+                title = context.getString(R.string.text_slide_4_title),
+                message = context.getString(R.string.text_slide_4_description),
                 backgroundColor = R.color.gray_soft,
             ),
             IntroItem(
                 image = R.drawable.sneaker_brands,
-                title = "The best brands",
-                message = "The best brands in the market in a single place. " +
-                        "Guarantee of quality.",
+                title = context.getString(R.string.text_slide_5_title),
+                message = context.getString(R.string.text_slide_5_description),
                 backgroundColor = R.color.white,
             ),
         )

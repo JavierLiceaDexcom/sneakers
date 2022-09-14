@@ -18,25 +18,6 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 import kotlin.coroutines.ContinuationInterceptor
 
-fun getSneaker() = Sneaker(
-    id = UUID.randomUUID().toString(),
-    "",
-    sizes = listOf(25.3, 26.0),
-    brandId = "",
-    typeId = "",
-    colors = listOf("", "", ""),
-    thumbnail = "",
-    photosId = "",
-    price = 0.0,
-    currencyId = "",
-    discountPercentage = 0,
-    favorite = false,
-    inCart = false,
-    createdAt = Date().time,
-    updatedAt = Date().time,
-    deletedAt = Date().time
-)
-
 fun <T> LiveData<T>.getOrAwaitValue(time: Long = 2L, timeUnit: TimeUnit = TimeUnit.SECONDS): T {
     var data: T? = null
     val latch = CountDownLatch(1)

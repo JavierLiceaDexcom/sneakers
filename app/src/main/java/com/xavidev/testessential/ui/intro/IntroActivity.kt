@@ -27,7 +27,7 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        introAdapter = IntroAdapter(introUtils.getIntroItems())
+        introAdapter = IntroAdapter(introUtils.getIntroItems(this))
         binding.onboardingViewPager.adapter = introAdapter
         introUtils.setupIntroIndicator(introAdapter, binding.lytIndicators, this)
         setupListeners()

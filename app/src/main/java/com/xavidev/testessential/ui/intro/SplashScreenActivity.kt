@@ -15,7 +15,6 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.setIntroPassed()
         viewModel.introPassed.observe(this) { passed ->
             val targetActivity = if (passed) MainActivity() else IntroActivity()
             startNewActivity(targetActivity, finish = true)

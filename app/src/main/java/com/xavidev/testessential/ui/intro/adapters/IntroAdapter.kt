@@ -13,9 +13,9 @@ class IntroAdapter(private val list: List<IntroItem>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindItem(item: IntroItem) = with(binding) {
-            idOnboardingImage.setImageResource(item.image)
-            idTitleOnboarding.text = item.title
-            idMessageOnboarding.text = item.message
+            imgSneakerOnboarding.setImageResource(item.image)
+            tvTitleOnboarding.text = item.title
+            tvMessageOnboarding.text = item.message
         }
     }
 

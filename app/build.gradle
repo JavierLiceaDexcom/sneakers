@@ -16,6 +16,11 @@ android {
         versionName build_versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
 
     buildTypes {
@@ -24,13 +29,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
         dataBinding true
@@ -81,13 +89,16 @@ dependencies {
     //testImplementation deps.jupiter
     testImplementation deps.truth
     androidTestImplementation deps.espresso
+    androidTestImplementation deps.rules
+    androidTestImplementation deps.runner
+    androidTestUtil deps.orchestrator
     testImplementation deps.hamcrest
     testImplementation deps.room_test
     testImplementation deps.livedata_test
     testImplementation deps.mockito
     testImplementation deps.mockk
     testImplementation deps.coroutines_test
-    testImplementation 'org.robolectric:robolectric:4.8'
+    testImplementation deps.robolectric
     //Annotations
     kapt deps.livedata_kapt
 }
