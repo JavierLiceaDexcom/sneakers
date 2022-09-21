@@ -13,8 +13,5 @@ data class Address(
     val city: String,
     val state: String,
     @ColumnInfo(name = "ext_number") val extNumber: String,
-    @ColumnInfo(name = "int_number") val intNumber: String?,
-    @ColumnInfo(name = "created_at") override val createdAt: Long?,
-    @ColumnInfo(name = "updated_at") override val updatedAt: Long?,
-    @ColumnInfo(name = "deleted_at") override val deletedAt: Long?,
-) : BaseEntity
+    @ColumnInfo(name = "int_number") val intNumber: String?
+) : BaseEntity()

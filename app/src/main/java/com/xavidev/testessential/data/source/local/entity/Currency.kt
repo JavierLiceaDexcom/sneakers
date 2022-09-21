@@ -13,10 +13,7 @@ data class Currency(
     val region: String,
     val icon: String,
     val abbreviation: String,
-    @ColumnInfo(name = "created_at") override val createdAt: Long?,
-    @ColumnInfo(name = "updated_at") override val updatedAt: Long?,
-    @ColumnInfo(name = "deleted_at") override val deletedAt: Long?,
-) : BaseEntity
+) : BaseEntity()
 
 enum class CurrencyType(name: String) {
     MXN("mxn"), USD("usd")

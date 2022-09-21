@@ -22,10 +22,7 @@ data class Sneaker(
     @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
     var favorite: Boolean = false,
     @ColumnInfo(name = "in_cart") var inCart: Boolean = false,
-    @ColumnInfo(name = "created_at") override val createdAt: Long?,
-    @ColumnInfo(name = "updated_at") override val updatedAt: Long?,
-    @ColumnInfo(name = "deleted_at") override val deletedAt: Long?,
-) : Serializable, BaseEntity
+) : Serializable, BaseEntity()
 
 data class SneakerComplete(
     val id: String,
@@ -50,9 +47,6 @@ fun SneakerComplete.toCart(): Cart {
         purchaseDate = Date().time,
         sneakerThumbnail = thumbnail,
         quantity = 1,
-        createdAt = Date().time,
-        updatedAt = Date().time,
-        deletedAt = Date().time
     )
 }
 
