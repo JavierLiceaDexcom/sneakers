@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
-class PopulateResources(
+class PopulateResources internal constructor(
     private val brandsDao: BrandsDao,
     private val sneakersDao: SneakersDao,
     private val imagesDao: ImagesDao,

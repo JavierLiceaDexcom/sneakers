@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
-class UserResources(private val userDao: UserDao) : UserRepository {
+class UserResources internal constructor(private val userDao: UserDao) : UserRepository {
     override suspend fun insertUser(user: User): Flow<Result<Boolean>> = flow {
         emit(Result.Loading)
         try {

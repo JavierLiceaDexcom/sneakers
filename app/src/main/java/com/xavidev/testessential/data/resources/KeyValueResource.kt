@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
-class KeyValueResource internal constructor(private val keyValueDao: KeyValueDao) : KeyValueRepository {
+class KeyValueResource internal constructor(private val keyValueDao: KeyValueDao) :
+    KeyValueRepository {
     override suspend fun insertKeyValue(keyValue: KeyValue): Flow<Result<Boolean>> = flow {
         emit(Result.Loading)
         try {

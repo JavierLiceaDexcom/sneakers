@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
 
-class PurchaseResources(private val purchasesDao: PurchasesDao) : PurchaseRepository {
+class PurchaseResources internal constructor(private val purchasesDao: PurchasesDao) :
+    PurchaseRepository {
     override suspend fun insertPurchase(purchase: Purchase): Flow<Result<Boolean>> = flow {
         emit(Result.Loading)
         try {

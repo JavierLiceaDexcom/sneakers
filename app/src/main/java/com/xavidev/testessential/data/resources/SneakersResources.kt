@@ -15,7 +15,7 @@ import java.io.IOException
 
 const val INSERTED = 1
 
-class SneakersResources(private val sneakersDao: SneakersDao) :
+class SneakersResources internal constructor(private val sneakersDao: SneakersDao) :
     SneakersRepository {
     override suspend fun populateSneakersTable(sneakers: List<Sneaker>): Flow<Result<Unit>> =
         flow {

@@ -23,7 +23,7 @@ class SneakersListFragment : Fragment() {
         FragmentSneakersListBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SneakersListFragmentViewModel by activityViewModels {
+    private val viewModel by activityViewModels<SneakersListFragmentViewModel> {
         ViewModelFactory(
             sneakersRepository = (requireContext().applicationContext as SneakersApplication).sneakersRepository,
             owner = this
