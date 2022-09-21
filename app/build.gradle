@@ -65,6 +65,7 @@ android {
 }
 
 dependencies {
+    //Library dependencies
     implementation deps.core_ktx
     implementation deps.appcompat
     implementation deps.material
@@ -76,7 +77,6 @@ dependencies {
     implementation deps.room
     implementation deps.test_core
     implementation deps.junit_ext
-    kapt deps.room_compiler
     implementation deps.paging
     implementation deps.viewmodel
     implementation deps.livedata
@@ -85,14 +85,11 @@ dependencies {
     implementation deps.picasso
     implementation deps.moshi_kotlin
     implementation deps.gson
-    //Testing libraries
+
+    //Unit test libraries
     testImplementation deps.junit
     //testImplementation deps.jupiter
     testImplementation deps.truth
-    androidTestImplementation deps.espresso
-    androidTestImplementation deps.rules
-    androidTestImplementation deps.runner
-    androidTestUtil deps.orchestrator
     testImplementation deps.hamcrest
     testImplementation deps.room_test
     testImplementation deps.livedata_test
@@ -100,6 +97,14 @@ dependencies {
     testImplementation deps.mockk
     testImplementation deps.coroutines_test
     testImplementation deps.robolectric
+
+    //Instrumentation test dependencies
+    androidTestImplementation deps.espresso
+    androidTestImplementation deps.rules
+    androidTestImplementation deps.runner
+    androidTestUtil deps.orchestrator
+
     //Annotations
     kapt deps.livedata_kapt
+    kapt deps.room_compiler
 }
