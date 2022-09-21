@@ -1,12 +1,10 @@
 package com.xavidev.testessential.ui.main
 
 import androidx.lifecycle.*
-import com.xavidev.testessential.data.State
-import com.xavidev.testessential.data.db.DatabaseBuilder
-import com.xavidev.testessential.data.entity.*
-import com.xavidev.testessential.repository.PopulateRepository
-import com.xavidev.testessential.resources.PopulateResources
-import com.xavidev.testessential.utils.App
+import com.xavidev.testessential.SneakersApplication
+import com.xavidev.testessential.data.Result
+import com.xavidev.testessential.data.repository.PopulateRepository
+import com.xavidev.testessential.data.source.local.entity.*
 import com.xavidev.testessential.utils.JsonParserUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -23,12 +21,12 @@ class PopulateViewModel(
     fun getSneakersCount() = viewModelScope.launch {
         populateRepository.getSneakersCount().flowOn(Dispatchers.IO)
             .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> {}
-                    State.SUCCESS -> {
-                        response.data?.let { count -> _sneakersCount.postValue(count) }
+                when (response) {
+                    is Result.Loading -> {}
+                    is Result.Success -> {
+                        response.data.let { count -> _sneakersCount.postValue(count) }
                     }
-                    State.ERROR -> {}
+                    is Result.Error -> {}
                 }
             }
     }
@@ -54,31 +52,36 @@ class PopulateViewModel(
     }
 
     fun populateDatabase() {
-        val sneakerTypes = JsonParserUtils.getObjectListFromJSON(Type::class.java, "types", App.getContext())
-        val currencies = JsonParserUtils.getObjectListFromJSON(Currency::class.java, "currency", App.getContext())
-        val brands = JsonParserUtils.getObjectListFromJSON(Brand::class.java, "brands", App.getContext())
-        val images = JsonParserUtils.getObjectListFromJSON(Images::class.java, "images", App.getContext())
-        val sneakers = JsonParserUtils.getObjectListFromJSON(Sneaker::class.java, "sneakers", App.getContext())
+        val sneakerTypes = JsonParserUtils.getObjectListFromJSON(
+            Type::class.java,
+            "types",
+            SneakersApplication.getContext()
+        )
+        val currencies = JsonParserUtils.getObjectListFromJSON(
+            Currency::class.java,
+            "currency",
+            SneakersApplication.getContext()
+        )
+        val brands = JsonParserUtils.getObjectListFromJSON(
+            Brand::class.java,
+            "brands",
+            SneakersApplication.getContext()
+        )
+        val images = JsonParserUtils.getObjectListFromJSON(
+            Images::class.java,
+            "images",
+            SneakersApplication.getContext()
+        )
+        val sneakers = JsonParserUtils.getObjectListFromJSON(
+            Sneaker::class.java,
+            "sneakers",
+            SneakersApplication.getContext()
+        )
 
         insertSneakerCurrencies(currencies)
         insertSneakerTypes(sneakerTypes)
         insertBrands(brands)
         insertSneakers(sneakers)
         insertImages(images)
-    }
-
-    class Factory : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PopulateViewModel::class.java)) {
-                return PopulateViewModel(
-                    PopulateResources(
-                        DatabaseBuilder.instance.database.brandsDao(),
-                        DatabaseBuilder.instance.database.sneakerDao(),
-                        DatabaseBuilder.instance.database.imagesDao()
-                    )
-                ) as T
-            }
-            throw Exception("Class not supported")
-        }
     }
 }

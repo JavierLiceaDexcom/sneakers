@@ -5,10 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.xavidev.testessential.R
-import com.xavidev.testessential.data.entity.Brand
+import com.xavidev.testessential.data.source.local.entity.Brand
 import com.xavidev.testessential.databinding.ItemBrandListBinding
-import com.xavidev.testessential.utils.App
 
 typealias BrandItemClickListener = (Brand, Int) -> Unit
 

@@ -23,7 +23,7 @@
         tools:layout="@layout/fragment_cart" />
     <dialog
         android:id="@+id/sneakerDetailDialogFragment"
-        android:name="com.xavidev.testessential.ui.sneakers.SneakerDetailDialogFragment"
+        android:name="com.xavidev.testessential.ui.sneakerDetail.SneakerDetailDialogFragment"
         android:label="fragment_sneaker_detail_dialog"
         tools:layout="@layout/fragment_sneaker_detail_dialog" >
         <argument

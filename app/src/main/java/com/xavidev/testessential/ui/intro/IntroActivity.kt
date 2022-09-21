@@ -5,10 +5,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.xavidev.testessential.R
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.ActivityIntroBinding
 import com.xavidev.testessential.ui.main.MainActivity
 import com.xavidev.testessential.ui.intro.adapters.IntroAdapter
 import com.xavidev.testessential.utils.IntroUtils
+import com.xavidev.testessential.utils.ViewModelFactory
 import com.xavidev.testessential.utils.startNewActivity
 import com.xavidev.testessential.utils.toast
 
@@ -20,7 +22,12 @@ class IntroActivity : AppCompatActivity() {
 
     private lateinit var introAdapter: IntroAdapter
     private var currentPosition = 0
-    private val viewModel: IntroViewModel by viewModels { IntroViewModel.Factory() }
+    private val viewModel: IntroViewModel by viewModels {
+        ViewModelFactory(
+            keyValueRepository = (this.applicationContext as SneakersApplication).ketValueRepository,
+            owner = this
+        )
+    }
     val introUtils = IntroUtils()
 
     override fun onCreate(savedInstanceState: Bundle?) {

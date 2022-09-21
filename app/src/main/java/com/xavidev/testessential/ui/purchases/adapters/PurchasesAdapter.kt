@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.xavidev.testessential.data.entity.Cart
+import com.xavidev.testessential.data.source.local.entity.Cart
 import com.xavidev.testessential.databinding.ItemPurchaseBinding
 
 class PurchasesAdapter(

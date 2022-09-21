@@ -1,7 +1,7 @@
 package com.xavidev.testessential.data
 
-import com.xavidev.testessential.data.entity.*
-import com.xavidev.testessential.data.entity.Currency
+import com.xavidev.testessential.data.source.local.entity.*
+import com.xavidev.testessential.data.source.local.entity.Currency
 import java.util.*
 
 object DatabaseTestUtil {

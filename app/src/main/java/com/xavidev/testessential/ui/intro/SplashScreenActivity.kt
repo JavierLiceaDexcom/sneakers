@@ -4,13 +4,20 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.ui.main.MainActivity
+import com.xavidev.testessential.utils.ViewModelFactory
 import com.xavidev.testessential.utils.startNewActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val viewModel: IntroViewModel by viewModels { IntroViewModel.Factory() }
+    private val viewModel: IntroViewModel by viewModels {
+        ViewModelFactory(
+            keyValueRepository = (this.applicationContext as SneakersApplication).ketValueRepository,
+            owner = this
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

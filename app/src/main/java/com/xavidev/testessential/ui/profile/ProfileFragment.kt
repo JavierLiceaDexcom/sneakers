@@ -6,14 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.FragmentProfileBinding
+import com.xavidev.testessential.utils.ViewModelFactory
 
 class ProfileFragment : Fragment() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentProfileBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: ProfileViewModel by activityViewModels { ProfileViewModel.Factory() }
+    private val viewModel: ProfileViewModel by activityViewModels {
+        ViewModelFactory(
+            userRepository = (requireContext().applicationContext as SneakersApplication).userRepository,
+            owner = this
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

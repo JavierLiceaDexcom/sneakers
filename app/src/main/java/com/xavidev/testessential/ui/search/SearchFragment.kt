@@ -8,7 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.xavidev.testessential.data.entity.Brand
+import com.xavidev.testessential.data.source.local.entity.Brand
 import com.xavidev.testessential.databinding.FragmentSearchBinding
 import com.xavidev.testessential.ui.sneakers.adapters.BrandsAdapter
 

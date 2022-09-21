@@ -1,9 +1,7 @@
 package com.xavidev.testessential.ui.main
 
 import com.xavidev.testessential.MainCoroutineRule
-import com.xavidev.testessential.data.entity.*
-import com.xavidev.testessential.resources.PopulateResources
-import com.xavidev.testessential.utils.JsonParserUtils
+import com.xavidev.testessential.data.resources.PopulateResources
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before

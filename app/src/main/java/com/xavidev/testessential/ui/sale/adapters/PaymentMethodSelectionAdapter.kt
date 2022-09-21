@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.xavidev.testessential.data.entity.Card
+import com.xavidev.testessential.data.source.local.entity.Card
 import com.xavidev.testessential.databinding.ItemAddressSelectionBinding
 
 class PaymentMethodSelectionAdapter(private val itemListener: (Card, Int) -> Unit) :

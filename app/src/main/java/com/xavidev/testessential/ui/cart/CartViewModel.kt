@@ -1,13 +1,12 @@
 package com.xavidev.testessential.ui.cart
 
-import androidx.lifecycle.*
-import com.xavidev.testessential.data.State
-import com.xavidev.testessential.data.dao.Action
-import com.xavidev.testessential.data.db.DatabaseBuilder
-import com.xavidev.testessential.data.entity.Cart
-import com.xavidev.testessential.repository.CartRepository
-import com.xavidev.testessential.resources.CartResources
-import com.xavidev.testessential.utils.App
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.xavidev.testessential.data.Result
+import com.xavidev.testessential.data.repository.CartRepository
+import com.xavidev.testessential.data.source.local.dao.Action
+import com.xavidev.testessential.data.source.local.entity.Cart
 import com.xavidev.testessential.utils.NavigationViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -33,10 +32,10 @@ class CartViewModel(private val cartRepository: CartRepository) : NavigationView
     fun insertCartItem(cart: Cart) = viewModelScope.launch {
         cartRepository.insertCartItem(cart).flowOn(Dispatchers.IO)
             .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> _loadingInsert.postValue(true)
-                    State.SUCCESS -> _loadingInsert.postValue(false)
-                    State.ERROR -> _loadingInsert.postValue(false)
+                when (response) {
+                    is Result.Loading -> _loadingInsert.postValue(true)
+                    is Result.Success -> _loadingInsert.postValue(false)
+                    is Result.Error -> _loadingInsert.postValue(false)
                 }
             }
     }
@@ -44,10 +43,10 @@ class CartViewModel(private val cartRepository: CartRepository) : NavigationView
     fun deleteCardItem(cart: Cart) = viewModelScope.launch {
         cartRepository.deleteCartItem(cart).flowOn(Dispatchers.IO)
             .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> _loadingDelete.postValue(true)
-                    State.SUCCESS -> _loadingDelete.postValue(false)
-                    State.ERROR -> _loadingDelete.postValue(false)
+                when (response) {
+                    is Result.Loading -> _loadingDelete.postValue(true)
+                    is Result.Success -> _loadingDelete.postValue(false)
+                    is Result.Error -> _loadingDelete.postValue(false)
                 }
             }
     }
@@ -55,13 +54,13 @@ class CartViewModel(private val cartRepository: CartRepository) : NavigationView
     fun getCartItems() = viewModelScope.launch {
         cartRepository.getCartItems().flowOn(Dispatchers.IO)
             .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> _loadingCartItems.postValue(true)
-                    State.SUCCESS -> {
+                when (response) {
+                    is Result.Loading -> _loadingCartItems.postValue(true)
+                    is Result.Success -> {
                         _loadingCartItems.postValue(false)
                         _cartItems.postValue(response.data ?: listOf())
                     }
-                    State.ERROR -> _loadingCartItems.postValue(false)
+                    is Result.Error -> _loadingCartItems.postValue(false)
                 }
             }
     }
@@ -69,20 +68,11 @@ class CartViewModel(private val cartRepository: CartRepository) : NavigationView
     fun updateCartItemQuantity(cartId: String, action: Action) = viewModelScope.launch {
         cartRepository.updateCartItemQuantity(cartId, action).flowOn(Dispatchers.IO)
             .collect { response ->
-                when (response.status!!) {
-                    State.LOADING -> _loadingCartItemUpdate.postValue(true)
-                    State.SUCCESS -> _loadingCartItemUpdate.postValue(false)
-                    State.ERROR -> _loadingCartItemUpdate.postValue(false)
+                when (response) {
+                    is Result.Loading -> _loadingCartItemUpdate.postValue(true)
+                    is Result.Success -> _loadingCartItemUpdate.postValue(false)
+                    is Result.Error -> _loadingCartItemUpdate.postValue(false)
                 }
             }
-    }
-
-    class Factory() : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(CartViewModel::class.java)) {
-                return CartResources(DatabaseBuilder.instance.database.cartDao()) as T
-            }
-            throw Exception("No class supported")
-        }
     }
 }

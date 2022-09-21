@@ -6,11 +6,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.xavidev.testessential.R
-import com.xavidev.testessential.ui.intro.IntroItem
-import com.xavidev.testessential.ui.intro.Onboarding
-import com.xavidev.testessential.ui.intro.adapters.IntroAdapter
-import com.xavidev.testessential.ui.sneakers.Carousel
-import com.xavidev.testessential.ui.sneakers.adapters.SneakerCarouselAdapter
+import com.xavidev.testessential.ui.sneakerDetail.Carousel
+import com.xavidev.testessential.ui.sneakerDetail.adapters.SneakerCarouselAdapter
 
 class SneakerCarouselUtils : Carousel {
 

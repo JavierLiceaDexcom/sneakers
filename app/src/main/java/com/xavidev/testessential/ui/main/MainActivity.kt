@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.xavidev.testessential.R
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.ActivityMainBinding
+import com.xavidev.testessential.utils.ViewModelFactory
 import com.xavidev.testessential.utils.toast
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +17,12 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: PopulateViewModel by viewModels { PopulateViewModel.Factory() }
+    private val viewModel: PopulateViewModel by viewModels {
+        ViewModelFactory(
+            populateRepository = (this.applicationContext as SneakersApplication).populateRepository,
+            owner = this
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

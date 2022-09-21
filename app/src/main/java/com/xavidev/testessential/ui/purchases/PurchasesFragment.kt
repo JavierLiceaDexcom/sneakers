@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.FragmentPurchasesBinding
+import com.xavidev.testessential.utils.ViewModelFactory
 
 
 class PurchasesFragment : Fragment() {
@@ -16,7 +18,12 @@ class PurchasesFragment : Fragment() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentPurchasesBinding.inflate(layoutInflater)
     }
-    private val viewModel: PurchasesViewModel by viewModels { PurchasesViewModel.Factory() }
+    private val viewModel: PurchasesViewModel by viewModels {
+        ViewModelFactory(
+            purchaseRepository = (requireContext().applicationContext as SneakersApplication).purchaseRepository,
+            owner = this
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

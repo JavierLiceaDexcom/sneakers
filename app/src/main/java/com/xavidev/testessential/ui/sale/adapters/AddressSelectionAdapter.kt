@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.xavidev.testessential.data.entity.Address
+import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.databinding.ItemAddressSelectionBinding
 
 class AddressSelectionAdapter(private val itemListener: (Address, Int) -> Unit) :

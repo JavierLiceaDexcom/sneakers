@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.FragmentCartBinding
+import com.xavidev.testessential.utils.ViewModelFactory
 
 class CartFragment : Fragment() {
 
@@ -14,7 +16,12 @@ class CartFragment : Fragment() {
         FragmentCartBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: CartViewModel by activityViewModels { CartViewModel.Factory() }
+    private val viewModel: CartViewModel by activityViewModels {
+        ViewModelFactory(
+            cartRepository = (requireContext().applicationContext as SneakersApplication).cartRepository,
+            owner = this
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

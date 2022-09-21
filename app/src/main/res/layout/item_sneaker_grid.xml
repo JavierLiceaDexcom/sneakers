@@ -13,7 +13,7 @@
 
         <variable
             name="sneaker"
-            type="com.xavidev.testessential.data.entity.SneakerComplete" />
+            type="com.xavidev.testessential.data.source.local.entity.SneakerComplete" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.xavidev.testessential.R
-import com.xavidev.testessential.data.entity.Card
+import com.xavidev.testessential.data.source.local.entity.Card
 import com.xavidev.testessential.databinding.FragmentPaymentMethodBinding
 import com.xavidev.testessential.ui.sale.adapters.PaymentMethodSelectionAdapter
 

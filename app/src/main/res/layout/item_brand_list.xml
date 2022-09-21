@@ -7,7 +7,7 @@
 
         <variable
             name="brand"
-            type="com.xavidev.testessential.data.entity.Brand" />
+            type="com.xavidev.testessential.data.source.local.entity.Brand" />
 
         <variable
             name="vm"

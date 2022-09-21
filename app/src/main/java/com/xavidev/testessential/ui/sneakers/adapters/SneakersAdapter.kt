@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.xavidev.testessential.data.entity.SneakerComplete
+import com.xavidev.testessential.data.source.local.entity.SneakerComplete
 import com.xavidev.testessential.databinding.ItemSneakerGridBinding
-import com.xavidev.testessential.utils.App
+import com.xavidev.testessential.SneakersApplication
 
 typealias SneakerItemClickListener = (SneakerComplete, Int) -> Unit
 typealias SneakerFavoriteClickListener = (SneakerComplete, Int) -> Unit
@@ -46,7 +46,7 @@ class SneakersAdapter(
         private fun loadColors(colors: List<String>, rvColors: RecyclerView) {
             val colorsAdapter = SneakerColorsAdapter()
             val linearLayoutManager =
-                LinearLayoutManager(App.getContext(), LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(SneakersApplication.getContext(), LinearLayoutManager.HORIZONTAL, false)
             rvColors.apply {
                 layoutManager = linearLayoutManager
                 adapter = colorsAdapter

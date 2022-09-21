@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.xavidev.testessential.ui.sneakers.SneakerDetailDialogFragmentViewModel" />
+            type="com.xavidev.testessential.ui.sneakerDetail.SneakerDetailDialogFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

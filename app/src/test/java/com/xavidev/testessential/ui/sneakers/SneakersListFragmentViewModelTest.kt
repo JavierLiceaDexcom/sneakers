@@ -1,14 +1,9 @@
 package com.xavidev.testessential.ui.sneakers
 
-import com.xavidev.testessential.data.dao.BrandsDao
-import com.xavidev.testessential.data.dao.SneakersDao
-import com.xavidev.testessential.data.entity.Sneaker
-import com.xavidev.testessential.data.entity.SneakerComplete
-import com.xavidev.testessential.getOrAwaitValue
-import com.xavidev.testessential.resources.SneakersResources
+import com.xavidev.testessential.data.source.local.dao.BrandsDao
+import com.xavidev.testessential.data.source.local.dao.SneakersDao
+import com.xavidev.testessential.data.resources.SneakersResources
 import io.mockk.mockk
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 

@@ -9,10 +9,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
-import com.xavidev.testessential.data.entity.Brand
-import com.xavidev.testessential.data.entity.SneakerComplete
+import com.xavidev.testessential.data.source.local.entity.Brand
+import com.xavidev.testessential.data.source.local.entity.SneakerComplete
 import com.xavidev.testessential.databinding.FragmentSneakersListBinding
 import com.xavidev.testessential.ui.sneakers.adapters.*
+import com.xavidev.testessential.SneakersApplication
+import com.xavidev.testessential.utils.ViewModelFactory
 import com.xavidev.testessential.utils.toast
 
 class SneakersListFragment : Fragment() {
@@ -21,7 +23,19 @@ class SneakersListFragment : Fragment() {
         FragmentSneakersListBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SneakersListFragmentViewModel by activityViewModels { SneakersListFragmentViewModel.Factory() }
+    private val viewModel: SneakersListFragmentViewModel by activityViewModels {
+        ViewModelFactory(
+            sneakersRepository = (requireContext().applicationContext as SneakersApplication).sneakersRepository,
+            owner = this
+        )
+    }
+
+    private val brandsViewModel by activityViewModels<BrandsViewModel> {
+        ViewModelFactory(
+            brandsRepository = (requireContext().applicationContext as SneakersApplication).brandsRepository,
+            owner = this
+        )
+    }
 
     private val sneakerItemClickListener = object : SneakerItemClickListener {
         override fun invoke(sneaker: SneakerComplete, pos: Int) {
@@ -84,14 +98,14 @@ class SneakersListFragment : Fragment() {
     }
 
     private fun getSneakersBrands() {
-        viewModel.getBrands()
+        brandsViewModel.getBrands()
         binding.recyclerSneakerBrands.apply {
             adapter = brandsAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        viewModel.brandsList.observe(viewLifecycleOwner) { brands ->
+        brandsViewModel.brandsList.observe(viewLifecycleOwner) { brands ->
             brandsAdapter.submitList(brands)
         }
     }
