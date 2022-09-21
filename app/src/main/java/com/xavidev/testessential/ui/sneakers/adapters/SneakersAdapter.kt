@@ -17,9 +17,9 @@ class SneakersAdapter(
     private val itemClickListener: SneakerItemClickListener,
     private val favoriteClickListener: SneakerFavoriteClickListener,
 ) :
-    ListAdapter<SneakerComplete, SneakersAdapter.ViewHolder>(SneakersCallback) {
+    ListAdapter<SneakerComplete, SneakersAdapter.ViewHolder>(SneakersDiffCallback()) {
 
-    inner class ViewHolder(val binding: ItemSneakerGridBinding) :
+    class ViewHolder private constructor(val binding: ItemSneakerGridBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             sneakerItem: SneakerComplete,
@@ -46,29 +46,29 @@ class SneakersAdapter(
         private fun loadColors(colors: List<String>, rvColors: RecyclerView) {
             val colorsAdapter = SneakerColorsAdapter()
             val linearLayoutManager =
-                LinearLayoutManager(SneakersApplication.getContext(), LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(
+                    SneakersApplication.getContext(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
             rvColors.apply {
                 layoutManager = linearLayoutManager
                 adapter = colorsAdapter
             }
             colorsAdapter.submitList(colors)
         }
-    }
 
-    companion object {
-        object SneakersCallback : DiffUtil.ItemCallback<SneakerComplete>() {
-            override fun areItemsTheSame(oldItem: SneakerComplete, newItem: SneakerComplete) =
-                oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: SneakerComplete, newItem: SneakerComplete) =
-                oldItem == newItem
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = ItemSneakerGridBinding.inflate(inflater, parent, false)
+                return ViewHolder(binding)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemSneakerGridBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -78,4 +78,12 @@ class SneakersAdapter(
     fun updateItem(sneakerItem: SneakerComplete, position: Int) {
         notifyItemChanged(position, sneakerItem)
     }
+}
+
+class SneakersDiffCallback : DiffUtil.ItemCallback<SneakerComplete>() {
+    override fun areItemsTheSame(oldItem: SneakerComplete, newItem: SneakerComplete) =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: SneakerComplete, newItem: SneakerComplete) =
+        oldItem == newItem
 }

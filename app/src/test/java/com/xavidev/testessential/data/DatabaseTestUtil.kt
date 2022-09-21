@@ -5,82 +5,95 @@ import com.xavidev.testessential.data.source.local.entity.Currency
 import java.util.*
 
 object DatabaseTestUtil {
+
+    val currentTime = System.currentTimeMillis()
+
     // Brand utils
     fun createBrand() =
         Brand(
             id = "0d4f8df4-2a3f-11ed-a261-0242ac120002",
             name = "Nike",
             logo = "https://nikecompanyblog.files.wordpress.com/2015/05/nike1.jpg",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        )
+        }
 
     fun createBrandList() = listOf(
         Brand(
             id = "0d4f8df4-2a3f-11ed-a261-0242ac120002",
             name = "Nike",
             logo = "https://nikecompanyblog.files.wordpress.com/2015/05/nike1.jpg",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+
+            ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Brand(
             id = "0d4f90ba-2a3f-11ed-a261-0242ac120002",
             name = "Adidas",
             logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/2560px-Adidas_Logo.svg.png",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Brand(
             id = "0d4f91fa-2a3f-11ed-a261-0242ac120002",
             name = "Converse",
             logo = "https://assets.simon.com/tenantlogos/13410.png",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Brand(
             id = "0d4f9312-2a3f-11ed-a261-0242ac120002",
             name = "New Balance",
             logo = "https://logos-world.net/wp-content/uploads/2020/09/New-Balance-Emblem.png",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Brand(
             id = "0d4f9434-2a3f-11ed-a261-0242ac120002",
             name = "Puma",
             logo = "https://1000logos.net/wp-content/uploads/2017/05/PUMA-logo.jpg",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Brand(
             id = "0d4f9542-2a3f-11ed-a261-0242ac120002",
             name = "Reebok",
             logo = "https://preview.thenewsmarket.com/Previews/RBOK/StillAssets/1920x1080/551064.png",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Brand(
             id = "0d4f9646-2a3f-11ed-a261-0242ac120002",
             name = "Yeezy",
             logo = "https://i.pinimg.com/originals/53/96/37/5396379804fae3dffdcc887102f223e1.png",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Brand(
             id = "0d4f99c0-2a3f-11ed-a261-0242ac120002",
             name = "Vans",
             logo = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Vans-logo.svg/2560px-Vans-logo.svg.png",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        )
+        }
     )
 
     // Sneakers utils
@@ -98,10 +111,11 @@ object DatabaseTestUtil {
         currencyId = "0d4f9eca-2a3f-11ed-a261-0242ac120002",
         favorite = false,
         inCart = false,
-        createdAt = Date().time,
-        updatedAt = Date().time,
+    ).apply {
+        createdAt = currentTime
+        updatedAt = currentTime
         deletedAt = null
-    )
+    }
 
     fun createSneakersList(): List<Sneaker> = listOf(
         Sneaker(
@@ -118,10 +132,11 @@ object DatabaseTestUtil {
             currencyId = "0d4f9eca-2a3f-11ed-a261-0242ac120002",
             inCart = false,
             favorite = false,
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Sneaker(
             id = "0d4fb22a-2a3f-11ed-a261-0242ac120002",
             brandId = "0d4f90ba-2a3f-11ed-a261-0242ac120002",
@@ -136,10 +151,11 @@ object DatabaseTestUtil {
             currencyId = "0d4f9eca-2a3f-11ed-a261-0242ac120002",
             inCart = false,
             favorite = false,
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Sneaker(
             id = "0d4fb32e-2a3f-11ed-a261-0242ac120002",
             brandId = "0d4f91fa-2a3f-11ed-a261-0242ac120002",
@@ -154,10 +170,11 @@ object DatabaseTestUtil {
             currencyId = "0d4f9eca-2a3f-11ed-a261-0242ac120002",
             inCart = false,
             favorite = false,
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Sneaker(
             id = "0d4fb428-2a3f-11ed-a261-0242ac120002",
             brandId = "0d4f9312-2a3f-11ed-a261-0242ac120002",
@@ -172,10 +189,11 @@ object DatabaseTestUtil {
             currencyId = "0d4f9fce-2a3f-11ed-a261-0242ac120002",
             inCart = false,
             favorite = false,
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        )
+        }
     )
 
     fun createSneakerComplete(): SneakerComplete = SneakerComplete(
@@ -265,20 +283,22 @@ object DatabaseTestUtil {
             region = "MX",
             icon = "https://cdn.pixabay.com/photo/2012/04/10/23/24/mexico-26989__480.png",
             abbreviation = "MXN",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        ),
+        },
         Currency(
             id = "0d4f9fce-2a3f-11ed-a261-0242ac120002",
             name = "Dollar",
             region = "US",
             icon = "https://eabc-online.com/wp-content/uploads/2021/11/Flags.jpg",
             abbreviation = "USD",
-            createdAt = Date().time,
-            updatedAt = Date().time,
+        ).apply {
+            createdAt = currentTime
+            updatedAt = currentTime
             deletedAt = null
-        )
+        }
     )
 
     //Types utils

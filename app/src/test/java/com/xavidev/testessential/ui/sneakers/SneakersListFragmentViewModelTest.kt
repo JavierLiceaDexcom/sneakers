@@ -11,14 +11,13 @@ import org.junit.Test
 internal class SneakersListFragmentViewModelTest {
 
     private val sneakerDao = mockk<SneakersDao>()
-    private val brandsDao = mockk<BrandsDao>()
     private lateinit var sneakersResources: SneakersResources
     private lateinit var viewModel: SneakersListFragmentViewModel
 
     @Before
     fun setup() {
-        sneakersResources = SneakersResources(sneakerDao, brandsDao)
-        viewModel = SneakersListFragmentViewModel(sneakersResources, sneakersResources)
+        sneakersResources = SneakersResources(sneakerDao)
+        viewModel = SneakersListFragmentViewModel(sneakersResources)
     }
 
     // List of the tests

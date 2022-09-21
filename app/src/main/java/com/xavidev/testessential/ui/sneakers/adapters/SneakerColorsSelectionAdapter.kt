@@ -12,7 +12,7 @@ import com.xavidev.testessential.databinding.ItemSneakerColorSelectionBinding
 typealias ColorClickListener = (String, Int) -> Unit
 
 class SneakerColorsSelectionAdapter(private val itemClickListener: ColorClickListener) :
-    ListAdapter<String, SneakerColorsSelectionAdapter.ViewHolder>(SneakerSizeCallback) {
+    ListAdapter<String, SneakerColorsSelectionAdapter.ViewHolder>(SneakerSizeSelectionDiffCallback()) {
 
     var selectedItemPos = -1
     var lastItemSelectedPos = -1
@@ -50,14 +50,6 @@ class SneakerColorsSelectionAdapter(private val itemClickListener: ColorClickLis
         }
     }
 
-    companion object {
-        object SneakerSizeCallback : DiffUtil.ItemCallback<String>() {
-            override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
-
-            override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSneakerColorSelectionBinding.inflate(inflater, parent, false)
@@ -68,4 +60,10 @@ class SneakerColorsSelectionAdapter(private val itemClickListener: ColorClickLis
         if (position == selectedItemPos) holder.selectColor() else holder.deselectColor()
         holder.bind(currentList[position], itemClickListener)
     }
+}
+
+class SneakerSizeSelectionDiffCallback : DiffUtil.ItemCallback<String>() {
+    override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
+
+    override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
 }

@@ -11,7 +11,7 @@ import com.xavidev.testessential.databinding.ItemBrandListBinding
 typealias BrandItemClickListener = (Brand, Int) -> Unit
 
 class BrandsAdapter(private val itemClickListener: BrandItemClickListener) :
-    ListAdapter<Brand, BrandsAdapter.ViewHolder>(BrandsCallback) {
+    ListAdapter<Brand, BrandsAdapter.ViewHolder>(BrandsDiffCallback()) {
 
     var selectedItemPos = -1
     var lastItemSelectedPos = -1
@@ -46,15 +46,6 @@ class BrandsAdapter(private val itemClickListener: BrandItemClickListener) :
         }
     }
 
-    companion object {
-        object BrandsCallback : DiffUtil.ItemCallback<Brand>() {
-            override fun areItemsTheSame(oldItem: Brand, newItem: Brand) =
-                oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: Brand, newItem: Brand) = oldItem == newItem
-        }
-    }
-
     fun clearSelectedItem() {
         notifyItemChanged(lastItemSelectedPos)
         selectedItemPos = -1
@@ -71,4 +62,11 @@ class BrandsAdapter(private val itemClickListener: BrandItemClickListener) :
         if (position == selectedItemPos) holder.checkCard() else holder.uncheckCard()
         holder.bind(currentList[position], itemClickListener)
     }
+}
+
+class BrandsDiffCallback : DiffUtil.ItemCallback<Brand>() {
+    override fun areItemsTheSame(oldItem: Brand, newItem: Brand) =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: Brand, newItem: Brand) = oldItem == newItem
 }
