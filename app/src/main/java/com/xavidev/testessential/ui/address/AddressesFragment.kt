@@ -1,4 +1,4 @@
-package com.xavidev.testessential.ui.profile
+package com.xavidev.testessential.ui.address
 
 import android.os.Bundle
 import android.view.LayoutInflater

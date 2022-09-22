@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressesFragment"
-        android:name="com.xavidev.testessential.ui.profile.AddressesFragment"
+        android:name="com.xavidev.testessential.ui.address.AddressesFragment"
         android:label="fragment_addresses"
         tools:layout="@layout/fragment_addresses">
         <action
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressFormFragment"
-        android:name="com.xavidev.testessential.ui.profile.AddressFormFragment"
+        android:name="com.xavidev.testessential.ui.address.AddressFormFragment"
         android:label="fragment_address_form"
         tools:layout="@layout/fragment_address_form" >
         <action

@@ -47,6 +47,11 @@ object ServiceLocator {
     var populateRepository: PopulateRepository? = null
         @VisibleForTesting set
 
+    @VisibleForTesting
+    @Volatile
+    var addressRepository: AddressRepository? = null
+        @VisibleForTesting set
+
     private val lock = Any()
 
     private fun createDatabase(context: Context): AppDatabase {
@@ -150,6 +155,19 @@ object ServiceLocator {
             db.imagesDao()
         )
         populateRepository = newRepo
+        return newRepo
+    }
+
+    //Address
+    fun provideAddressRepository(context: Context): AddressRepository {
+        synchronized(lock) {
+            return addressRepository ?: createAddressRepository(context)
+        }
+    }
+
+    private fun createAddressRepository(context: Context): AddressRepository {
+        val newRepo = AddressResources(getDatabase(context).addressDao())
+        addressRepository = newRepo
         return newRepo
     }
 }

@@ -1,4 +1,4 @@
-package com.xavidev.testessential.ui.profile
+package com.xavidev.testessential.ui.address
 
 import android.app.Dialog
 import android.os.Bundle
@@ -25,7 +25,7 @@ class AddressFormFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ) = binding.root
 
-   // override fun getTheme() = R.style.FullscreenDialogTheme_Primary
+   override fun getTheme() = R.style.FullscreenDialogTheme_Primary
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)

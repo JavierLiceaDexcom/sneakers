@@ -7,14 +7,14 @@
 
         <variable
             name="vm"
-            type="com.xavidev.testessential.ui.profile.AddressViewModel" />
+            type="com.xavidev.testessential.ui.address.AddressViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray"
-        tools:context=".ui.profile.AddressesFragment">
+        tools:context=".ui.address.AddressesFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/abl_addresses"

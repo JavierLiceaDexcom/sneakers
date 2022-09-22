@@ -40,4 +40,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun keyValueDao(): KeyValueDao
     abstract fun userDao(): UserDao
     abstract fun purchasesDao(): PurchasesDao
+    abstract fun addressDao(): AddressDao
 }
