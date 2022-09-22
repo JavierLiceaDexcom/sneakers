@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.xavidev.testessential.data.Result
 import com.xavidev.testessential.data.source.local.entity.*
 import com.xavidev.testessential.data.repository.SneakersRepository
+import com.xavidev.testessential.utils.Event
 import com.xavidev.testessential.utils.NavigationViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -18,14 +19,14 @@ class SneakersListFragmentViewModel(private val sneakersRepository: SneakersRepo
     private val _sneakersList = MutableLiveData<List<SneakerComplete>>()
     val sneakersList: LiveData<List<SneakerComplete>> get() = _sneakersList
 
-    private val _clearResults = MutableLiveData(false)
-    val clearResults: LiveData<Boolean> get() = _clearResults
+    private val _clearResults = MutableLiveData<Event<Boolean>>()
+    val clearResults: LiveData<Event<Boolean>> get() = _clearResults
 
     private val _showEmptyState = MutableLiveData(false)
     val showEmptyState: LiveData<Boolean> get() = _showEmptyState
 
     private fun setClearResults(value: Boolean) {
-        _clearResults.value = value
+        _clearResults.value = Event(value)
     }
 
     fun getAllSneakersComplete() = viewModelScope.launch {

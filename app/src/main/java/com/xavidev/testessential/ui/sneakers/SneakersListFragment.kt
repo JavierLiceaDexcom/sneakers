@@ -6,18 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Brand
 import com.xavidev.testessential.data.source.local.entity.SneakerComplete
 import com.xavidev.testessential.databinding.FragmentSneakersListBinding
+import com.xavidev.testessential.ui.main.PopulateViewModel
 import com.xavidev.testessential.ui.sneakers.adapters.*
-import com.xavidev.testessential.SneakersApplication
-import com.xavidev.testessential.utils.ViewModelFactory
-import com.xavidev.testessential.utils.toast
+import com.xavidev.testessential.utils.*
+import kotlinx.coroutines.launch
 
 class SneakersListFragment : Fragment() {
+
+    companion object {
+        private const val GRID_COUNT = 2
+    }
 
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentSneakersListBinding.inflate(layoutInflater)
@@ -33,6 +40,13 @@ class SneakersListFragment : Fragment() {
     private val brandsViewModel by activityViewModels<BrandsViewModel> {
         ViewModelFactory(
             brandsRepository = (requireContext().applicationContext as SneakersApplication).brandsRepository,
+            owner = this
+        )
+    }
+
+    private val populateModel: PopulateViewModel by viewModels {
+        ViewModelFactory(
+            populateRepository = (requireContext().applicationContext as SneakersApplication).populateRepository,
             owner = this
         )
     }
@@ -75,21 +89,49 @@ class SneakersListFragment : Fragment() {
             vm = viewModel
         }
 
-        getSneakersBrands()
-        getSneakersList()
+        populateDatabase()
 
-        viewModel.clearResults.observe(viewLifecycleOwner) { filter ->
+        populateModel.databasePopulatedEvent.observe(viewLifecycleOwner, EventObserver {
+            getBrandsAndSneakers()
+        })
+
+        viewModel.clearResults.observe(viewLifecycleOwner, EventObserver { filter ->
             if (!filter) {
                 brandsAdapter.clearSelectedItem()
+            }
+
+            binding.fabClearResults.apply { if (filter) visible() else gone() }
+        })
+
+        setSneakersBrands()
+        setSneakersList()
+    }
+
+    private fun getBrandsAndSneakers() {
+        brandsViewModel.getBrands()
+        viewModel.getAllSneakersComplete()
+    }
+
+    private fun populateDatabase() {
+        populateModel.getSneakersCount()
+
+        populateModel.sneakersCount.observe(viewLifecycleOwner) { count ->
+            if (count == 0) {
+                lifecycleScope.launch {
+                    populateModel.populateDatabase(requireContext())
+                }
+            } else {
+                getBrandsAndSneakers()
             }
         }
     }
 
-    private fun getSneakersList() {
-        viewModel.getAllSneakersComplete()
+    private fun setSneakersList() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), GRID_COUNT)
+
         binding.recyclerSneakers.apply {
             adapter = sneakersAdapter
-            layoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = gridLayoutManager
         }
 
         viewModel.sneakersList.observe(viewLifecycleOwner) { sneakers ->
@@ -97,12 +139,13 @@ class SneakersListFragment : Fragment() {
         }
     }
 
-    private fun getSneakersBrands() {
-        brandsViewModel.getBrands()
+    private fun setSneakersBrands() {
+        val linearLayoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
         binding.recyclerSneakerBrands.apply {
             adapter = brandsAdapter
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = linearLayoutManager
         }
 
         brandsViewModel.brandsList.observe(viewLifecycleOwner) { brands ->
@@ -110,6 +153,7 @@ class SneakersListFragment : Fragment() {
         }
     }
 
+    //TODO: Remove this method and create a reactive call to update the list
     private fun setSneakerFavorite(sneaker: SneakerComplete, pos: Int) {
         sneakersAdapter.updateItem(sneaker, pos)
         val value = sneaker.favorite.not()

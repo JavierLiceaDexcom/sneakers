@@ -21,7 +21,7 @@ class KeyValueResource internal constructor(private val keyValueDao: KeyValueDao
 
     }
 
-    override suspend fun getKeyValue(key: String): Flow<Result<KeyValue>> = flow {
+    override suspend fun getKeyValue(key: String): Flow<Result<KeyValue?>> = flow {
         emit(Result.Loading)
         try {
             val response = keyValueDao.getKeyValue(key)

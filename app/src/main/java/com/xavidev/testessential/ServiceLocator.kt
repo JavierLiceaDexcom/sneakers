@@ -5,9 +5,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.room.Room
 import com.xavidev.testessential.data.repository.*
 import com.xavidev.testessential.data.resources.*
-import com.xavidev.testessential.data.source.local.dao.BrandsDao
-import com.xavidev.testessential.data.source.local.dao.CartDao
-import com.xavidev.testessential.data.source.local.dao.SneakersDao
 import com.xavidev.testessential.data.source.local.db.AppDatabase
 import com.xavidev.testessential.data.source.local.db.DB_NAME
 

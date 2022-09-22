@@ -11,8 +11,6 @@ import com.xavidev.testessential.data.source.local.entity.KeyValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 class IntroViewModel(private val keyValueRepository: KeyValueRepository) : ViewModel() {
@@ -30,7 +28,7 @@ class IntroViewModel(private val keyValueRepository: KeyValueRepository) : ViewM
                 when (response) {
                     is Result.Loading -> {}
                     is Result.Success -> {
-                        val passed = response.data.value.toBoolean()
+                        val passed = response.data?.value.toBoolean()
                         _introPassed.postValue(passed)
                     }
                     is Result.Error -> {}
