@@ -42,15 +42,8 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun viewModelObservers() = with(viewModel) {
-        introPassedLoader.observe(this@IntroActivity) { loading ->
-            if (loading) {
-                toast("Loading...")
-            }
-        }
-
         introPassed.observe(this@IntroActivity) { passed ->
             if (passed) {
-                toast("Intro passed")
                 startNewActivity(targetActivity = MainActivity(), finish = true)
             }
         }
@@ -82,6 +75,7 @@ class IntroActivity : AppCompatActivity() {
                 binding.onboardingViewPager.currentItem = currentPosition.plus(1)
             } else {
                 viewModel.setIntroPassed()
+                startNewActivity(targetActivity = MainActivity(), finish = true)
             }
         }
     }

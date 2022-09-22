@@ -9,30 +9,31 @@ import com.xavidev.testessential.data.repository.KeyValueRepository
 import com.xavidev.testessential.data.source.local.dao.KeyValueDao
 import com.xavidev.testessential.data.source.local.entity.KeyValue
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 class IntroViewModel(private val keyValueRepository: KeyValueRepository) : ViewModel() {
-
-    private val _introPassedLoader = MutableLiveData(false)
-    val introPassedLoader: LiveData<Boolean> get() = _introPassedLoader
 
     private val _introPassed = MutableLiveData(false)
     val introPassed: LiveData<Boolean> get() = _introPassed
 
     private fun saveKeyValue(keyValue: KeyValue) = viewModelScope.launch {
-        keyValueRepository.insertKeyValue(keyValue).flowOn(Dispatchers.IO)
+        keyValueRepository.insertKeyValue(keyValue).flowOn(Dispatchers.IO).collect()
+    }
+
+    fun getIntroPassed() = viewModelScope.launch {
+        keyValueRepository.getKeyValue(KeyValueDao.INTRO_PASSED).flowOn(Dispatchers.IO)
             .collect { response ->
                 when (response) {
-                    is Result.Loading -> _introPassedLoader.postValue(true)
+                    is Result.Loading -> {}
                     is Result.Success -> {
-                        _introPassedLoader.postValue(false)
-                        _introPassed.postValue(true)
+                        val passed = response.data.value.toBoolean()
+                        _introPassed.postValue(passed)
                     }
-                    is Result.Error -> {
-                        _introPassedLoader.postValue(false)
-                        _introPassed.postValue(false)
-                    }
+                    is Result.Error -> {}
                 }
             }
     }
