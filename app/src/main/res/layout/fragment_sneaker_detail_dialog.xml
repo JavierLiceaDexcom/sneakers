@@ -233,7 +233,7 @@
                                     style="@style/PrimaryButtonStyle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:onClick="@{() -> vm.validateSizeAndColor()}"
+                                    android:onClick="@{() -> vm.onBuySneaker()}"
                                     android:text="@string/text_buy_now"
                                     app:elevation="0dp"
                                     app:iconTint="@color/black"

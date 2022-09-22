@@ -8,9 +8,11 @@ import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
@@ -62,6 +64,22 @@ private fun View.hide(hidingStrategy: Int, animate: Boolean = true) {
 }
 
 fun Context.toast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+fun View.showSnackbar(snackbarText: String, timeLength: Int) {
+    Snackbar.make(this, snackbarText, timeLength).run { show() }
+}
+
+fun View.setupSnackbar(
+    lifecycleOwner: LifecycleOwner,
+    snackbarEvent: LiveData<Event<Int>>,
+    timeLength: Int
+) {
+    snackbarEvent.observe(lifecycleOwner) { event ->
+        event.getContentIfNotHandled()?.let {
+            showSnackbar(context.getString(it), timeLength)
+        }
+    }
+}
 
 fun Activity.startNewActivity(targetActivity: Activity, finish: Boolean = true) {
     this.startActivity(Intent(this, targetActivity::class.java))

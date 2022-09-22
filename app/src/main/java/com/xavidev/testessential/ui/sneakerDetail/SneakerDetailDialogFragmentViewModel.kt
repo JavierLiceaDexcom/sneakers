@@ -1,18 +1,19 @@
 package com.xavidev.testessential.ui.sneakerDetail
 
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.xavidev.testessential.R
 import com.xavidev.testessential.data.Result
+import com.xavidev.testessential.data.repository.CartRepository
+import com.xavidev.testessential.data.repository.SneakersRepository
 import com.xavidev.testessential.data.source.local.entity.Cart
 import com.xavidev.testessential.data.source.local.entity.Images
 import com.xavidev.testessential.data.source.local.entity.SneakerComplete
 import com.xavidev.testessential.data.source.local.entity.toCart
-import com.xavidev.testessential.data.repository.CartRepository
-import com.xavidev.testessential.data.repository.SneakersRepository
-import com.xavidev.testessential.SneakersApplication
+import com.xavidev.testessential.utils.Event
 import com.xavidev.testessential.utils.NavigationViewModel
 import com.xavidev.testessential.utils.startNewActivity
 import kotlinx.coroutines.Dispatchers
@@ -46,8 +47,11 @@ class SneakerDetailDialogFragmentViewModel(
     val sneakerFavorite: LiveData<Boolean> get() = _sneakerFavorite
 
     //Validations
-    private val _errorMessage = MutableLiveData<MutableList<String>>(mutableListOf())
-    val errorMessages: LiveData<MutableList<String>> get() = _errorMessage
+    private val _errorMessage = MutableLiveData<Event<Int>>()
+    val errorMessages: LiveData<Event<Int>> get() = _errorMessage
+
+    private val _addedToCartMessage = MutableLiveData<Event<Int>>()
+    val addedToCartMessage: LiveData<Event<Int>> get() = _addedToCartMessage
 
     private val _sizeSelected = MutableLiveData(false)
     private val sizeSelected: LiveData<Boolean> get() = _sizeSelected
@@ -55,8 +59,8 @@ class SneakerDetailDialogFragmentViewModel(
     private val _colorSelected = MutableLiveData(false)
     private val colorSelected: LiveData<Boolean> get() = _colorSelected
 
-    private val _isValid = MutableLiveData(false)
-    val isValid: LiveData<Boolean> get() = _isValid
+    private val _buySneakerEvent = MutableLiveData<Event<Unit>>()
+    val buySneakerEvent: LiveData<Event<Unit>> get() = _buySneakerEvent
 
     fun getSneaker(sneakerId: String) = viewModelScope.launch {
         sneakersRepository.getSneaker(sneakerId).flowOn(Dispatchers.IO)
@@ -141,37 +145,45 @@ class SneakerDetailDialogFragmentViewModel(
     fun onSneakerFavorite() {
         val isFavorite = sneakerFavorite.value!!
         val sneakerId = sneaker.value?.id!!
-        Log.i("JAVI", "Set fav: ${!isFavorite}")
         setFavorite(sneakerId, !isFavorite)
     }
 
     fun onSneakerToCart() {
-        val cartItem = sneaker.value?.toCart()!!
         sneakerInCart.value?.let { inCart ->
-            updateSneakerInCart(cartItem.sneakerId, !inCart)
-            if (inCart) removeSneakerFromCart(cartItem.sneakerId) else addSneakerToCart(cartItem)
+            if (inCart) {
+                _addedToCartMessage.value = Event(R.string.text_removed_from_cart)
+                addSneakerToCart(inCart)
+            } else {
+                _addedToCartMessage.value = Event(R.string.text_sneaker_added_to_cart)
+                if (!validateSizeAndColor()) return
+                addSneakerToCart(inCart)
+            }
         }
     }
 
-    fun validateSizeAndColor() {
-        _errorMessage.value?.clear()
+    private fun addSneakerToCart(isAdded: Boolean) {
+        val cartItem = sneaker.value?.toCart()!!
+        updateSneakerInCart(cartItem.sneakerId, !isAdded)
+        if (isAdded) removeSneakerFromCart(cartItem.sneakerId) else addSneakerToCart(cartItem)
+    }
+
+    fun onBuySneaker() {
+        _buySneakerEvent.value = Event(Unit)
+        validateSizeAndColor()
+    }
+
+    fun validateSizeAndColor(): Boolean {
         if (!sizeSelected.value!!) {
-            _errorMessage.value?.add(
-                SneakersApplication.getContext().getString(R.string.text_select_size)
-            )
-            _errorMessage.postValue(_errorMessage.value)
+            _errorMessage.value = Event(R.string.text_select_size)
         }
 
         if (!colorSelected.value!!) {
-            _errorMessage.value?.add(
-                SneakersApplication.getContext().getString(R.string.text_select_color)
-            )
-            _errorMessage.postValue(_errorMessage.value)
+            _errorMessage.value = Event(R.string.text_select_color)
         }
-        _isValid.postValue(errorMessages.value?.isEmpty())
+        return sizeSelected.value!! && colorSelected.value!!
     }
 
-    fun onBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
+    fun startBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
         fragment.startNewActivity(targetActivity = destiny, finish = false)
     }
 

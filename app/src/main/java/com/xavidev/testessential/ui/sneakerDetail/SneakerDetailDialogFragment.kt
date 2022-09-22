@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Images
 import com.xavidev.testessential.databinding.FragmentSneakerDetailDialogBinding
@@ -94,6 +95,10 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun handleObservers() {
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.errorMessages, Snackbar.LENGTH_SHORT)
+
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.addedToCartMessage, Snackbar.LENGTH_SHORT)
+
         viewModel.sneaker.observe(viewLifecycleOwner) { sneaker ->
             setSizesListSelection(sneaker.sizes)
             setColorsAdapter(sneaker.colors)
@@ -102,16 +107,10 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
 
         viewModel.sneakerImages.observe(viewLifecycleOwner) { images -> setCarouselAdapter(images) }
 
-        viewModel.errorMessages.observe(viewLifecycleOwner) { errors ->
-            if (errors.isNotEmpty()) {
-                val message = errors.joinToString("\n")
-                requireActivity().toast(message)
-            }
-        }
-
-        viewModel.isValid.observe(viewLifecycleOwner) { isValid ->
-            if (isValid) viewModel.onBuySneaker(requireActivity(), SaleOrderActivity())
-        }
+        viewModel.buySneakerEvent.observe(viewLifecycleOwner, EventObserver {
+            if (!viewModel.validateSizeAndColor()) return@EventObserver
+            viewModel.startBuySneaker(requireActivity(), SaleOrderActivity())
+        })
     }
 
     private fun setColorsAdapter(colors: List<String>) {
