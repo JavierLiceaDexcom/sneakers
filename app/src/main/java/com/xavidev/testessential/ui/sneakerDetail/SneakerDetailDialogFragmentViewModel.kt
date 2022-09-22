@@ -24,7 +24,6 @@ class SneakerDetailDialogFragmentViewModel(
     private val sneakersRepository: SneakersRepository,
     private val cartRepository: CartRepository
 ) : NavigationViewModel() {
-
     private val _sneakerLoading = MutableLiveData(false)
     val sneakerLoading: LiveData<Boolean> get() = _sneakerLoading
 
@@ -52,6 +51,9 @@ class SneakerDetailDialogFragmentViewModel(
 
     private val _addedToCartMessage = MutableLiveData<Event<Int>>()
     val addedToCartMessage: LiveData<Event<Int>> get() = _addedToCartMessage
+
+    private val _favoriteMessage = MutableLiveData<Event<Int>>()
+    val favoriteMessage: LiveData<Event<Int>> get() = _favoriteMessage
 
     private val _sizeSelected = MutableLiveData(false)
     private val sizeSelected: LiveData<Boolean> get() = _sizeSelected
@@ -89,7 +91,7 @@ class SneakerDetailDialogFragmentViewModel(
                 when (response) {
                     is Result.Loading -> {}
                     is Result.Success -> _sneakerFavorite.postValue(favorite)
-                    is Result.Error -> {}
+                    is Result.Error -> _favoriteMessage.postValue(Event(R.string.text_favorite_error_updating))
                 }
             }
     }
@@ -145,6 +147,8 @@ class SneakerDetailDialogFragmentViewModel(
     fun onSneakerFavorite() {
         val isFavorite = sneakerFavorite.value!!
         val sneakerId = sneaker.value?.id!!
+        _favoriteMessage.value =
+            if (isFavorite) Event(R.string.text_favorite_removed) else Event(R.string.text_favorites_added)
         setFavorite(sneakerId, !isFavorite)
     }
 

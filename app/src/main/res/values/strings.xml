@@ -151,4 +151,5 @@
     <string name="text_slide_5_title">The best brands</string>
     <string name="text_slide_5_description">The best brands in the market in a single place. Guarantee of quality.</string>
     <string name="text_removed_from_cart">Sneaker removed from your cart</string>
+    <string name="text_favorite_error_updating">Cannot update favorite status</string>
 </resources>

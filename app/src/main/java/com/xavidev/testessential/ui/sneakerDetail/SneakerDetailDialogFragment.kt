@@ -99,6 +99,8 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
 
         view?.setupSnackbar(viewLifecycleOwner, viewModel.addedToCartMessage, Snackbar.LENGTH_SHORT)
 
+        view?.setupSnackbar(viewLifecycleOwner, viewModel.favoriteMessage, Snackbar.LENGTH_SHORT)
+
         viewModel.sneaker.observe(viewLifecycleOwner) { sneaker ->
             setSizesListSelection(sneaker.sizes)
             setColorsAdapter(sneaker.colors)
