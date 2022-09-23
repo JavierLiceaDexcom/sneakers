@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.data.Result
 
-
 interface AddressRepository {
     suspend fun insertAddress(address: Address)
 

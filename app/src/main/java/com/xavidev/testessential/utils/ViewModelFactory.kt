@@ -6,6 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.xavidev.testessential.data.repository.*
+import com.xavidev.testessential.ui.addEditAddress.AddEditAddressViewModel
+import com.xavidev.testessential.ui.address.AddressViewModel
 import com.xavidev.testessential.ui.cart.CartViewModel
 import com.xavidev.testessential.ui.intro.IntroViewModel
 import com.xavidev.testessential.ui.main.PopulateViewModel
@@ -26,6 +28,7 @@ class ViewModelFactory constructor(
     private val populateRepository: PopulateRepository? = null,
     private val userRepository: UserRepository? = null,
     private val purchaseRepository: PurchaseRepository? = null,
+    private val addressRepository: AddressRepository? = null,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -59,6 +62,12 @@ class ViewModelFactory constructor(
             }
             isAssignableFrom(SaleViewModel::class.java) -> SaleViewModel()
             isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel()
+            isAssignableFrom(AddressViewModel::class.java) -> addressRepository?.let {
+                AddressViewModel(it)
+            }
+            isAssignableFrom(AddEditAddressViewModel::class.java) -> addressRepository?.let {
+                AddEditAddressViewModel(it)
+            }
             isAssignableFrom(BrandsViewModel::class.java) -> brandsRepository?.let {
                 BrandsViewModel(it)
             }

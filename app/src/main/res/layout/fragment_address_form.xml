@@ -7,13 +7,13 @@
 
         <variable
             name="vm"
-            type="com.xavidev.testessential.ui.address.AddressViewModel" />
+            type="com.xavidev.testessential.ui.addEditAddress.AddEditAddressViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.address.AddressFormFragment">
+        tools:context=".ui.addEditAddress.AddressFormFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/abl_address_form"
@@ -246,6 +246,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:onClick="@{() -> vm.onSaveAddress()}"
                 android:text="@string/text_save_address"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

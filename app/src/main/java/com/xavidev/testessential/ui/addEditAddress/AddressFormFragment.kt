@@ -1,4 +1,4 @@
-package com.xavidev.testessential.ui.address
+package com.xavidev.testessential.ui.addEditAddress
 
 import android.app.Dialog
 import android.os.Bundle
@@ -9,7 +9,10 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.xavidev.testessential.R
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.FragmentAddressFormBinding
+import com.xavidev.testessential.utils.EventObserver
+import com.xavidev.testessential.utils.ViewModelFactory
 
 
 class AddressFormFragment : DialogFragment() {
@@ -18,14 +21,19 @@ class AddressFormFragment : DialogFragment() {
         FragmentAddressFormBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: AddressViewModel by viewModels()
+    private val viewModel by viewModels<AddEditAddressViewModel> {
+        ViewModelFactory(
+            addressRepository = (requireContext().applicationContext as SneakersApplication).addressRepository,
+            owner = this
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = binding.root
 
-   override fun getTheme() = R.style.FullscreenDialogTheme_Primary
+    override fun getTheme() = R.style.FullscreenDialogTheme_Primary
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
@@ -45,5 +53,22 @@ class AddressFormFragment : DialogFragment() {
         binding.tbrAddressForm.setNavigationOnClickListener {
             viewModel.navigateTo(view, R.id.action_addressFormFragment_to_addressesFragment)
         }
+
+        handleObservers()
+    }
+
+    private fun handleObservers() = with(viewModel) {
+        saveAddressEvent.observe(viewLifecycleOwner, EventObserver {
+            validateForm()
+        })
+
+        addressUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
+            // Navigate to the addresses list
+        })
+    }
+
+    private fun validateForm() {
+        // Validate form
+        // Send request
     }
 }
