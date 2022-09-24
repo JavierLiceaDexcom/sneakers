@@ -58,18 +58,6 @@
             app:destination="@id/profileFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addressesFragment"
-        android:name="com.xavidev.testessential.ui.address.AddressesFragment"
-        android:label="fragment_addresses"
-        tools:layout="@layout/fragment_addresses">
-        <action
-            android:id="@+id/action_addressesFragment_to_addressFormFragment"
-            app:destination="@id/addressFormFragment" />
-        <action
-            android:id="@+id/action_addressesFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/cardFormFragment"
         android:name="com.xavidev.testessential.ui.profile.CardFormFragment"
         android:label="fragment_card_form"
@@ -86,18 +74,16 @@
         android:name="com.xavidev.testessential.ui.addEditAddress.AddressFormFragment"
         android:label="fragment_address_form"
         tools:layout="@layout/fragment_address_form" >
-        <action
-            android:id="@+id/action_addressFormFragment_to_addressesFragment"
-            app:destination="@id/addressesFragment" />
+        <argument
+            android:name="addressId"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.xavidev.testessential.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
-        <action
-            android:id="@+id/action_profileFragment_to_addressesFragment"
-            app:destination="@id/addressesFragment" />
         <action
             android:id="@+id/action_profileFragment_to_paymentMethodsFragment"
             app:destination="@id/paymentMethodsFragment" />

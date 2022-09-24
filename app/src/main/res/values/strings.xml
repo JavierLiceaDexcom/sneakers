@@ -106,7 +106,7 @@
     <string name="text_municipality">Municipality/City hall</string>
     <string name="text_suburb">Suburb</string>
     <string name="text_street">Street</string>
-    <string name="text_int_number">Internal number</string>
+    <string name="text_int_number">Internal number (Optional)</string>
     <string name="text_contact_number">Contact number</string>
     <string name="text_card_number">Card number</string>
     <string name="text_card_beneficiary">Beneficiary</string>
@@ -152,4 +152,12 @@
     <string name="text_slide_5_description">The best brands in the market in a single place. Guarantee of quality.</string>
     <string name="text_removed_from_cart">Sneaker removed from your cart</string>
     <string name="text_favorite_error_updating">Cannot update favorite status</string>
+    <string name="text_address_saved">Adress saved!</string>
+    <string name="text_address_updated">Address updated!</string>
+    <string name="text_exit">Exit</string>
+    <string name="text_exit_address_form_message">You area about to leave the form ¿do you want to exit?</string>
+    <string name="text_accept">Accept</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="text_required_field">Required field</string>
+    <string name="text_ext_number">External number</string>
 </resources>

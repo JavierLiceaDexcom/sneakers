@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.xavidev.testessential.ui.profile.ProfileViewModel" />
@@ -83,9 +84,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_address"
                     style="@style/ClickableLayout"
-                    android:onClick="@{(view) -> vm.clickAddressInfo(view)}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> vm.clickAddressInfo()}"
                     android:orientation="horizontal"
                     android:padding="12dp">
 
@@ -124,9 +125,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_payment_method"
                     style="@style/ClickableLayout"
-                    android:onClick="@{(view) -> vm.clickPaymentMethods(view)}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{(view) -> vm.clickPaymentMethods(view)}"
                     android:orientation="horizontal"
                     android:padding="12dp">
 

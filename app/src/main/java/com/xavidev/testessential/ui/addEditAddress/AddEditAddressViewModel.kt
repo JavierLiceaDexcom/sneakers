@@ -1,17 +1,20 @@
 package com.xavidev.testessential.ui.addEditAddress
 
 import androidx.lifecycle.*
+import com.xavidev.testessential.R
 import com.xavidev.testessential.data.Result
 import com.xavidev.testessential.data.Result.Success
 import com.xavidev.testessential.data.repository.AddressRepository
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.utils.Event
 import com.xavidev.testessential.utils.NavigationViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AddEditAddressViewModel(private val addressRepository: AddressRepository) :
     NavigationViewModel() {
 
+    private var _isNewAddress: Boolean = false
     private val _addressId = MutableLiveData<String>()
 
     private val _address = _addressId.switchMap { addressId ->
@@ -20,6 +23,9 @@ class AddEditAddressViewModel(private val addressRepository: AddressRepository) 
 
     val address: LiveData<Address?> get() = _address
 
+    private val _addressSavedMessage = MutableLiveData<Event<Int>>()
+    val addressSavedMessage: LiveData<Event<Int>> get() = _addressSavedMessage
+
     // Events
 
     private val _saveAddressEvent = MutableLiveData<Event<Unit>>()
@@ -27,20 +33,37 @@ class AddEditAddressViewModel(private val addressRepository: AddressRepository) 
 
     // Functions
 
+    fun start(addressId: String?) {
+        addressId?.let { _addressId.value = it }
+        if (addressId == null) {
+            _isNewAddress = true
+            return
+        }
+
+        _isNewAddress = false
+        getAddressById(addressId)
+    }
+
     private val _addressUpdatedEvent = MutableLiveData<Event<Unit>>()
     val addressUpdatedEvent: LiveData<Event<Unit>> get() = _addressUpdatedEvent
 
-    fun getAddressById(addressId: String) = viewModelScope.launch {
+    private fun getAddressById(addressId: String) = viewModelScope.launch {
         addressRepository.getAddressById(addressId)
     }
 
-    fun insertAddress(address: Address) = viewModelScope.launch {
-        addressRepository.insertAddress(address)
-        _addressUpdatedEvent.postValue(Event(Unit))
-    }
+    fun saveAddress(address: Address) {
+        viewModelScope.launch {
+            if (_isNewAddress) {
+                addressRepository.insertAddress(address)
+                _addressSavedMessage.postValue(Event(R.string.text_address_saved))
+            } else {
+                addressRepository.updateAddress(address)
+                _addressSavedMessage.postValue(Event(R.string.text_address_updated))
+            }
 
-    fun updateAddress(address: Address) = viewModelScope.launch {
-        addressRepository.updateAddress(address)
+            delay(1000)
+            _addressUpdatedEvent.postValue(Event(Unit))
+        }
     }
 
     private fun computeResult(addressResult: Result<Address>): Address? {

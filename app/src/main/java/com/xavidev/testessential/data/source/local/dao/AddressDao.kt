@@ -26,8 +26,8 @@ interface AddressDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateAddress(address: Address): Int
 
-    @Query("UPDATE address SET is_default = :default WHERE id = :addressId")
-    suspend fun updateDefaultAddress(addressId: String, default: Boolean)
+    @Query("UPDATE address SET is_default = :value WHERE id = :addressId")
+    suspend fun updateDefaultAddress(addressId: String, value: Boolean)
 
     @Delete
     suspend fun deleteAddress(address: Address)

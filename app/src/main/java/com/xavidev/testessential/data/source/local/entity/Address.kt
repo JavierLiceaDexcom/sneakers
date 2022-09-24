@@ -16,8 +16,8 @@ data class Address(
     val state: String,
     val municipality: String,
     val suburb: String,
-    @ColumnInfo(name = "is_default") val isDefault: Boolean,
+    @ColumnInfo(name = "is_default") val isDefault: Boolean = false,
     @ColumnInfo(name = "contact_number") val contactNumber: String,
     @ColumnInfo(name = "ext_number") val extNumber: String,
-    @ColumnInfo(name = "int_number") val intNumber: String?
+    @ColumnInfo(name = "int_number") val intNumber: String? = null
 ) : BaseEntity()

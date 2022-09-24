@@ -85,6 +85,7 @@ dependencies {
     implementation deps.picasso
     implementation deps.moshi_kotlin
     implementation deps.gson
+    implementation deps.easy_validation
 
     //Unit test libraries
     testImplementation deps.junit

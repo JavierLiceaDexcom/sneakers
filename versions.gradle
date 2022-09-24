@@ -34,6 +34,7 @@ versions.robolectric = "4.8"
 versions.rules = "1.4.0"
 versions.runner = "1.4.0"
 versions.orchestrator = "1.4.1"
+versions.easy_validation = "1.0.4"
 
 //Library dependencies
 deps.core_ktx = "androidx.core:core-ktx:$versions.core_ktx"
@@ -57,6 +58,7 @@ deps.picasso = "com.squareup.picasso:picasso:$versions.picasso"
 deps.moshi_kotlin = "com.squareup.moshi:moshi-kotlin:$versions.moshi_kotlin"
 deps.gson = "com.google.code.gson:gson:$versions.gson"
 deps.orchestrator = "androidx.test:orchestrator:$versions.orchestrator"
+deps.easy_validation = "com.wajahatkarim:easyvalidation-core:$versions.easy_validation"
 
 //Testing libraries dependencies
 deps.junit = "junit:junit:$versions.junit"
