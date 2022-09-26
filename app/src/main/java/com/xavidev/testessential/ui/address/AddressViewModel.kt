@@ -21,6 +21,9 @@ class AddressViewModel(private val addressRepository: AddressRepository) : Navig
     private val _defaultAddressUpdatedEvent = MutableLiveData<Event<Unit>>()
     val defaultAddressUpdatedEvent: LiveData<Event<Unit>> get() = _defaultAddressUpdatedEvent
 
+    private val _addressRemovedEvent = MutableLiveData<Event<Unit>>()
+    val addressRemovedEvent: LiveData<Event<Unit>> get() = _addressRemovedEvent
+
     // Functions
 
     fun getAddresses() = viewModelScope.launch {
@@ -38,6 +41,15 @@ class AddressViewModel(private val addressRepository: AddressRepository) : Navig
         val result = addressRepository.updateDefaultAddress(addressId)
         if (result is Result.Success){
             _defaultAddressUpdatedEvent.postValue(Event(Unit))
+        } else {
+            // Handle error
+        }
+    }
+
+    fun removeAddress(addressId: String) = viewModelScope.launch {
+        val result = addressRepository.deleteAddressById(addressId)
+        if (result is Result.Success){
+            _addressRemovedEvent.postValue(Event(Unit))
         } else {
             // Handle error
         }

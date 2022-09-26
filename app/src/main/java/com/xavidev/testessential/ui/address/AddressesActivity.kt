@@ -14,7 +14,6 @@ import com.xavidev.testessential.ui.address.adapters.AddressesAdapter
 import com.xavidev.testessential.utils.EventObserver
 import com.xavidev.testessential.utils.ViewModelFactory
 import com.xavidev.testessential.utils.showAlertDialog
-import com.xavidev.testessential.utils.toast
 
 class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
 
@@ -41,17 +40,6 @@ class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
         }
     }
 
-    private fun setAddressAsDefault(addressId: String) {
-        showAlertDialog(
-            titleId = R.string.text_default_address_title,
-            messageId = R.string.text_default_address_message,
-            onAccept = object : () -> Unit {
-                override fun invoke() {
-                    viewModel.setDefaultAddress(addressId)
-                }
-            })
-    }
-
     private val editAddressListener = object : (String) -> Unit {
         override fun invoke(id: String) {
             openAddEditDialog(id)
@@ -60,7 +48,7 @@ class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
 
     private val removeAddressListener = object : (String) -> Unit {
         override fun invoke(id: String) {
-            toast("Remove address with ID: $id")
+            removeAddress(id)
         }
     }
 
@@ -78,7 +66,12 @@ class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
 
         setAddressesList()
         handleListeners()
+
         viewModel.defaultAddressUpdatedEvent.observe(this, EventObserver {
+            viewModel.getAddresses()
+        })
+
+        viewModel.addressRemovedEvent.observe(this, EventObserver {
             viewModel.getAddresses()
         })
     }
@@ -103,6 +96,28 @@ class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
         btnAddAddress.setOnClickListener {
             openAddEditDialog(null)
         }
+    }
+
+    private fun setAddressAsDefault(addressId: String) {
+        showAlertDialog(
+            titleId = R.string.text_default_address_title,
+            messageId = R.string.text_default_address_message,
+            onAccept = object : () -> Unit {
+                override fun invoke() {
+                    viewModel.setDefaultAddress(addressId)
+                }
+            })
+    }
+
+    private fun removeAddress(addressId: String) {
+        showAlertDialog(
+            titleId = R.string.text_remove_address_title,
+            messageId = R.string.text_remove_address_message,
+            onAccept = object : () -> Unit {
+                override fun invoke() {
+                    viewModel.removeAddress(addressId)
+                }
+            })
     }
 
     private fun openAddEditDialog(addressId: String?) {

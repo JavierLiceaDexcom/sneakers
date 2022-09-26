@@ -165,4 +165,6 @@
     <string name="text_set_default">Set as default</string>
     <string name="text_default_address_title">Set address as default</string>
     <string name="text_default_address_message">The selected address will be used as delivery address in future purchases. ¿Continue?</string>
+    <string name="text_remove_address_title">Remove address</string>
+    <string name="text_remove_address_message">The selected address will be removed, ¿continue?</string>
 </resources>
