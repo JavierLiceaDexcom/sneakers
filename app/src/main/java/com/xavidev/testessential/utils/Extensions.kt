@@ -118,23 +118,25 @@ fun ChipGroup.addChip(context: Context, label: String) {
     }
 }
 
-typealias OnDialogCancel = (dialog: DialogInterface) -> Unit
-typealias OnDialogAccept = (dialog: DialogInterface) -> Unit
+typealias OnDialogCancel = () -> Unit
+typealias OnDialogAccept = () -> Unit
 
 fun Context.showAlertDialog(
     titleId: Int,
     messageId: Int,
-    onAccept: OnDialogAccept,
-    onCancel: OnDialogCancel
+    onAccept: OnDialogAccept? = null,
+    onCancel: OnDialogCancel? = null
 ) {
     MaterialAlertDialogBuilder(this)
         .setTitle(titleId)
         .setMessage(messageId)
         .setPositiveButton(R.string.text_accept) { dialog, _ ->
-            onAccept.invoke(dialog)
+            onAccept?.invoke()
+            dialog.dismiss()
         }
         .setNegativeButton(R.string.text_cancel) { dialog, _ ->
-            onCancel.invoke(dialog)
+            onCancel?.invoke()
+            dialog.cancel()
         }
         .show()
 }

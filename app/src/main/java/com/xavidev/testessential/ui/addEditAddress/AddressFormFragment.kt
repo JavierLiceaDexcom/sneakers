@@ -1,7 +1,7 @@
 package com.xavidev.testessential.ui.addEditAddress
 
 import android.app.Dialog
-import android.content.DialogInterface
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +14,10 @@ import com.xavidev.testessential.R
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.databinding.FragmentAddressFormBinding
-import com.xavidev.testessential.utils.*
+import com.xavidev.testessential.utils.EventObserver
+import com.xavidev.testessential.utils.ViewModelFactory
+import com.xavidev.testessential.utils.showAlertDialog
+import com.xavidev.testessential.utils.toast
 
 class AddressFormFragment : DialogFragment() {
 
@@ -33,6 +36,7 @@ class AddressFormFragment : DialogFragment() {
             owner = this
         )
     }
+    private lateinit var onAddressSavedListener: OnAddressSavedListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +69,11 @@ class AddressFormFragment : DialogFragment() {
         handleObservers()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        onAddressSavedListener = context as OnAddressSavedListener
+    }
+
     private fun handleObservers() = with(viewModel) {
         saveAddressEvent.observe(viewLifecycleOwner, EventObserver {
             if (!isValidForm()) return@EventObserver
@@ -73,6 +82,7 @@ class AddressFormFragment : DialogFragment() {
 
         addressUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
             requireDialog().dismiss()
+            onAddressSavedListener.onSaved()
         })
 
         addressSavedMessage.observe(viewLifecycleOwner, EventObserver { message ->
@@ -155,15 +165,15 @@ class AddressFormFragment : DialogFragment() {
         requireActivity().showAlertDialog(
             R.string.text_exit,
             R.string.text_exit_address_form_message,
-            object : OnDialogAccept {
-                override fun invoke(dialog: DialogInterface) {
-                    dialog.dismiss()
+            onAccept = object : () -> Unit {
+                override fun invoke() {
+                    dialog?.dismiss()
                 }
-            },
-            object : OnDialogCancel {
-                override fun invoke(dialog: DialogInterface) {
-                    dialog.dismiss()
-                }
-            })
+            }
+        )
     }
+}
+
+interface OnAddressSavedListener {
+    fun onSaved()
 }

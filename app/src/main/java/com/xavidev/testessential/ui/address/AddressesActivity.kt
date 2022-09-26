@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.ActivityAddressesBinding
 import com.xavidev.testessential.ui.addEditAddress.AddressFormFragment
+import com.xavidev.testessential.ui.addEditAddress.OnAddressSavedListener
 import com.xavidev.testessential.ui.address.adapters.AddressesAdapter
 import com.xavidev.testessential.utils.ViewModelFactory
-import com.xavidev.testessential.utils.toast
 
-class AddressesActivity : AppCompatActivity() {
+class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
 
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityAddressesBinding.inflate(layoutInflater)
@@ -82,8 +82,7 @@ class AddressesActivity : AppCompatActivity() {
         fragment.show(supportFragmentManager, AddressFormFragment.TAG)
     }
 
-    override fun onResume() {
-        super.onResume()
-        toast("Monterrey sin agua")
+    override fun onSaved() {
+        viewModel.getAddresses()
     }
 }
