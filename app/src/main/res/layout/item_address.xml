@@ -1,77 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/FilledCardView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
-    android:layout_marginVertical="2dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_address_item"
-        style="@style/ClickableLayout"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="address"
+            type="com.xavidev.testessential.data.source.local.entity.Address" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/FilledCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="2dp">
 
-
-        <ImageView
-            android:id="@+id/img_address_icon"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_address_item"
+            style="@style/ClickableLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/text_address_icon"
-            android:src="@drawable/ic_home"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="12dp">
 
-        <TextView
-            android:id="@+id/tv_address_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/img_more_options"
-            app:layout_constraintStart_toEndOf="@+id/img_address_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Av Zoquipan 1959" />
+            <ImageView
+                android:id="@+id/img_address_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/text_address_icon"
+                android:src="@drawable/ic_home"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/img_more_options"
-            style="@style/ClickableImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/text_address_options"
-            android:padding="4dp"
-            android:src="@drawable/ic_arrow_drop_down"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tv_address_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{address.street}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/img_more_options"
+                app:layout_constraintStart_toEndOf="@+id/img_address_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Av Zoquipan 1959" />
 
-        <TextView
-            android:id="@+id/tv_address_complete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tv_address_name"
-            app:layout_constraintTop_toBottomOf="@+id/tv_address_name"
-            tools:text="Av Zoquipan 1959, Lomas de Zapopan, 45178, Zapopan, Jalico" />
+            <ImageView
+                android:id="@+id/img_more_options"
+                style="@style/ClickableImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/text_address_options"
+                android:padding="4dp"
+                android:src="@drawable/ic_arrow_drop_down"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.Chip
-            style="@style/ChipCheckedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/text_default"
-            android:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/tv_address_complete"
-            app:layout_constraintTop_toBottomOf="@+id/tv_address_complete" />
+            <TextView
+                android:id="@+id/tv_address_complete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{address.completeAddress}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_address_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_address_name"
+                tools:text="Av Zoquipan 1959, Lomas de Zapopan, 45178, Zapopan, Jalico" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.chip.Chip
+                style="@style/ChipCheckedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clickable="false"
+                android:text="@string/text_default"
+                android:visibility="@{address.isDefault ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toStartOf="@+id/tv_address_complete"
+                app:layout_constraintTop_toBottomOf="@+id/tv_address_complete" />
 
-</com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

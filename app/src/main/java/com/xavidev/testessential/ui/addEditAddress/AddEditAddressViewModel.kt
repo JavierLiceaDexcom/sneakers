@@ -31,6 +31,9 @@ class AddEditAddressViewModel(private val addressRepository: AddressRepository) 
     private val _saveAddressEvent = MutableLiveData<Event<Unit>>()
     val saveAddressEvent: LiveData<Event<Unit>> get() = _saveAddressEvent
 
+    private val _addressUpdatedEvent = MutableLiveData<Event<Unit>>()
+    val addressUpdatedEvent: LiveData<Event<Unit>> get() = _addressUpdatedEvent
+
     // Functions
 
     fun start(addressId: String?) {
@@ -43,9 +46,6 @@ class AddEditAddressViewModel(private val addressRepository: AddressRepository) 
         _isNewAddress = false
         getAddressById(addressId)
     }
-
-    private val _addressUpdatedEvent = MutableLiveData<Event<Unit>>()
-    val addressUpdatedEvent: LiveData<Event<Unit>> get() = _addressUpdatedEvent
 
     private fun getAddressById(addressId: String) = viewModelScope.launch {
         addressRepository.getAddressById(addressId)
@@ -78,5 +78,4 @@ class AddEditAddressViewModel(private val addressRepository: AddressRepository) 
     fun onSaveAddress() {
         _saveAddressEvent.value = Event(Unit)
     }
-
 }

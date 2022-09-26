@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.xavidev.testessential.ui.address.AddressViewModel" />
@@ -13,7 +15,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray"
         tools:context=".ui.address.AddressesListActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -38,6 +39,7 @@
             android:layout_height="0dp"
             android:clipToPadding="false"
             android:paddingBottom="76dp"
+            android:visibility="@{vm.isEmpty ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +53,7 @@
             android:alpha="0.2"
             android:contentDescription="@string/text_empty_list"
             android:src="@drawable/ic_map"
-            android:visibility="visible"
+            android:visibility="@{vm.isEmpty ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/rv_addresses"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

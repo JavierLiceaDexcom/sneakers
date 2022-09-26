@@ -12,7 +12,6 @@ data class Address(
     val name: String,
     val street: String,
     val zip: Int,
-    val city: String,
     val state: String,
     val municipality: String,
     val suburb: String,
@@ -20,4 +19,8 @@ data class Address(
     @ColumnInfo(name = "contact_number") val contactNumber: String,
     @ColumnInfo(name = "ext_number") val extNumber: String,
     @ColumnInfo(name = "int_number") val intNumber: String? = null
-) : BaseEntity()
+) : BaseEntity() {
+
+    val completeAddress: String
+        get() = "${this.street}, ${this.zip}, ${this.suburb}, ${this.municipality}"
+}

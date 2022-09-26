@@ -1,6 +1,7 @@
 package com.xavidev.testessential.ui.addEditAddress
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +9,12 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.wajahatkarim3.easyvalidation.core.view_ktx.validator
 import com.xavidev.testessential.R
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.databinding.FragmentAddressFormBinding
-import com.xavidev.testessential.utils.EventObserver
-import com.xavidev.testessential.utils.ViewModelFactory
-import com.xavidev.testessential.utils.toast
-
+import com.xavidev.testessential.utils.*
 
 class AddressFormFragment : DialogFragment() {
 
@@ -58,6 +55,7 @@ class AddressFormFragment : DialogFragment() {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
         }
+
         viewModel.start(arguments?.getString(ADDRESS_ID_EXTRA))
 
         binding.tbrAddressForm.setNavigationOnClickListener {
@@ -96,7 +94,6 @@ class AddressFormFragment : DialogFragment() {
             name = name,
             street = street,
             zip = 45178,
-            city = municipality,
             state = state,
             municipality = municipality,
             suburb = suburb,
@@ -155,16 +152,18 @@ class AddressFormFragment : DialogFragment() {
     }
 
     private fun showConfirmationDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.text_exit)
-            .setMessage(R.string.text_exit_address_form_message)
-            .setPositiveButton(R.string.text_accept) { dialog, _ ->
-                dialog.dismiss()
-                requireDialog().dismiss()
-            }
-            .setNegativeButton(R.string.text_cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+        requireActivity().showAlertDialog(
+            R.string.text_exit,
+            R.string.text_exit_address_form_message,
+            object : OnDialogAccept {
+                override fun invoke(dialog: DialogInterface) {
+                    dialog.dismiss()
+                }
+            },
+            object : OnDialogCancel {
+                override fun invoke(dialog: DialogInterface) {
+                    dialog.dismiss()
+                }
+            })
     }
 }

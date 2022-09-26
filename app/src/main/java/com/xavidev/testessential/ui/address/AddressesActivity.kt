@@ -1,18 +1,19 @@
 package com.xavidev.testessential.ui.address
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.xavidev.testessential.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.ActivityAddressesBinding
 import com.xavidev.testessential.ui.addEditAddress.AddressFormFragment
+import com.xavidev.testessential.ui.address.adapters.AddressesAdapter
 import com.xavidev.testessential.utils.ViewModelFactory
+import com.xavidev.testessential.utils.toast
 
 class AddressesActivity : AppCompatActivity() {
+
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityAddressesBinding.inflate(layoutInflater)
     }
@@ -24,6 +25,20 @@ class AddressesActivity : AppCompatActivity() {
         )
     }
 
+    private val addressItemListener = object : (String) -> Unit {
+        override fun invoke(id: String) {
+            openAddEditDialog(id)
+        }
+    }
+
+    private val addressOptionsListener = object : (String, Int) -> Unit {
+        override fun invoke(id: String, pos: Int) {
+            // TODO: Handle menu options clicks
+        }
+    }
+
+    private val addressesAdapter = AddressesAdapter(addressItemListener, addressOptionsListener)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -33,16 +48,42 @@ class AddressesActivity : AppCompatActivity() {
             vm = viewModel
         }
 
-        binding.tbrAddresses.setNavigationOnClickListener {
+        setAddressesList()
+        handleListeners()
+    }
+
+    private fun setAddressesList() {
+        viewModel.getAddresses()
+        binding.rvAddresses.apply {
+            adapter = addressesAdapter
+            layoutManager = LinearLayoutManager(this@AddressesActivity)
+        }
+
+        viewModel.addressesList.observe(this) { list ->
+            addressesAdapter.submitList(list)
+        }
+    }
+
+    private fun handleListeners() = with(binding) {
+        tbrAddresses.setNavigationOnClickListener {
             finish()
         }
 
-        binding.btnAddAddress.setOnClickListener {
-            val bundle = bundleOf()
-            bundle.putString(AddressFormFragment.ADDRESS_ID_EXTRA, null)
-            val fragment = AddressFormFragment()
-            fragment.arguments = bundle
-            fragment.show(supportFragmentManager, AddressFormFragment.TAG)
+        btnAddAddress.setOnClickListener {
+            openAddEditDialog(null)
         }
+    }
+
+    private fun openAddEditDialog(addressId: String?) {
+        val bundle = bundleOf()
+        bundle.putString(AddressFormFragment.ADDRESS_ID_EXTRA, addressId)
+        val fragment = AddressFormFragment()
+        fragment.arguments = bundle
+        fragment.show(supportFragmentManager, AddressFormFragment.TAG)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        toast("Monterrey sin agua")
     }
 }

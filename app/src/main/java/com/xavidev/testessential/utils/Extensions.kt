@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
@@ -12,8 +13,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.xavidev.testessential.R
 import java.util.*
 
 /** Set the View visibility to VISIBLE and eventually animate the View alpha till 100% */
@@ -113,4 +116,25 @@ fun ChipGroup.addChip(context: Context, label: String) {
     fun Long.toDate(): Date {
         return Date(this)
     }
+}
+
+typealias OnDialogCancel = (dialog: DialogInterface) -> Unit
+typealias OnDialogAccept = (dialog: DialogInterface) -> Unit
+
+fun Context.showAlertDialog(
+    titleId: Int,
+    messageId: Int,
+    onAccept: OnDialogAccept,
+    onCancel: OnDialogCancel
+) {
+    MaterialAlertDialogBuilder(this)
+        .setTitle(titleId)
+        .setMessage(messageId)
+        .setPositiveButton(R.string.text_accept) { dialog, _ ->
+            onAccept.invoke(dialog)
+        }
+        .setNegativeButton(R.string.text_cancel) { dialog, _ ->
+            onCancel.invoke(dialog)
+        }
+        .show()
 }
