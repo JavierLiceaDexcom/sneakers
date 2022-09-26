@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.xavidev.testessential.data.Result
 import com.xavidev.testessential.data.repository.AddressRepository
 import com.xavidev.testessential.data.source.local.entity.Address
+import com.xavidev.testessential.utils.Event
 import com.xavidev.testessential.utils.NavigationViewModel
 import kotlinx.coroutines.launch
 
@@ -17,6 +18,9 @@ class AddressViewModel(private val addressRepository: AddressRepository) : Navig
     private val _isEmpty = MutableLiveData<Boolean>()
     val isEmpty: LiveData<Boolean> get() = _isEmpty
 
+    private val _defaultAddressUpdatedEvent = MutableLiveData<Event<Unit>>()
+    val defaultAddressUpdatedEvent: LiveData<Event<Unit>> get() = _defaultAddressUpdatedEvent
+
     // Functions
 
     fun getAddresses() = viewModelScope.launch {
@@ -27,6 +31,15 @@ class AddressViewModel(private val addressRepository: AddressRepository) : Navig
             _addressesList.postValue(data)
         } else {
             _isEmpty.postValue(true)
+        }
+    }
+
+    fun setDefaultAddress(addressId: String) = viewModelScope.launch {
+        val result = addressRepository.updateDefaultAddress(addressId)
+        if (result is Result.Success){
+            _defaultAddressUpdatedEvent.postValue(Event(Unit))
+        } else {
+            // Handle error
         }
     }
 }

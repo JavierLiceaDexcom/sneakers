@@ -17,7 +17,7 @@ interface AddressRepository {
 
     suspend fun updateAddress(address: Address): Result<Int>
 
-    suspend fun updateDefaultAddress(addressId: String, default: Boolean)
+    suspend fun updateDefaultAddress(addressId: String): Result<Unit>
 
     suspend fun deleteAddress(address: Address)
 

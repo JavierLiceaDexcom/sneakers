@@ -8,8 +8,10 @@ import com.xavidev.testessential.data.Result.Success
 import com.xavidev.testessential.data.repository.AddressRepository
 import com.xavidev.testessential.data.source.local.dao.AddressDao
 import com.xavidev.testessential.data.source.local.entity.Address
-import kotlinx.coroutines.*
-
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 
 class AddressResources internal constructor(
     private val addressDao: AddressDao,
@@ -18,7 +20,10 @@ class AddressResources internal constructor(
 
     override suspend fun insertAddress(address: Address) {
         coroutineScope {
-            launch { addressDao.insertAddress(address) }
+            val existsDefault = addressDao.getDefaultAddress()
+            addressDao.insertAddress(address)
+            if (existsDefault == null)
+                addressDao.setDefaultAddress(address.id, true)
         }
     }
 
@@ -60,8 +65,12 @@ class AddressResources internal constructor(
         }
     }
 
-    override suspend fun updateDefaultAddress(addressId: String, default: Boolean) {
-        coroutineScope { addressDao.updateDefaultAddress(addressId, default) }
+    override suspend fun updateDefaultAddress(addressId: String) = withContext(ioDispatcher) {
+        return@withContext try {
+            Success(addressDao.updateDefaultAddress(addressId))
+        } catch (ex: Exception) {
+            Error(ex)
+        }
     }
 
     override suspend fun deleteAddress(address: Address) {

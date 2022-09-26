@@ -2,31 +2,47 @@ package com.xavidev.testessential.ui.address.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.xavidev.testessential.R
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.databinding.ItemAddressBinding
 
-typealias OnAddressItemClick = (String) -> Unit
-typealias OnOptionsItemEdit = (String, Int) -> Unit
+typealias OnAddressEditClick = (String) -> Unit
+typealias OnAddressDefaultClick = (String) -> Unit
+typealias OnAddressRemoveClick = (String) -> Unit
 
 class AddressesAdapter(
-    private val itemListener: OnAddressItemClick,
-    private val optionsListener: OnOptionsItemEdit
+    private val editAddressListener: OnAddressEditClick,
+    private val defaultAddressListener: OnAddressDefaultClick,
+    private val removeAddressListener: OnAddressRemoveClick
 ) : ListAdapter<Address, AddressesAdapter.ViewHolder>(AddressDiffCallback()) {
 
     inner class ViewHolder(val binding: ItemAddressBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             addressEntity: Address,
-            itemListener: OnAddressItemClick,
-            optionsListener: OnOptionsItemEdit
-        )= with(binding) {
+        ) = with(binding) {
             address = addressEntity
-            clAddressItem.setOnClickListener { itemListener(addressEntity.id) }
-            imgMoreOptions.setOnClickListener { optionsListener(addressEntity.id, this@ViewHolder.adapterPosition) }
+            imgMoreOptions.setOnClickListener { setItemMenuOptions(addressEntity) }
             executePendingBindings()
+        }
+
+        private fun setItemMenuOptions(addressEntity: Address) {
+            val addressId = addressEntity.id
+            val popupMenu = PopupMenu(binding.root.context, binding.imgMoreOptions)
+            popupMenu.inflate(R.menu.address_options_menu)
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.address_default_option -> defaultAddressListener(addressId)
+                    R.id.address_edit_option -> editAddressListener(addressId)
+                    R.id.address_remove_option -> removeAddressListener(addressId)
+                }
+                true
+            }
+            popupMenu.show()
         }
     }
 
@@ -37,11 +53,11 @@ class AddressesAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(currentList[position], itemListener, optionsListener)
+        holder.bind(currentList[position])
     }
 }
 
-class AddressDiffCallback() : DiffUtil.ItemCallback<Address>() {
+class AddressDiffCallback : DiffUtil.ItemCallback<Address>() {
     override fun areItemsTheSame(oldItem: Address, newItem: Address) = newItem.id == oldItem.id
 
     override fun areContentsTheSame(oldItem: Address, newItem: Address) = newItem == oldItem

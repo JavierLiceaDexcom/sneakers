@@ -27,7 +27,18 @@ interface AddressDao {
     suspend fun updateAddress(address: Address): Int
 
     @Query("UPDATE address SET is_default = :value WHERE id = :addressId")
-    suspend fun updateDefaultAddress(addressId: String, value: Boolean)
+    suspend fun setDefaultAddress(addressId: String, value: Boolean)
+
+    @Query("SELECT * FROM address WHERE is_default = :value")
+    suspend fun getDefaultAddress(value: Boolean = true): Address?
+
+    @Transaction
+    suspend fun updateDefaultAddress(newAddressId: String){
+        val oldAddressId = getDefaultAddress()?.id
+        if (newAddressId == oldAddressId) return
+        oldAddressId?.let { setDefaultAddress(it, false) }
+        setDefaultAddress(newAddressId, true)
+    }
 
     @Delete
     suspend fun deleteAddress(address: Address)

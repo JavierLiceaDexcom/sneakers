@@ -5,12 +5,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.xavidev.testessential.R
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.ActivityAddressesBinding
 import com.xavidev.testessential.ui.addEditAddress.AddressFormFragment
 import com.xavidev.testessential.ui.addEditAddress.OnAddressSavedListener
 import com.xavidev.testessential.ui.address.adapters.AddressesAdapter
+import com.xavidev.testessential.utils.EventObserver
 import com.xavidev.testessential.utils.ViewModelFactory
+import com.xavidev.testessential.utils.showAlertDialog
+import com.xavidev.testessential.utils.toast
 
 class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
 
@@ -31,13 +35,37 @@ class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
         }
     }
 
-    private val addressOptionsListener = object : (String, Int) -> Unit {
-        override fun invoke(id: String, pos: Int) {
-            // TODO: Handle menu options clicks
+    private val defaultAddressListener = object : (String) -> Unit {
+        override fun invoke(id: String) {
+            setAddressAsDefault(id)
         }
     }
 
-    private val addressesAdapter = AddressesAdapter(addressItemListener, addressOptionsListener)
+    private fun setAddressAsDefault(addressId: String) {
+        showAlertDialog(
+            titleId = R.string.text_default_address_title,
+            messageId = R.string.text_default_address_message,
+            onAccept = object : () -> Unit {
+                override fun invoke() {
+                    viewModel.setDefaultAddress(addressId)
+                }
+            })
+    }
+
+    private val editAddressListener = object : (String) -> Unit {
+        override fun invoke(id: String) {
+            openAddEditDialog(id)
+        }
+    }
+
+    private val removeAddressListener = object : (String) -> Unit {
+        override fun invoke(id: String) {
+            toast("Remove address with ID: $id")
+        }
+    }
+
+    private val addressesAdapter =
+        AddressesAdapter(editAddressListener, defaultAddressListener, removeAddressListener)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +78,9 @@ class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
 
         setAddressesList()
         handleListeners()
+        viewModel.defaultAddressUpdatedEvent.observe(this, EventObserver {
+            viewModel.getAddresses()
+        })
     }
 
     private fun setAddressesList() {
