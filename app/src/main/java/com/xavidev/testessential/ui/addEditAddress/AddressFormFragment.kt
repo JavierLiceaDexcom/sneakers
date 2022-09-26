@@ -14,10 +14,7 @@ import com.xavidev.testessential.R
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.databinding.FragmentAddressFormBinding
-import com.xavidev.testessential.utils.EventObserver
-import com.xavidev.testessential.utils.ViewModelFactory
-import com.xavidev.testessential.utils.showAlertDialog
-import com.xavidev.testessential.utils.toast
+import com.xavidev.testessential.utils.*
 
 class AddressFormFragment : DialogFragment() {
 
@@ -36,7 +33,10 @@ class AddressFormFragment : DialogFragment() {
             owner = this
         )
     }
+
     private lateinit var onAddressSavedListener: OnAddressSavedListener
+
+    private var addressId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +60,8 @@ class AddressFormFragment : DialogFragment() {
             vm = viewModel
         }
 
-        viewModel.start(arguments?.getString(ADDRESS_ID_EXTRA))
+        addressId = arguments?.getString(ADDRESS_ID_EXTRA)
+        viewModel.start(addressId)
 
         binding.tbrAddressForm.setNavigationOnClickListener {
             showConfirmationDialog()
@@ -88,9 +89,14 @@ class AddressFormFragment : DialogFragment() {
         addressSavedMessage.observe(viewLifecycleOwner, EventObserver { message ->
             requireContext().toast(getString(message))
         })
+
+        addressErrorMessage.observe(requireActivity(), EventObserver {
+            view?.setupSnackbar(viewLifecycleOwner, viewModel.addressErrorMessage)
+        })
     }
 
     private fun getForm(): Address {
+        val zip = binding.etSearchZipCode.text.toString().toInt()
         val name = binding.etName.text.toString()
         val street = binding.etStreet.text.toString()
         val state = binding.etState.text.toString()
@@ -99,11 +105,14 @@ class AddressFormFragment : DialogFragment() {
         val contactNumber = binding.etContactNumber.text.toString()
         val intNumber = binding.etIntNumber.text.toString()
         val extNumber = binding.etExtNumber.text.toString()
+        var id = ""
+        addressId?.let { id = it }
 
         return Address(
+            id = id,
             name = name,
             street = street,
-            zip = 45178,
+            zip = zip,
             state = state,
             municipality = municipality,
             suburb = suburb,
@@ -116,6 +125,12 @@ class AddressFormFragment : DialogFragment() {
     }
 
     private fun isValidForm(): Boolean {
+
+        val zip = binding.etSearchZipCode.validator().nonEmpty()
+            .addErrorCallback {
+                binding.etSearchZipCode.error = getString(R.string.text_required_field)
+            }
+            .addSuccessCallback { binding.etSearchZipCode.error = null }.check()
 
         val name = binding.etName.validator().nonEmpty()
             .addErrorCallback { binding.etName.error = getString(R.string.text_required_field) }
@@ -145,12 +160,6 @@ class AddressFormFragment : DialogFragment() {
             }
             .addSuccessCallback { binding.etExtNumber.error = null }.check()
 
-        val intNumber = binding.etIntNumber.validator().startWithNumber()
-            .addErrorCallback {
-                binding.etIntNumber.error = getString(R.string.text_required_field)
-            }
-            .addSuccessCallback { binding.etIntNumber.error = null }.check()
-
         val contactNumber =
             binding.etContactNumber.validator().nonEmpty().onlyNumbers().maxLength(10)
                 .addErrorCallback {
@@ -158,7 +167,7 @@ class AddressFormFragment : DialogFragment() {
                 }
                 .addSuccessCallback { binding.etContactNumber.error = null }.check()
 
-        return name && state && municipality && suburb && street && extNumber && intNumber && contactNumber
+        return zip && name && state && municipality && suburb && street && extNumber && contactNumber
     }
 
     private fun showConfirmationDialog() {

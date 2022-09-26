@@ -167,4 +167,10 @@
     <string name="text_default_address_message">The selected address will be used as delivery address in future purchases. ¿Continue?</string>
     <string name="text_remove_address_title">Remove address</string>
     <string name="text_remove_address_message">The selected address will be removed, ¿continue?</string>
+    <string name="text_default_address_error">Cannot set address as default</string>
+    <string name="text_remove_address_error">Address could not be removed</string>
+    <string name="text_address_details_error">Cannot load address information</string>
+    <string name="text_update_address">Update address</string>
+    <string name="text_address_updated_error">Cannot update address</string>
+    <string name="text_address_saved_error">Cannot save address</string>
 </resources>

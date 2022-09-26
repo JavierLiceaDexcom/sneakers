@@ -54,7 +54,7 @@
             android:contentDescription="@string/text_empty_list"
             android:src="@drawable/ic_map"
             android:visibility="@{vm.isEmpty ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@+id/rv_addresses"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/abl_addresses" />

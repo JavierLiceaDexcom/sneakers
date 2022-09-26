@@ -13,6 +13,7 @@ import com.xavidev.testessential.ui.addEditAddress.OnAddressSavedListener
 import com.xavidev.testessential.ui.address.adapters.AddressesAdapter
 import com.xavidev.testessential.utils.EventObserver
 import com.xavidev.testessential.utils.ViewModelFactory
+import com.xavidev.testessential.utils.setupSnackbar
 import com.xavidev.testessential.utils.showAlertDialog
 
 class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
@@ -66,13 +67,20 @@ class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
 
         setAddressesList()
         handleListeners()
+        handleObservers()
+    }
 
+    private fun handleObservers() {
         viewModel.defaultAddressUpdatedEvent.observe(this, EventObserver {
             viewModel.getAddresses()
         })
 
         viewModel.addressRemovedEvent.observe(this, EventObserver {
             viewModel.getAddresses()
+        })
+
+        viewModel.addressOptionMessage.observe(this, EventObserver {
+            binding.root.setupSnackbar(this, viewModel.addressOptionMessage)
         })
     }
 

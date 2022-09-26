@@ -1,5 +1,6 @@
 package com.xavidev.testessential.ui.addEditAddress
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.xavidev.testessential.R
 import com.xavidev.testessential.data.Result
@@ -14,7 +15,10 @@ import kotlinx.coroutines.launch
 class AddEditAddressViewModel(private val addressRepository: AddressRepository) :
     NavigationViewModel() {
 
+    private val ONE_SECOND_DELAY = 1000L
+
     private var _isNewAddress: Boolean = false
+
     private val _addressId = MutableLiveData<String>()
 
     private val _address = _addressId.switchMap { addressId ->
@@ -25,6 +29,12 @@ class AddEditAddressViewModel(private val addressRepository: AddressRepository) 
 
     private val _addressSavedMessage = MutableLiveData<Event<Int>>()
     val addressSavedMessage: LiveData<Event<Int>> get() = _addressSavedMessage
+
+    private val _addressErrorMessage = MutableLiveData<Event<Int>>()
+    val addressErrorMessage: LiveData<Event<Int>> get() = _addressErrorMessage
+
+    private val _actionText = MutableLiveData<Int>()
+    val actionText: LiveData<Int> get() = _actionText
 
     // Events
 
@@ -40,29 +50,39 @@ class AddEditAddressViewModel(private val addressRepository: AddressRepository) 
         addressId?.let { _addressId.value = it }
         if (addressId == null) {
             _isNewAddress = true
+            _actionText.value = R.string.text_save_address
             return
         }
 
         _isNewAddress = false
-        getAddressById(addressId)
-    }
-
-    private fun getAddressById(addressId: String) = viewModelScope.launch {
-        addressRepository.getAddressById(addressId)
+        _actionText.value = R.string.text_update_address
     }
 
     fun saveAddress(address: Address) {
         viewModelScope.launch {
-            if (_isNewAddress) {
-                addressRepository.insertAddress(address)
-                _addressSavedMessage.postValue(Event(R.string.text_address_saved))
-            } else {
-                addressRepository.updateAddress(address)
-                _addressSavedMessage.postValue(Event(R.string.text_address_updated))
-            }
+            if (_isNewAddress) insertAddress(address) else updateAddress(address)
+        }
+    }
 
-            delay(1000)
+    private suspend fun insertAddress(address: Address) {
+        val result = addressRepository.insertAddress(address)
+        if (result is Success) {
+            _addressSavedMessage.postValue(Event(R.string.text_address_saved))
+            delay(ONE_SECOND_DELAY)
             _addressUpdatedEvent.postValue(Event(Unit))
+        } else {
+            _addressSavedMessage.postValue(Event(R.string.text_address_saved_error))
+        }
+    }
+
+    private suspend fun updateAddress(address: Address) {
+        val result = addressRepository.updateAddress(address)
+        if (result is Success) {
+            _addressSavedMessage.postValue(Event(R.string.text_address_updated))
+            delay(ONE_SECOND_DELAY)
+            _addressUpdatedEvent.postValue(Event(Unit))
+        } else {
+            _addressSavedMessage.postValue(Event(R.string.text_address_updated_error))
         }
     }
 

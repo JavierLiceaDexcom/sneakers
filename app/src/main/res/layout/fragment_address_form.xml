@@ -76,6 +76,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxLength="5"
+                    android:text='@{(vm.address.zip > 0) ? String.valueOf(vm.address.zip) : ""}'
                     app:layout_constraintBottom_toBottomOf="@+id/btn_search_zip_code"
                     app:layout_constraintEnd_toStartOf="@+id/btn_search_zip_code"
                     app:layout_constraintStart_toStartOf="parent"
@@ -117,6 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:inputType="textPersonName"
+                        android:text="@{vm.address.name}"
                         tools:ignore="Autofill" />
 
                     <TextView
@@ -135,6 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:inputType="text"
+                        android:text="@{vm.address.state}"
                         tools:ignore="Autofill" />
 
                     <TextView
@@ -153,6 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:inputType="text"
+                        android:text="@{vm.address.municipality}"
                         tools:ignore="Autofill" />
 
                     <TextView
@@ -171,6 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:inputType="text"
+                        android:text="@{vm.address.suburb}"
                         tools:ignore="Autofill" />
 
                     <TextView
@@ -189,6 +194,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:inputType="text"
+                        android:text="@{vm.address.street}"
                         tools:ignore="Autofill" />
 
                     <TextView
@@ -208,6 +214,7 @@
                         android:layout_marginTop="8dp"
                         android:inputType="number"
                         android:maxLength="5"
+                        android:text="@{vm.address.extNumber}"
                         tools:ignore="Autofill" />
 
                     <TextView
@@ -227,6 +234,7 @@
                         android:layout_marginTop="8dp"
                         android:inputType="number"
                         android:maxLines="5"
+                        android:text="@{vm.address.intNumber}"
                         tools:ignore="Autofill" />
 
                     <TextView
@@ -246,11 +254,13 @@
                         android:layout_marginTop="8dp"
                         android:inputType="phone"
                         android:maxLength="10"
+                        android:text="@{vm.address.contactNumber}"
                         tools:ignore="Autofill" />
 
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.core.widget.NestedScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -269,7 +279,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:onClick="@{() -> vm.onSaveAddress()}"
-                android:text="@string/text_save_address"
+                android:text="@{context.getString(vm.actionText)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -277,4 +287,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

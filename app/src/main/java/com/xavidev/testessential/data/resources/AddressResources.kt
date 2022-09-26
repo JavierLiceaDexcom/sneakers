@@ -18,12 +18,15 @@ class AddressResources internal constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : AddressRepository {
 
-    override suspend fun insertAddress(address: Address) {
-        coroutineScope {
-            val existsDefault = addressDao.getDefaultAddress()
-            addressDao.insertAddress(address)
+    override suspend fun insertAddress(address: Address): Result<Unit> = withContext(ioDispatcher) {
+        val existsDefault = addressDao.getDefaultAddress()
+        return@withContext try {
+            val inserted = addressDao.insertAddress(address)
             if (existsDefault == null)
                 addressDao.setDefaultAddress(address.id, true)
+            Success(inserted)
+        } catch (ex: Exception) {
+            Error(ex)
         }
     }
 

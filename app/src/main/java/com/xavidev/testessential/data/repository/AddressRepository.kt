@@ -5,7 +5,7 @@ import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.data.Result
 
 interface AddressRepository {
-    suspend fun insertAddress(address: Address)
+    suspend fun insertAddress(address: Address): Result<Unit>
 
     fun observeAddresses(): LiveData<Result<List<Address>>>
 
