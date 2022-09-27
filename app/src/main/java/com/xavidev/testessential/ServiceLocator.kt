@@ -52,6 +52,11 @@ object ServiceLocator {
     var addressRepository: AddressRepository? = null
         @VisibleForTesting set
 
+    @VisibleForTesting
+    @Volatile
+    var cardsRepository: CardRepository? = null
+        @VisibleForTesting set
+
     private val lock = Any()
 
     private fun createDatabase(context: Context): AppDatabase {
@@ -168,6 +173,19 @@ object ServiceLocator {
     private fun createAddressRepository(context: Context): AddressRepository {
         val newRepo = AddressResources(getDatabase(context).addressDao())
         addressRepository = newRepo
+        return newRepo
+    }
+
+    // Card
+    fun provideCardsRepository(context: Context): CardRepository {
+        synchronized(lock) {
+            return cardsRepository ?: createCardsRepository(context)
+        }
+    }
+
+    private fun createCardsRepository(context: Context): CardRepository {
+        val newRepo = CardResources(getDatabase(context).cardDao())
+        cardsRepository = newRepo
         return newRepo
     }
 }

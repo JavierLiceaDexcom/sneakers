@@ -1,4 +1,4 @@
-package com.xavidev.testessential.ui.profile
+package com.xavidev.testessential.ui.addEditCards
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +7,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.xavidev.testessential.R
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.FragmentCardFormBinding
+import com.xavidev.testessential.ui.paymentMethods.PaymentMethodViewModel
+import com.xavidev.testessential.utils.ViewModelFactory
 
 class CardFormFragment : DialogFragment() {
+
     val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentCardFormBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: PaymentMethodViewModel by viewModels()
+    private val viewModel by viewModels<PaymentMethodViewModel> {
+        ViewModelFactory(
+            cardsRepository = (requireContext().applicationContext as SneakersApplication).cardRepository,
+            owner = this
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

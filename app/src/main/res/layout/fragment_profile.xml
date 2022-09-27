@@ -127,7 +127,7 @@
                     style="@style/ClickableLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{(view) -> vm.clickPaymentMethods(view)}"
+                    android:onClick="@{() -> vm.clickPaymentMethods()}"
                     android:orientation="horizontal"
                     android:padding="12dp">
 

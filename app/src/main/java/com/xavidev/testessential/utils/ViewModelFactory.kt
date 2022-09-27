@@ -11,6 +11,7 @@ import com.xavidev.testessential.ui.address.AddressViewModel
 import com.xavidev.testessential.ui.cart.CartViewModel
 import com.xavidev.testessential.ui.intro.IntroViewModel
 import com.xavidev.testessential.ui.main.PopulateViewModel
+import com.xavidev.testessential.ui.paymentMethods.PaymentMethodViewModel
 import com.xavidev.testessential.ui.profile.ProfileViewModel
 import com.xavidev.testessential.ui.purchases.PurchasesViewModel
 import com.xavidev.testessential.ui.sale.SaleViewModel
@@ -29,6 +30,7 @@ class ViewModelFactory constructor(
     private val userRepository: UserRepository? = null,
     private val purchaseRepository: PurchaseRepository? = null,
     private val addressRepository: AddressRepository? = null,
+    private val cardsRepository: CardRepository? = null,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -70,6 +72,9 @@ class ViewModelFactory constructor(
             }
             isAssignableFrom(BrandsViewModel::class.java) -> brandsRepository?.let {
                 BrandsViewModel(it)
+            }
+            isAssignableFrom(PaymentMethodViewModel::class.java) -> cardsRepository?.let {
+                PaymentMethodViewModel(it)
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class ${modelClass.name}")
         }

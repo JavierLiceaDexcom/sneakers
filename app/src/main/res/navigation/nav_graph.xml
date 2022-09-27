@@ -47,9 +47,9 @@
         tools:layout="@layout/fragment_purchase_filter_bottom_sheet" />
     <fragment
         android:id="@+id/paymentMethodsFragment"
-        android:name="com.xavidev.testessential.ui.profile.PaymentMethodsFragment"
+        android:name="com.xavidev.testessential.ui.paymentMethods.PaymentMethodsActivity"
         android:label="fragment_payment_methods"
-        tools:layout="@layout/fragment_payment_methods">
+        tools:layout="@layout/activity_payment_methods">
         <action
             android:id="@+id/action_paymentMethodsFragment_to_cardFormFragment"
             app:destination="@id/cardFormFragment" />
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/cardFormFragment"
-        android:name="com.xavidev.testessential.ui.profile.CardFormFragment"
+        android:name="com.xavidev.testessential.ui.addEditCards.CardFormFragment"
         android:label="fragment_card_form"
         tools:layout="@layout/fragment_card_form" >
         <action

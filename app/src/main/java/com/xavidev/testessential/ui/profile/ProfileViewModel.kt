@@ -4,7 +4,6 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.xavidev.testessential.R
 import com.xavidev.testessential.data.Result
 import com.xavidev.testessential.data.repository.UserRepository
 import com.xavidev.testessential.data.source.local.entity.User
@@ -19,13 +18,15 @@ class ProfileViewModel(private val userRepository: UserRepository) : NavigationV
     private val _openAddressesEvent = MutableLiveData<Event<Unit>>()
     val openAddressesEvent: LiveData<Event<Unit>> get() = _openAddressesEvent
 
+    private val _openCardsEvent = MutableLiveData<Event<Unit>>()
+    val openCardsEvent: LiveData<Event<Unit>> get() = _openCardsEvent
+
     fun clickAddressInfo() {
         _openAddressesEvent.value = Event(Unit)
-
     }
 
-    fun clickPaymentMethods(view: View) {
-        navigateTo(view, R.id.action_profileFragment_to_paymentMethodsFragment)
+    fun clickPaymentMethods() {
+        _openCardsEvent.value = Event(Unit)
     }
 
     fun insertUser(user: User) = viewModelScope.launch {

@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.FragmentProfileBinding
 import com.xavidev.testessential.ui.address.AddressesActivity
+import com.xavidev.testessential.ui.paymentMethods.PaymentMethodsActivity
 import com.xavidev.testessential.utils.EventObserver
 import com.xavidev.testessential.utils.ViewModelFactory
 import com.xavidev.testessential.utils.startNewActivity
@@ -40,6 +41,10 @@ class ProfileFragment : Fragment() {
 
         viewModel.openAddressesEvent.observe(viewLifecycleOwner, EventObserver{
             requireActivity().startNewActivity(targetActivity = AddressesActivity(), finish = false)
+        })
+
+        viewModel.openCardsEvent.observe(viewLifecycleOwner, EventObserver{
+            requireActivity().startNewActivity(targetActivity = PaymentMethodsActivity(), finish = false)
         })
     }
 }

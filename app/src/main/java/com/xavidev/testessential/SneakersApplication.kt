@@ -25,4 +25,5 @@ class SneakersApplication : Application() {
     val purchaseRepository: PurchaseRepository get() = ServiceLocator.providePurchaseRepository(this)
     val populateRepository: PopulateRepository get() = ServiceLocator.providePopulateRepository(this)
     val addressRepository: AddressRepository get() = ServiceLocator.provideAddressRepository(this)
+    val cardRepository: CardRepository get() = ServiceLocator.provideCardsRepository(this)
 }

@@ -22,6 +22,10 @@
             android:exported="false"
             android:theme="@style/Theme.TestEssential.NoActionBar" />
         <activity
+            android:name=".ui.paymentMethods.PaymentMethodsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TestEssential.NoActionBar" />
+        <activity
             android:name=".ui.sale.SaleOrderActivity"
             android:exported="false"
             android:label="@string/title_activity_sale_order"
