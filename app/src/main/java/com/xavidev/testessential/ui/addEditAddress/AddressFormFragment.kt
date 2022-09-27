@@ -173,7 +173,7 @@ class AddressFormFragment : DialogFragment() {
     private fun showConfirmationDialog() {
         requireActivity().showAlertDialog(
             R.string.text_exit,
-            R.string.text_exit_address_form_message,
+            R.string.text_exit_form_message,
             onAccept = object : () -> Unit {
                 override fun invoke() {
                     dialog?.dismiss()

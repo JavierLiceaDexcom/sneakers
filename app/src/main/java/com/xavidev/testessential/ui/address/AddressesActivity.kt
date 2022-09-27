@@ -29,12 +29,6 @@ class AddressesActivity : AppCompatActivity(), OnAddressSavedListener {
         )
     }
 
-    private val addressItemListener = object : (String) -> Unit {
-        override fun invoke(id: String) {
-            openAddEditDialog(id)
-        }
-    }
-
     private val defaultAddressListener = object : (String) -> Unit {
         override fun invoke(id: String) {
             setAddressAsDefault(id)

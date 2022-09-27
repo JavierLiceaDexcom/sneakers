@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.xavidev.testessential.data.repository.*
 import com.xavidev.testessential.ui.addEditAddress.AddEditAddressViewModel
+import com.xavidev.testessential.ui.addEditCards.AddEditCardViewModel
 import com.xavidev.testessential.ui.address.AddressViewModel
 import com.xavidev.testessential.ui.cart.CartViewModel
 import com.xavidev.testessential.ui.intro.IntroViewModel
@@ -75,6 +76,9 @@ class ViewModelFactory constructor(
             }
             isAssignableFrom(PaymentMethodViewModel::class.java) -> cardsRepository?.let {
                 PaymentMethodViewModel(it)
+            }
+            isAssignableFrom(AddEditCardViewModel::class.java) -> cardsRepository?.let {
+                AddEditCardViewModel(it)
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class ${modelClass.name}")
         }

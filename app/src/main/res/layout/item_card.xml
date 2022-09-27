@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="card"
             type="com.xavidev.testessential.data.source.local.entity.Card" />
@@ -25,7 +27,7 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/img_card_icon"
                 android:layout_width="70dp"
                 android:layout_height="60dp"
                 android:contentDescription="@string/text_credit_card_icon"
@@ -39,9 +41,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:text="@{@string/text_card_end_format(card.lastDigits)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintEnd_toStartOf="@+id/img_remove_card"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toEndOf="@+id/img_card_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="End with 8019" />
 
@@ -50,6 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="@{card.institutionName}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintEnd_toEndOf="@+id/tv_card_last_digits"
                 app:layout_constraintStart_toStartOf="@+id/tv_card_last_digits"
@@ -57,10 +61,11 @@
                 tools:text="Citibanamex" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/tv_expiration_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="@{@string/text_card_expiration_format(card.expirationDate)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintEnd_toEndOf="@+id/tv_card_bank"
                 app:layout_constraintStart_toStartOf="@+id/tv_card_bank"
@@ -73,9 +78,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/text_default"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="@+id/textView16"
-                app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                android:visibility="@{card.isDefault ? View.VISIBLE : View.GONE }"
+                app:layout_constraintStart_toStartOf="@+id/tv_expiration_date"
+                app:layout_constraintTop_toBottomOf="@+id/tv_expiration_date" />
 
             <ImageView
                 android:id="@+id/img_remove_card"

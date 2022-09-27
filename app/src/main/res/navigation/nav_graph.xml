@@ -49,26 +49,12 @@
         android:id="@+id/paymentMethodsFragment"
         android:name="com.xavidev.testessential.ui.paymentMethods.PaymentMethodsActivity"
         android:label="fragment_payment_methods"
-        tools:layout="@layout/activity_payment_methods">
-        <action
-            android:id="@+id/action_paymentMethodsFragment_to_cardFormFragment"
-            app:destination="@id/cardFormFragment" />
-        <action
-            android:id="@+id/action_paymentMethodsFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-    </fragment>
+        tools:layout="@layout/activity_payment_methods"/>
     <fragment
         android:id="@+id/cardFormFragment"
         android:name="com.xavidev.testessential.ui.addEditCards.CardFormFragment"
         android:label="fragment_card_form"
-        tools:layout="@layout/fragment_card_form" >
-        <action
-            android:id="@+id/action_cardFormFragment_to_paymentMethodsFragment"
-            app:destination="@id/paymentMethodsFragment" />
-        <action
-            android:id="@+id/action_cardFormFragment_to_paymentMethodFragment"
-            app:destination="@id/paymentMethodFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_card_form" />
     <fragment
         android:id="@+id/addressFormFragment"
         android:name="com.xavidev.testessential.ui.addEditAddress.AddressFormFragment"
@@ -83,9 +69,5 @@
         android:id="@+id/profileFragment"
         android:name="com.xavidev.testessential.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile">
-        <action
-            android:id="@+id/action_profileFragment_to_paymentMethodsFragment"
-            app:destination="@id/paymentMethodsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_profile"/>
 </navigation>

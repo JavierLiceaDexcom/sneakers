@@ -76,7 +76,7 @@
     <string name="text_select_the_address">Select the address</string>
     <string name="text_pay_order">Pay order</string>
     <string name="text_select_payment_method">Select payment method</string>
-    <string name="text_add_payment_method">Add payment method</string>
+    <string name="text_add_payment_method">Add new payment method</string>
     <string name="text_filters">Filters</string>
     <string name="text_buy_again">Buy again</string>
     <string name="text_all">All</string>
@@ -112,6 +112,19 @@
     <string name="text_card_beneficiary">Beneficiary</string>
     <string name="text_card_expiration">Expiration</string>
     <string name="text_card_cvv">CVV</string>
+    <string name="text_card_end_format">Ends with %1$s</string>
+    <string name="text_card_expiration_format">Expiration: %1$s</string>
+
+    <string-array name="banks">
+        <item>BBVA Bancomer</item>
+        <item>Santander</item>
+        <item>Scotiabank</item>
+        <item>Bancoppel</item>
+        <item>Citibanamex</item>
+        <item>HSBC</item>
+        <item>Banregio</item>
+    </string-array>
+
     <string name="text_check_done">Check done</string>
     <string name="text_purchase_completed">Purchase completed</string>
     <string name="text_you_bought">You bought</string>
@@ -155,7 +168,7 @@
     <string name="text_address_saved">Adress saved!</string>
     <string name="text_address_updated">Address updated!</string>
     <string name="text_exit">Exit</string>
-    <string name="text_exit_address_form_message">You area about to leave the form ¿do you want to exit?</string>
+    <string name="text_exit_form_message">You area about to leave the form ¿do you want to exit?</string>
     <string name="text_accept">Accept</string>
     <string name="text_cancel">Cancel</string>
     <string name="text_required_field">Required field</string>
@@ -173,4 +186,9 @@
     <string name="text_update_address">Update address</string>
     <string name="text_address_updated_error">Cannot update address</string>
     <string name="text_address_saved_error">Cannot save address</string>
+    <string name="text_set_as_default_payment">Set as default payment method</string>
+    <string name="text_card_saved_error">Cannot save card</string>
+    <string name="text_card_format_error">Enter a valid card number</string>
+    <string name="text_remove_card_title">Remove card</string>
+    <string name="text_remove_card_message">The selected card will be removed, ¿continue?</string>
 </resources>

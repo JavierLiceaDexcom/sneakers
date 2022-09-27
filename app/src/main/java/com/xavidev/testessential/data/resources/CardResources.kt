@@ -13,6 +13,7 @@ class CardResources internal constructor(private val cardDao: CardDao) : CardRep
         emit(Result.Loading)
         try {
             val response = cardDao.insertCard(card)
+            if (card.isDefault) cardDao.updateDefaultCard(card.id)
             emit(Result.Success(response == 1L))
         } catch (ex: IOException) {
             emit(Result.Error(ex))
@@ -49,11 +50,11 @@ class CardResources internal constructor(private val cardDao: CardDao) : CardRep
         }
     }
 
-    override suspend fun updateDefaultCard(oldCard: Card, newCard: Card): Flow<Result<Unit>> =
+    override suspend fun updateDefaultCard( cardId: String): Flow<Result<Unit>> =
         flow {
             emit(Result.Loading)
             try {
-                val response = cardDao.updateDefaultCard(oldCard, newCard)
+                val response = cardDao.updateDefaultCard(cardId)
                 emit(Result.Success(response))
             } catch (ex: IOException) {
                 emit(Result.Error(ex))

@@ -21,9 +21,14 @@ interface CardDao {
     @Query("UPDATE card SET is_default =:value WHERE id =:id")
     suspend fun setDefaultCard(id: String, value: Boolean): Int
 
+    @Query("SELECT * FROM card WHERE is_default = :value")
+    suspend fun getDefaultCard(value: Boolean = true): Card?
+
     @Transaction
-    suspend fun updateDefaultCard(oldCard: Card, newCard: Card) {
-        setDefaultCard(oldCard.id, false)
-        setDefaultCard(newCard.id, true)
+    suspend fun updateDefaultCard(newCardId: String) {
+        val oldCardId = getDefaultCard()?.id
+        if (oldCardId == newCardId) return
+        oldCardId?.let { setDefaultCard(it, false) }
+        setDefaultCard(newCardId, true)
     }
 }
