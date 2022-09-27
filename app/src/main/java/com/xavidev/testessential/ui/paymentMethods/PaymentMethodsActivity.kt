@@ -41,17 +41,6 @@ class PaymentMethodsActivity : AppCompatActivity(), OnCardAdded {
         }
     }
 
-    private fun showRemoveConfirmationDialog(cardId: String) {
-        showAlertDialog(
-            titleId = R.string.text_remove_card_title,
-            messageId = R.string.text_remove_card_message,
-            onAccept = object : () -> Unit {
-                override fun invoke() {
-                    // Remove card
-                }
-            })
-    }
-
     private val cardAdapter = CardsAdapter(cardItemClickListener, cardItemRemoveListener)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,9 +59,16 @@ class PaymentMethodsActivity : AppCompatActivity(), OnCardAdded {
         }
 
         setCardList()
+        handleObservers()
+    }
 
+    private fun handleObservers() {
         viewModel.openFormEvent.observe(this, EventObserver {
             CardFormFragment().show(supportFragmentManager, CardFormFragment.TAG)
+        })
+
+        viewModel.cardRemovedEvent.observe(this, EventObserver{
+            viewModel.getCards()
         })
     }
 
@@ -85,6 +81,17 @@ class PaymentMethodsActivity : AppCompatActivity(), OnCardAdded {
         viewModel.cards.observe(this) { list ->
             cardAdapter.submitList(list)
         }
+    }
+
+    private fun showRemoveConfirmationDialog(cardId: String) {
+        showAlertDialog(
+            titleId = R.string.text_remove_card_title,
+            messageId = R.string.text_remove_card_message,
+            onAccept = object : () -> Unit {
+                override fun invoke() {
+                    viewModel.removeCardById(cardId)
+                }
+            })
     }
 
     override fun cardAdded() {

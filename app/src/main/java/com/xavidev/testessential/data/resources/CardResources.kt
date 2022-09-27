@@ -30,6 +30,16 @@ class CardResources internal constructor(private val cardDao: CardDao) : CardRep
         }
     }
 
+    override suspend fun deleteCardById(cardId: String): Flow<Result<Unit>> = flow{
+        emit(Result.Loading)
+        try {
+            cardDao.deleteCardById(cardId)
+            emit(Result.Success(Unit))
+        } catch (ex: IOException) {
+            emit(Result.Error(ex))
+        }
+    }
+
     override suspend fun getAllCards(): Flow<Result<List<Card>>> = flow {
         emit(Result.Loading)
         try {

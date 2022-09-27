@@ -9,8 +9,7 @@ interface CardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCard(card: Card): Long
 
-    @Delete
-    suspend fun deleteCard(card: Card): Int
+
 
     @Query("SELECT * FROM card")
     suspend fun getAllCards(): List<Card>
@@ -31,4 +30,10 @@ interface CardDao {
         oldCardId?.let { setDefaultCard(it, false) }
         setDefaultCard(newCardId, true)
     }
+
+    @Delete
+    suspend fun deleteCard(card: Card): Int
+
+    @Query("DELETE FROM card WHERE id = :id")
+    suspend fun deleteCardById(id: String)
 }

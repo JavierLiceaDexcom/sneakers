@@ -9,6 +9,8 @@ interface CardRepository {
 
     suspend fun deleteCard(card: Card): Flow<Result<Boolean>>
 
+    suspend fun deleteCardById(cardId: String): Flow<Result<Unit>>
+
     suspend fun getAllCards(): Flow<Result<List<Card>>>
 
     suspend fun getCardById(cardId: String): Flow<Result<Card>>

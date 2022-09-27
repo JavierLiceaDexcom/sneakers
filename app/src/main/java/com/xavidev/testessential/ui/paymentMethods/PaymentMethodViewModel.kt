@@ -24,6 +24,9 @@ class PaymentMethodViewModel(private val cardRepository: CardRepository) : Navig
     private val _openFormEvent = MutableLiveData<Event<Unit>>()
     val openFormEvent: LiveData<Event<Unit>> get() = _openFormEvent
 
+    private val _cardRemovedEvent = MutableLiveData<Event<Unit>>()
+    val cardRemovedEvent: LiveData<Event<Unit>> get() = _cardRemovedEvent
+
     fun getCards() = viewModelScope.launch {
         cardRepository.getAllCards().flowOn(Dispatchers.IO)
             .collect { result ->
@@ -34,6 +37,14 @@ class PaymentMethodViewModel(private val cardRepository: CardRepository) : Navig
                     _isEmpty.postValue(true)
                 }
             }
+    }
+
+    fun removeCardById(cardId: String) = viewModelScope.launch {
+        cardRepository.deleteCardById(cardId).flowOn(Dispatchers.IO).collect{result->
+            if (result is Result.Success){
+                _cardRemovedEvent.postValue(Event(Unit))
+            }
+        }
     }
 
     fun openCardFormFragment() {
