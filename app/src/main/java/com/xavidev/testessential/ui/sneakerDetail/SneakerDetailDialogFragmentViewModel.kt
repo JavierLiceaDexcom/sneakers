@@ -24,6 +24,7 @@ class SneakerDetailDialogFragmentViewModel(
     private val sneakersRepository: SneakersRepository,
     private val cartRepository: CartRepository
 ) : NavigationViewModel() {
+
     private val _sneakerLoading = MutableLiveData(false)
     val sneakerLoading: LiveData<Boolean> get() = _sneakerLoading
 
@@ -35,9 +36,6 @@ class SneakerDetailDialogFragmentViewModel(
 
     private val _sneakerHasDiscount = MutableLiveData<Boolean>()
     val sneakerHasDiscount: LiveData<Boolean> get() = _sneakerHasDiscount
-
-    private val _sneakerDiscount = MutableLiveData<String>()
-    val sneakerDiscount: LiveData<String> get() = _sneakerDiscount
 
     private val _sneakerInCart = MutableLiveData(false)
     val sneakerInCart: LiveData<Boolean> get() = _sneakerInCart
@@ -61,6 +59,14 @@ class SneakerDetailDialogFragmentViewModel(
     private val _colorSelected = MutableLiveData(false)
     private val colorSelected: LiveData<Boolean> get() = _colorSelected
 
+    // Events
+
+    private val _sneakerFavoriteEvent = MutableLiveData<Event<Unit>>()
+    val sneakerFavoriteEvent: LiveData<Event<Unit>> get() = _sneakerFavoriteEvent
+
+    private val _sneakerCartEvent = MutableLiveData<Event<Unit>>()
+    val sneakerCartEvent: LiveData<Event<Unit>> get() = _sneakerCartEvent
+
     private val _buySneakerEvent = MutableLiveData<Event<Unit>>()
     val buySneakerEvent: LiveData<Event<Unit>> get() = _buySneakerEvent
 
@@ -75,7 +81,6 @@ class SneakerDetailDialogFragmentViewModel(
                             _sneaker.postValue(sneaker)
                             val discount = sneaker.discountPercentage
                             _sneakerHasDiscount.postValue(discount > 0)
-                            _sneakerDiscount.postValue("- $discount%")
                             _sneakerInCart.postValue(sneaker.inCart)
                             _sneakerFavorite.postValue(sneaker.favorite)
                         }
@@ -90,7 +95,10 @@ class SneakerDetailDialogFragmentViewModel(
             .collect { response ->
                 when (response) {
                     is Result.Loading -> {}
-                    is Result.Success -> _sneakerFavorite.postValue(favorite)
+                    is Result.Success -> {
+                        _sneakerFavorite.postValue(favorite)
+                        _sneakerFavoriteEvent.postValue(Event(Unit))
+                    }
                     is Result.Error -> _favoriteMessage.postValue(Event(R.string.text_favorite_error_updating))
                 }
             }
@@ -169,6 +177,7 @@ class SneakerDetailDialogFragmentViewModel(
         val cartItem = sneaker.value?.toCart()!!
         updateSneakerInCart(cartItem.sneakerId, !isAdded)
         if (isAdded) removeSneakerFromCart(cartItem.sneakerId) else addSneakerToCart(cartItem)
+        _sneakerCartEvent.postValue(Event(Unit))
     }
 
     fun onBuySneaker() {

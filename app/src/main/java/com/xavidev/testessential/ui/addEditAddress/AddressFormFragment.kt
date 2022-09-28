@@ -44,7 +44,7 @@ class AddressFormFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ) = binding.root
 
-    override fun getTheme() = R.style.FullscreenDialogTheme_Primary
+    override fun getTheme() = R.style.FullscreenDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)

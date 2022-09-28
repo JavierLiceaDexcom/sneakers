@@ -44,7 +44,7 @@ class CardFormFragment : DialogFragment() {
         onCardAddedListener = context as OnCardAdded
     }
 
-    override fun getTheme() = R.style.FullscreenDialogTheme_Primary
+    override fun getTheme() = R.style.FullscreenDialogTheme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

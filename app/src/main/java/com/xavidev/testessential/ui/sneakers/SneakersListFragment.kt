@@ -16,6 +16,7 @@ import com.xavidev.testessential.data.source.local.entity.Brand
 import com.xavidev.testessential.data.source.local.entity.SneakerComplete
 import com.xavidev.testessential.databinding.FragmentSneakersListBinding
 import com.xavidev.testessential.ui.main.PopulateViewModel
+import com.xavidev.testessential.ui.sneakerDetail.OnSneakerListener
 import com.xavidev.testessential.ui.sneakers.adapters.*
 import com.xavidev.testessential.utils.*
 import kotlinx.coroutines.launch

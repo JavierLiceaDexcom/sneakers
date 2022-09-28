@@ -1,6 +1,7 @@
 package com.xavidev.testessential.ui.sneakerDetail
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,17 +51,24 @@ class SneakerDetailDialogFragment : DialogFragment() {
 
     private val sneakerColorsAdapter = SneakerColorsSelectionAdapter(sneakerColorClickListener)
 
+    private var onSneakerListener: OnSneakerListener? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = binding.root
 
-    override fun getTheme() = R.style.FullscreenDialogTheme_Primary
+    override fun getTheme() = R.style.FullscreenDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         return dialog
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        onSneakerListener = context as OnSneakerListener
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -123,6 +131,14 @@ class SneakerDetailDialogFragment : DialogFragment() {
             if (!viewModel.validateSizeAndColor()) return@EventObserver
             viewModel.startBuySneaker(requireActivity(), SaleOrderActivity())
         })
+
+        viewModel.sneakerFavoriteEvent.observe(viewLifecycleOwner, EventObserver {
+            onSneakerListener?.onSneakerFavorite()
+        })
+
+        viewModel.sneakerCartEvent.observe(viewLifecycleOwner, EventObserver {
+            onSneakerListener?.onSneakerCart()
+        })
     }
 
     private fun setColorsAdapter(colors: List<String>) {
@@ -147,4 +163,10 @@ class SneakerDetailDialogFragment : DialogFragment() {
             requireContext()
         )
     }
+}
+
+interface OnSneakerListener {
+    fun onSneakerFavorite()
+
+    fun onSneakerCart()
 }
