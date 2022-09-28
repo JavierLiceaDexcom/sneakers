@@ -1,34 +1,36 @@
 package com.xavidev.testessential.ui.sneakerDetail
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import com.xavidev.testessential.R
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Images
 import com.xavidev.testessential.databinding.FragmentSneakerDetailDialogBinding
 import com.xavidev.testessential.ui.sale.SaleOrderActivity
-import com.xavidev.testessential.ui.sneakers.adapters.ColorClickListener
 import com.xavidev.testessential.ui.sneakerDetail.adapters.SneakerCarouselAdapter
+import com.xavidev.testessential.ui.sneakers.adapters.ColorClickListener
 import com.xavidev.testessential.ui.sneakers.adapters.SneakerColorsSelectionAdapter
 import com.xavidev.testessential.utils.*
 
-class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
+class SneakerDetailDialogFragment : DialogFragment() {
 
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
         FragmentSneakerDetailDialogBinding.inflate(layoutInflater)
     }
 
     private val args: SneakerDetailDialogFragmentArgs by navArgs()
+
     private val viewModel by viewModels<SneakerDetailDialogFragmentViewModel> {
         ViewModelFactory(
             sneakersRepository = (requireContext().applicationContext as SneakersApplication).sneakersRepository,
@@ -53,13 +55,17 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ) = binding.root
 
-    override fun onStart() {
-        super.onStart()
-        (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
+    override fun getTheme() = R.style.FullscreenDialogTheme_Primary
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        return dialog
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -91,6 +97,10 @@ class SneakerDetailDialogFragment : BottomSheetDialogFragment() {
         chpGroupSizes.setOnCheckedChangeListener { chipGroup, checkedId ->
             val size = chipGroup.findViewById<Chip>(checkedId)?.text
             viewModel.setSizeSelected()
+        }
+
+        tbrSneakerDetails.setNavigationOnClickListener {
+            dialog?.dismiss()
         }
     }
 
