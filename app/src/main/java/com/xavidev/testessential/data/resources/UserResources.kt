@@ -1,5 +1,7 @@
 package com.xavidev.testessential.data.resources
 
+import android.content.Context
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.Result
 import com.xavidev.testessential.data.source.local.dao.UserDao
 import com.xavidev.testessential.data.source.local.entity.User
@@ -34,6 +36,17 @@ class UserResources internal constructor(private val userDao: UserDao) : UserRep
         try {
             val response = userDao.updateUser(user)
             emit(Result.Success(response == 1))
+        } catch (ex: IOException) {
+            emit(Result.Error(ex))
+        }
+    }
+
+    override suspend fun signOut(context: Context): Flow<Result<Unit>> = flow {
+        emit(Result.Loading)
+        try {
+            val database = (context.applicationContext as SneakersApplication).database
+            database?.clearAllTables()
+            emit(Result.Success(Unit))
         } catch (ex: IOException) {
             emit(Result.Error(ex))
         }

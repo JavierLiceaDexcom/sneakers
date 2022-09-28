@@ -15,6 +15,7 @@ import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.databinding.FragmentAddressFormBinding
 import com.xavidev.testessential.utils.*
+import java.util.*
 
 class AddressFormFragment : DialogFragment() {
 
@@ -105,11 +106,9 @@ class AddressFormFragment : DialogFragment() {
         val contactNumber = binding.etContactNumber.text.toString()
         val intNumber = binding.etIntNumber.text.toString()
         val extNumber = binding.etExtNumber.text.toString()
-        var id = ""
-        addressId?.let { id = it }
 
         return Address(
-            id = id,
+            id = addressId ?: UUID.randomUUID().toString(),
             name = name,
             street = street,
             zip = zip,

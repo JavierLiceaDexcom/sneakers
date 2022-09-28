@@ -1,12 +1,11 @@
 package com.xavidev.testessential.ui.profile
 
-import android.view.View
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.xavidev.testessential.data.Result
 import com.xavidev.testessential.data.repository.UserRepository
-import com.xavidev.testessential.data.source.local.entity.User
 import com.xavidev.testessential.utils.Event
 import com.xavidev.testessential.utils.NavigationViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +20,12 @@ class ProfileViewModel(private val userRepository: UserRepository) : NavigationV
     private val _openCardsEvent = MutableLiveData<Event<Unit>>()
     val openCardsEvent: LiveData<Event<Unit>> get() = _openCardsEvent
 
+    private val _signOutEvent = MutableLiveData<Event<Unit>>()
+    val signOutEvent: LiveData<Event<Unit>> get() = _signOutEvent
+
+    private val _signedOutEvent = MutableLiveData<Event<Unit>>()
+    val signedOutEvent: LiveData<Event<Unit>> get() = _signedOutEvent
+
     fun clickAddressInfo() {
         _openAddressesEvent.value = Event(Unit)
     }
@@ -29,36 +34,15 @@ class ProfileViewModel(private val userRepository: UserRepository) : NavigationV
         _openCardsEvent.value = Event(Unit)
     }
 
-    fun insertUser(user: User) = viewModelScope.launch {
-        userRepository.insertUser(user).flowOn(Dispatchers.IO)
-            .collect { response ->
-                when (response) {
-                    is Result.Loading -> {}
-                    is Result.Success -> {}
-                    is Result.Error -> {}
-                }
-            }
+    fun onSignOut() {
+        _signOutEvent.value = Event(Unit)
     }
 
-    fun getUser(userId: String) = viewModelScope.launch {
-        userRepository.getUser(userId).flowOn(Dispatchers.IO)
-            .collect { response ->
-                when (response) {
-                    is Result.Loading -> {}
-                    is Result.Success -> {}
-                    is Result.Error -> {}
-                }
+    fun signOut(context: Context) = viewModelScope.launch {
+        userRepository.signOut(context).flowOn(Dispatchers.IO).collect { result ->
+            if (result is Result.Success) {
+                _signedOutEvent.postValue(Event(Unit))
             }
-    }
-
-    fun updateUser(user: User) = viewModelScope.launch {
-        userRepository.updateUser(user).flowOn(Dispatchers.IO)
-            .collect { response ->
-                when (response) {
-                    is Result.Loading -> {}
-                    is Result.Success -> {}
-                    is Result.Error -> {}
-                }
-            }
+        }
     }
 }

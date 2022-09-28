@@ -10,7 +10,7 @@ import com.xavidev.testessential.data.source.local.db.DB_NAME
 
 object ServiceLocator {
 
-    private var database: AppDatabase? = null
+    var database: AppDatabase? = null
 
     @VisibleForTesting
     @Volatile

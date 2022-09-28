@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.xavidev.testessential.R
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.FragmentProfileBinding
 import com.xavidev.testessential.ui.address.AddressesActivity
+import com.xavidev.testessential.ui.intro.IntroActivity
 import com.xavidev.testessential.ui.paymentMethods.PaymentMethodsActivity
-import com.xavidev.testessential.utils.EventObserver
-import com.xavidev.testessential.utils.ViewModelFactory
-import com.xavidev.testessential.utils.startNewActivity
+import com.xavidev.testessential.utils.*
 
 class ProfileFragment : Fragment() {
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
@@ -39,12 +39,35 @@ class ProfileFragment : Fragment() {
             vm = viewModel
         }
 
-        viewModel.openAddressesEvent.observe(viewLifecycleOwner, EventObserver{
+        viewModel.openAddressesEvent.observe(viewLifecycleOwner, EventObserver {
             requireActivity().startNewActivity(targetActivity = AddressesActivity(), finish = false)
         })
 
-        viewModel.openCardsEvent.observe(viewLifecycleOwner, EventObserver{
-            requireActivity().startNewActivity(targetActivity = PaymentMethodsActivity(), finish = false)
+        viewModel.openCardsEvent.observe(viewLifecycleOwner, EventObserver {
+            requireActivity().startNewActivity(
+                targetActivity = PaymentMethodsActivity(),
+                finish = false
+            )
         })
+
+        viewModel.signOutEvent.observe(viewLifecycleOwner, EventObserver {
+            showSignOutDialog()
+        })
+
+        viewModel.signedOutEvent.observe(viewLifecycleOwner, EventObserver {
+            requireActivity().startNewActivity(targetActivity = IntroActivity(), finish = true)
+        })
+    }
+
+    private fun showSignOutDialog() {
+        requireActivity().showAlertDialog(
+            titleId = R.string.text_sigout_title,
+            messageId = R.string.text_sigout_message,
+            onAccept = object : OnDialogAccept {
+                override fun invoke() {
+                    viewModel.signOut(requireContext())
+                }
+            }
+        )
     }
 }

@@ -23,7 +23,7 @@ class AddressResources internal constructor(
         return@withContext try {
             val inserted = addressDao.insertAddress(address)
             if (existsDefault == null)
-                addressDao.setDefaultAddress(address.id, true)
+                addressDao.updateDefaultAddress(address.id)
             Success(inserted)
         } catch (ex: Exception) {
             Error(ex)

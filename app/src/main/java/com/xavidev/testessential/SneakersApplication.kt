@@ -3,6 +3,7 @@ package com.xavidev.testessential
 import android.app.Application
 import android.content.Context
 import com.xavidev.testessential.data.repository.*
+import com.xavidev.testessential.data.source.local.db.AppDatabase
 
 class SneakersApplication : Application() {
 
@@ -26,4 +27,5 @@ class SneakersApplication : Application() {
     val populateRepository: PopulateRepository get() = ServiceLocator.providePopulateRepository(this)
     val addressRepository: AddressRepository get() = ServiceLocator.provideAddressRepository(this)
     val cardRepository: CardRepository get() = ServiceLocator.provideCardsRepository(this)
+    val database: AppDatabase? get() = ServiceLocator.database
 }
