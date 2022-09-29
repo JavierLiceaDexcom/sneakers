@@ -1,7 +1,9 @@
 package com.xavidev.testessential.ui.addEditAddress
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.viewModelScope
 import com.xavidev.testessential.R
 import com.xavidev.testessential.data.Result
 import com.xavidev.testessential.data.Result.Success
@@ -15,16 +17,13 @@ import kotlinx.coroutines.launch
 class AddEditAddressViewModel(private val addressRepository: AddressRepository) :
     NavigationViewModel() {
 
-    private val ONE_SECOND_DELAY = 1000L
+    companion object {
+        private const val ONE_SECOND_DELAY = 1000L
+    }
 
     private var _isNewAddress: Boolean = false
 
-    private val _addressId = MutableLiveData<String>()
-
-    private val _address = _addressId.switchMap { addressId ->
-        addressRepository.observeAddressById(addressId).map { computeResult(it) }
-    }
-
+    private val _address = MutableLiveData<Address?>()
     val address: LiveData<Address?> get() = _address
 
     private val _addressSavedMessage = MutableLiveData<Event<Int>>()
@@ -47,7 +46,7 @@ class AddEditAddressViewModel(private val addressRepository: AddressRepository) 
     // Functions
 
     fun start(addressId: String?) {
-        addressId?.let { _addressId.value = it }
+        addressId?.let { getAddress(it) }
         if (addressId == null) {
             _isNewAddress = true
             _actionText.value = R.string.text_save_address
@@ -58,7 +57,13 @@ class AddEditAddressViewModel(private val addressRepository: AddressRepository) 
         _actionText.value = R.string.text_update_address
     }
 
-    fun saveAddress(address: Address) {
+    private fun getAddress(addressId: String) = viewModelScope.launch {
+        addressRepository.observeAddressById(addressId).asFlow().collect { result ->
+            _address.postValue(computeResult(result))
+        }
+    }
+
+    fun saveOrUpdateAddress(address: Address) {
         viewModelScope.launch {
             if (_isNewAddress) insertAddress(address) else updateAddress(address)
         }

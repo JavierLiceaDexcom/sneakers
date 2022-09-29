@@ -56,9 +56,8 @@ class AddressResources internal constructor(
             }
         }
 
-    override fun observeAddressById(addressId: String): LiveData<Result<Address>> {
-        return addressDao.observeAddressById(addressId).map { Success(it) }
-    }
+    override fun observeAddressById(addressId: String): LiveData<Result<Address>> =
+        addressDao.observeAddressById(addressId).map { Success(it) }
 
     override suspend fun updateAddress(address: Address): Result<Int> = withContext(ioDispatcher) {
         return@withContext try {

@@ -79,7 +79,7 @@ class AddressFormFragment : DialogFragment() {
     private fun handleObservers() = with(viewModel) {
         saveAddressEvent.observe(viewLifecycleOwner, EventObserver {
             if (!isValidForm()) return@EventObserver
-            viewModel.saveAddress(getForm())
+            viewModel.saveOrUpdateAddress(getForm())
         })
 
         addressUpdatedEvent.observe(viewLifecycleOwner, EventObserver {

@@ -1,8 +1,7 @@
 package com.xavidev.testessential.ui.sneakers
 
-import com.xavidev.testessential.data.source.local.dao.BrandsDao
-import com.xavidev.testessential.data.source.local.dao.SneakersDao
 import com.xavidev.testessential.data.resources.SneakersResources
+import com.xavidev.testessential.data.source.local.dao.SneakersDao
 import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test
