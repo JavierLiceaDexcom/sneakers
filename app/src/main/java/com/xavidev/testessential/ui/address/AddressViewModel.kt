@@ -2,16 +2,16 @@ package com.xavidev.testessential.ui.address
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xavidev.testessential.R
 import com.xavidev.testessential.data.Result
 import com.xavidev.testessential.data.repository.AddressRepository
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.utils.Event
-import com.xavidev.testessential.utils.NavigationViewModel
 import kotlinx.coroutines.launch
 
-class AddressViewModel(private val addressRepository: AddressRepository) : NavigationViewModel() {
+class AddressViewModel(private val addressRepository: AddressRepository) : ViewModel() {
 
     private val _addressesList = MutableLiveData<List<Address>?>()
     val addressesList: LiveData<List<Address>?> get() = _addressesList
