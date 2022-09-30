@@ -1,6 +1,7 @@
 package com.xavidev.testessential.ui.address
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.xavidev.testessential.MainCoroutineRule
 import com.xavidev.testessential.data.source.repository.AddressRepositoryFake
 import com.xavidev.testessential.getOrAwaitValue
 import com.xavidev.testessential.utils.AddressTestUtils
@@ -24,6 +25,10 @@ class AddressViewModelTest {
 
     @get:Rule
     val instantExecutor = InstantTaskExecutorRule()
+
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
 
     @get:Rule
     val mockkRule = MockKRule(this)
