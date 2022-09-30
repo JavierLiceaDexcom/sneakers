@@ -7,11 +7,10 @@ import com.xavidev.testessential.MainCoroutineRule
 import com.xavidev.testessential.data.source.repository.CardRepositoryFake
 import com.xavidev.testessential.getOrAwaitValue
 import com.xavidev.testessential.utils.CardTestUtils
+import io.mockk.coVerify
 import io.mockk.junit4.MockKRule
 import io.mockk.spyk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -45,7 +44,7 @@ class AddEditCardViewModelTest {
     fun when_addCard_expect_cardSavedEventIsTriggered() {
         val card = CardTestUtils.getSingleCard()
         viewModel.saveCard(card)
-        verify(exactly = 1) { runTest { addEditCardRepository.insertCard(card) } }
+        coVerify(exactly = 1) { addEditCardRepository.insertCard(card) }
         assertThat(viewModel.cardSavedEvent.getOrAwaitValue().peekContent()).isEqualTo(Unit)
     }
 }

@@ -6,6 +6,7 @@ import com.xavidev.testessential.R
 import com.xavidev.testessential.data.source.repository.AddressRepositoryFake
 import com.xavidev.testessential.getOrAwaitValue
 import com.xavidev.testessential.utils.AddressTestUtils
+import io.mockk.coVerify
 import io.mockk.junit4.MockKRule
 import io.mockk.spyk
 import io.mockk.verify
@@ -52,7 +53,10 @@ class AddEditAddressViewModelTest {
         val isNewAddressValue = isNewAddressField.get(viewModel) as Boolean
 
         assertThat(isNewAddressValue, `is`(equalTo(true)))
-        assertThat(viewModel.actionText.getOrAwaitValue(), `is`(equalTo(R.string.text_save_address)))
+        assertThat(
+            viewModel.actionText.getOrAwaitValue(),
+            `is`(equalTo(R.string.text_save_address))
+        )
     }
 
     @Test
@@ -63,11 +67,14 @@ class AddEditAddressViewModelTest {
         val isNewAddressValue = isNewAddressField.get(viewModel) as Boolean
 
         assertThat(isNewAddressValue, `is`(equalTo(false)))
-        assertThat(viewModel.actionText.getOrAwaitValue(), `is`(equalTo(R.string.text_update_address)))
+        assertThat(
+            viewModel.actionText.getOrAwaitValue(),
+            `is`(equalTo(R.string.text_update_address))
+        )
     }
 
     @Test
-    fun when_addressIdIsNotNull_expect_getAddressFromDb() = runTest{
+    fun when_addressIdIsNotNull_expect_getAddressFromDb() = runTest {
         val address = AddressTestUtils.getSingleAddress()
         addressRepository.insertAddress(address)
 
@@ -81,8 +88,11 @@ class AddEditAddressViewModelTest {
         val address = AddressTestUtils.getSingleAddress()
         viewModel.start(null)
         viewModel.saveOrUpdateAddress(address)
-        verify { runTest { addressRepository.insertAddress(address) } }
-        assertThat(viewModel.addressSavedMessage.getOrAwaitValue().peekContent(), `is`(equalTo(R.string.text_address_saved)))
+        coVerify(exactly = 1) { addressRepository.insertAddress(address) }
+        assertThat(
+            viewModel.addressSavedMessage.getOrAwaitValue().peekContent(),
+            `is`(equalTo(R.string.text_address_saved))
+        )
     }
 
     @Test
@@ -90,7 +100,10 @@ class AddEditAddressViewModelTest {
         val address = AddressTestUtils.getSingleAddress()
         viewModel.start(address.id)
         viewModel.saveOrUpdateAddress(address)
-        verify { runTest { addressRepository.updateAddress(address) } }
-        assertThat(viewModel.addressSavedMessage.getOrAwaitValue().peekContent(), `is`(equalTo(R.string.text_address_updated)))
+        coVerify { addressRepository.updateAddress(address) }
+        assertThat(
+            viewModel.addressSavedMessage.getOrAwaitValue().peekContent(),
+            `is`(equalTo(R.string.text_address_updated))
+        )
     }
 }

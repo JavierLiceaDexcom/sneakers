@@ -5,12 +5,11 @@ import com.xavidev.testessential.MainCoroutineRule
 import com.xavidev.testessential.data.source.repository.AddressRepositoryFake
 import com.xavidev.testessential.getOrAwaitValue
 import com.xavidev.testessential.utils.AddressTestUtils
+import io.mockk.coVerify
 import io.mockk.junit4.MockKRule
 import io.mockk.spyk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
@@ -45,14 +44,14 @@ class AddressViewModelTest {
     @Test
     fun when_noAddressesInDb_expect_emptyAddressesList() {
         viewModel.getAddresses()
-        verify(exactly = 1) { runTest { addressesRepository.getAllAddresses() } }
+        coVerify(exactly = 1) { addressesRepository.getAllAddresses() }
         assertThat(viewModel.addressesList.getOrAwaitValue(), `is`(emptyList()))
     }
 
     @Test
     fun when_getEmptyList_expect_isEmptyTrue() {
         viewModel.getAddresses()
-        verify(exactly = 1) { runTest { addressesRepository.getAllAddresses() } }
+        coVerify(exactly = 1) { addressesRepository.getAllAddresses() }
         assertThat(viewModel.isEmpty.getOrAwaitValue(), equalTo(true))
     }
 
@@ -66,7 +65,7 @@ class AddressViewModelTest {
     fun when_getAddressesListSuccessful_expect_addressesList() {
         insertAddresses()
         viewModel.getAddresses()
-        verify(exactly = 1) { runTest { addressesRepository.getAllAddresses() } }
+        coVerify(exactly = 1) { addressesRepository.getAllAddresses() }
         assertThat(
             viewModel.addressesList.getOrAwaitValue()?.sortedBy { it.id },
             equalTo(AddressTestUtils.getAddressList().sortedBy { it.id })
@@ -79,7 +78,7 @@ class AddressViewModelTest {
         insertAddresses()
         val addressId = AddressTestUtils.getAddressList()[0].id
         viewModel.setDefaultAddress(addressId)
-        verify { runTest { addressesRepository.updateDefaultAddress(addressId) } }
+        coVerify { addressesRepository.updateDefaultAddress(addressId) }
         assertThat(
             viewModel.defaultAddressUpdatedEvent.getOrAwaitValue().getContentIfNotHandled(),
             `is`(equalTo(Unit))
@@ -91,7 +90,7 @@ class AddressViewModelTest {
         val removedAddressId = AddressTestUtils.getAddressList()[1].id
         insertAddresses()
         viewModel.removeAddress(removedAddressId)
-        verify { runTest { addressesRepository.deleteAddressById(removedAddressId) } }
+        coVerify { addressesRepository.deleteAddressById(removedAddressId) }
 
         viewModel.getAddresses()
         assertThat(
