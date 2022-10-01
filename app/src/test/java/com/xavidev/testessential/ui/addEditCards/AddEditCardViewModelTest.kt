@@ -3,9 +3,9 @@ package com.xavidev.testessential.ui.addEditCards
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
-import com.xavidev.testessential.MainCoroutineRule
 import com.xavidev.testessential.data.source.repository.CardRepositoryFake
 import com.xavidev.testessential.getOrAwaitValue
+import com.xavidev.testessential.rules.MainCoroutineRule
 import com.xavidev.testessential.utils.CardTestUtils
 import io.mockk.coVerify
 import io.mockk.junit4.MockKRule
@@ -27,7 +27,6 @@ class AddEditCardViewModelTest {
     @get:Rule
     val mockkRule = MockKRule(this)
 
-    @ExperimentalCoroutinesApi
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 

@@ -27,12 +27,8 @@ class PopulateViewModel(
     fun getSneakersCount() = viewModelScope.launch {
         populateRepository.getSneakersCount().flowOn(Dispatchers.IO)
             .collect { response ->
-                when (response) {
-                    is Result.Loading -> {}
-                    is Result.Success -> {
-                        response.data.let { count -> _sneakersCount.postValue(count) }
-                    }
-                    is Result.Error -> {}
+                if (response is Result.Success){
+                    response.data.let { count -> _sneakersCount.postValue(count) }
                 }
             }
     }
@@ -59,7 +55,6 @@ class PopulateViewModel(
         }
 
     fun populateDatabase(context: Context) = viewModelScope.launch {
-
         val sneakerTypes =
             JsonParserUtils.getObjectListFromJSON(Type::class.java, TYPES_FILE_NAME, context)
 

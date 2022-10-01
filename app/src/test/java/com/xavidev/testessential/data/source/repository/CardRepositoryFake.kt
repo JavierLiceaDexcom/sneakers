@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
 
 class CardRepositoryFake : CardRepository {
 
-    val cardList = mutableListOf<Card>()
+    private val cardList = mutableListOf<Card>()
 
     override suspend fun insertCard(card: Card): Flow<Result<Boolean>> = flow {
         emit(Loading)

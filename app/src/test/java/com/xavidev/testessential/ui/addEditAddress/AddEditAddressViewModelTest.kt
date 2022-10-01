@@ -1,7 +1,7 @@
 package com.xavidev.testessential.ui.addEditAddress
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.xavidev.testessential.MainCoroutineRule
+import com.xavidev.testessential.rules.MainCoroutineRule
 import com.xavidev.testessential.R
 import com.xavidev.testessential.data.source.repository.AddressRepositoryFake
 import com.xavidev.testessential.getOrAwaitValue

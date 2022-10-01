@@ -1,7 +1,7 @@
 package com.xavidev.testessential.ui.sneakers
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.xavidev.testessential.MainCoroutineRule
+import com.xavidev.testessential.rules.MainCoroutineRule
 import com.xavidev.testessential.data.repository.SneakersRepository
 import io.mockk.junit4.MockKRule
 import io.mockk.spyk

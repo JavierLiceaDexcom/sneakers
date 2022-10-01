@@ -30,16 +30,3 @@ fun <T> LiveData<T>.getOrAwaitValue(time: Long = 2L, timeUnit: TimeUnit = TimeUn
     @Suppress("UNCHECKED_CAST")
     return data as T
 }
-
-@ExperimentalCoroutinesApi
-class MainCoroutineRule : TestWatcher(), TestCoroutineScope by TestCoroutineScope() {
-    override fun starting(description: Description) {
-        super.starting(description)
-        Dispatchers.setMain(this.coroutineContext[ContinuationInterceptor] as CoroutineDispatcher)
-    }
-
-    override fun finished(description: Description) {
-        super.finished(description)
-        Dispatchers.resetMain()
-    }
-}
