@@ -49,14 +49,14 @@ internal class PopulateViewModelTest {
     }
 
     @Test
-    fun getSneakersCount_getZeroCount() {
+    fun getSneakersCountShouldGetZeroCount() {
         viewModel.getSneakersCount()
         coVerify { populateRepository.getSneakersCount() }
         assertThat(viewModel.sneakersCount.getOrAwaitValue()).isEqualTo(0)
     }
 
     @Test
-    fun populateDatabase_insertAllDataInDB() {
+    fun populateDatabaseShouldInsertAllDataInDB() {
         val types =
             JsonParserUtils.getObjectListFromJSON(Type::class.java, "types", context)
 
@@ -81,7 +81,7 @@ internal class PopulateViewModelTest {
     }
 
     @Test
-    fun populateSneakers_getSneakersCount() = runTest{
+    fun getSneakersCountShouldReturnFour() = runTest{
         val sneakers =
             JsonParserUtils.getObjectListFromJSON(Sneaker::class.java, "sneakers", context)
         populateRepository.populateSneakersTable(sneakers).collect{}
