@@ -1,8 +1,9 @@
 package com.xavidev.testessential.data.source.local.entity
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
-import java.io.Serializable
 import java.util.*
 
 @JsonClass(generateAdapter = true)
@@ -22,7 +23,7 @@ data class Sneaker(
     @ColumnInfo(name = "discount_percentage") val discountPercentage: Int,
     var favorite: Boolean = false,
     @ColumnInfo(name = "in_cart") var inCart: Boolean = false,
-) : Serializable, BaseEntity()
+) : BaseEntity()
 
 data class SneakerComplete(
     val id: String,

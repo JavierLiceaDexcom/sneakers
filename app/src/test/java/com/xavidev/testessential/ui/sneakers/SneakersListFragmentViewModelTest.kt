@@ -1,22 +1,37 @@
 package com.xavidev.testessential.ui.sneakers
 
-import com.xavidev.testessential.data.resources.SneakersResources
-import com.xavidev.testessential.data.source.local.dao.SneakersDao
-import io.mockk.mockk
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.xavidev.testessential.MainCoroutineRule
+import com.xavidev.testessential.data.repository.SneakersRepository
+import io.mockk.junit4.MockKRule
+import io.mockk.spyk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
-
+@ExperimentalCoroutinesApi
+@RunWith(RobolectricTestRunner::class)
 internal class SneakersListFragmentViewModelTest {
 
-    private val sneakerDao = mockk<SneakersDao>()
-    private lateinit var sneakersResources: SneakersResources
     private lateinit var viewModel: SneakersListFragmentViewModel
+
+    private val sneakersRepository = spyk<SneakersRepository>()
+
+    @get:Rule
+    val mockkRule = MockKRule(this)
+
+    @get:Rule
+    val executorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule()
 
     @Before
     fun setup() {
-        sneakersResources = SneakersResources(sneakerDao)
-        viewModel = SneakersListFragmentViewModel(sneakersResources)
+        viewModel = SneakersListFragmentViewModel(sneakersRepository)
     }
 
     // List of the tests
@@ -32,6 +47,11 @@ internal class SneakersListFragmentViewModelTest {
     // 9. Validate the sneaker color list is not empty
     // 10. Validate the sneaker colors list is not empty
     // 11. Validate that the sneaker images list is not empty
+
+    @Test
+    fun getAllSneakersComplete_listOfSneakersSuccess() {
+
+    }
 
     @Test
     fun getAllSneakerFromDBRetrievesCorrectListOfSneakers() {
