@@ -6,7 +6,7 @@ import java.util.*
 object CardTestUtils {
 
     fun getSingleCard() = Card(
-        id = UUID.randomUUID().toString(),
+        id = "4",
         institutionName = "Citibanamex",
         expirationDate = "23/26",
         ownerName = "Francisco Javier Licea",
