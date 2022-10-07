@@ -3,6 +3,7 @@ package com.xavidev.testessential.ui.sneakers
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.xavidev.testessential.rules.MainCoroutineRule
 import com.xavidev.testessential.data.repository.SneakersRepository
+import com.xavidev.testessential.data.source.repository.SneakersRepositoryFake
 import io.mockk.junit4.MockKRule
 import io.mockk.spyk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,7 +19,7 @@ internal class SneakersListFragmentViewModelTest {
 
     private lateinit var viewModel: SneakersListFragmentViewModel
 
-    private val sneakersRepository = spyk<SneakersRepository>()
+    private val sneakersRepository = spyk<SneakersRepositoryFake>()
 
     @get:Rule
     val mockkRule = MockKRule(this)

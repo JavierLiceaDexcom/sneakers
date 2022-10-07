@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class BrandsRepositoryFake : BrandsRepository {
-    val brandsList = mutableListOf<Brand>()
+    private val brandsList = mutableListOf<Brand>()
 
     fun insertBrands(brands: List<Brand>) {
         brandsList.addAll(brands)

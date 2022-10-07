@@ -45,6 +45,6 @@ class MainActivity : AppCompatActivity() , OnSneakerListener{
     }
 
     override fun onSneakerCart() {
-        TODO("Not yet implemented")
+        // Add to the cart
     }
 }

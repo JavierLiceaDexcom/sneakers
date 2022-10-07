@@ -11,10 +11,8 @@ import kotlinx.coroutines.flow.flow
 
 class SneakersRepositoryFake : SneakersRepository {
 
-    // TODO: Finish this class
-
-    val sneakersList = mutableListOf<Sneaker>()
-    val sneakersListComplete = mutableListOf<SneakerComplete>()
+    private val sneakersList = mutableListOf<Sneaker>()
+    private val sneakersListComplete = mutableListOf<SneakerComplete>()
 
     override suspend fun populateSneakersTable(sneakers: List<Sneaker>): Flow<Result<Unit>> = flow {
         emit(Loading)
@@ -35,15 +33,16 @@ class SneakersRepositoryFake : SneakersRepository {
         }
     }
 
-    override suspend fun getSneakersByBrand(brandId: String): Flow<Result<List<SneakerComplete>>> = flow{
-        emit(Loading)
-        try {
-            val filteredList = sneakersList.filter { it.brandId == brandId }
-            emit(Success(sneakersListComplete))
-        } catch (ex: Exception) {
-            emit(Error(ex))
+    override suspend fun getSneakersByBrand(brandId: String): Flow<Result<List<SneakerComplete>>> =
+        flow {
+            emit(Loading)
+            try {
+                val filteredList = sneakersList.filter { it.brandId == brandId }
+                emit(Success(sneakersListComplete))
+            } catch (ex: Exception) {
+                emit(Error(ex))
+            }
         }
-    }
 
     override suspend fun getSneakersByType(typeId: String): Flow<Result<List<Sneaker>>> = flow {
         emit(Loading)
@@ -71,5 +70,16 @@ class SneakersRepositoryFake : SneakersRepository {
 
     override suspend fun getSneakerImages(imagesId: String): Flow<Result<Images>> {
         TODO("Not yet implemented")
+    }
+
+    override fun searchSneakerByName(query: String): Flow<Result<List<SneakerComplete>>> = flow {
+        emit(Loading)
+        try {
+            val filteredSneakers =
+                sneakersListComplete.filter { it.model == query || it.brand == query }
+            emit(Success(filteredSneakers))
+        } catch (ex: Exception) {
+            emit(Error(ex))
+        }
     }
 }

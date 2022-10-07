@@ -5,6 +5,8 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.matcher.BoundedMatcher
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -23,6 +25,22 @@ fun firstItem(matcher: Matcher<View>): Matcher<View> {
                 return true
             }
             return false
+        }
+    }
+}
+
+fun atPosition(position: Int, matcher: Matcher<View>): Matcher<View> {
+    return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
+        override fun describeTo(description: Description?) {
+            description?.appendText("has item at position $position :")
+            matcher.describeTo(description)
+        }
+
+        override fun matchesSafely(item: RecyclerView?): Boolean {
+            val viewHolder: RecyclerView.ViewHolder =
+                item?.findViewHolderForAdapterPosition(position)
+                    ?: return false
+            return matcher.matches(viewHolder.itemView)
         }
     }
 }

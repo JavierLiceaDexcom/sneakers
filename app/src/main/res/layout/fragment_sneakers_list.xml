@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tbr_sneakers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/text_sneakers"
@@ -59,7 +60,7 @@
                 android:paddingVertical="8dp">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerSneakerBrands"
+                    android:id="@+id/rv_sneaker_brands"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -67,7 +68,7 @@
                     tools:listitem="@layout/item_brand_list" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerSneakers"
+                    android:id="@+id/rv_sneakers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"

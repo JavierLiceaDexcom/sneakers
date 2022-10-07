@@ -10,7 +10,7 @@ import com.xavidev.testessential.data.source.local.entity.Address
 
 class AddressRepositoryFake : AddressRepository {
 
-    val addressServiceData: LinkedHashMap<String, Address> = LinkedHashMap()
+    private val addressServiceData: LinkedHashMap<String, Address> = LinkedHashMap()
     private val observableAddress = MutableLiveData<Result<List<Address>>>()
 
     override suspend fun insertAddress(address: Address): Result<Unit> {

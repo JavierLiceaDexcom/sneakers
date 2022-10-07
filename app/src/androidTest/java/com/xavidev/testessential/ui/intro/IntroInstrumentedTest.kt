@@ -1,4 +1,4 @@
-package com.xavidev.testessential.intro
+package com.xavidev.testessential.ui.intro
 
 import android.content.Context
 import androidx.test.core.app.launchActivity
@@ -7,7 +7,6 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
-import com.xavidev.testessential.ui.intro.IntroActivity
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

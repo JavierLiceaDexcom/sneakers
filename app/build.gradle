@@ -104,6 +104,7 @@ dependencies {
     testImplementation deps.mockk
     testImplementation deps.coroutines_test
     testImplementation deps.robolectric
+    debugImplementation deps.fragment_testing
 
     //Instrumentation test dependencies
     androidTestImplementation deps.espresso

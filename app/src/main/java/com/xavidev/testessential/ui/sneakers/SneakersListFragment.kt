@@ -130,7 +130,7 @@ class SneakersListFragment : Fragment() {
     private fun setSneakersList() {
         val gridLayoutManager = GridLayoutManager(requireContext(), GRID_COUNT)
 
-        binding.recyclerSneakers.apply {
+        binding.rvSneakers.apply {
             adapter = sneakersAdapter
             layoutManager = gridLayoutManager
         }
@@ -144,7 +144,7 @@ class SneakersListFragment : Fragment() {
         val linearLayoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-        binding.recyclerSneakerBrands.apply {
+        binding.rvSneakerBrands.apply {
             adapter = brandsAdapter
             layoutManager = linearLayoutManager
         }

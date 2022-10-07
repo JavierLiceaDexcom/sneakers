@@ -36,6 +36,7 @@ versions.runner = "1.4.0"
 versions.orchestrator = "1.4.1"
 versions.easy_validation = "1.0.4"
 versions.jacoco = "0.8.7"
+versions.fragment_testing = "1.5.3"
 
 //Library dependencies
 deps.core_ktx = "androidx.core:core-ktx:$versions.core_ktx"
@@ -79,6 +80,7 @@ deps.mockk = "io.mockk:mockk:$versions.mockk"
 deps.coroutines_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines_test"
 deps.livedata_test = "androidx.arch.core:core-testing:$versions.arch"
 deps.jacoco = "org.jacoco:org.jacoco.core:$versions.jacoco"
+deps.fragment_testing = "androidx.fragment:fragment-testing:$versions.fragment_testing"
 
 //Build versions
 build_versions.compileSdk = 32
