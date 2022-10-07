@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.xavidev.testessential.R
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.databinding.FragmentAddressSelectionBinding
 import com.xavidev.testessential.ui.sale.adapters.AddressSelectionAdapter
+import com.xavidev.testessential.utils.ViewModelFactory
 
 
 class AddressSelectionFragment : Fragment() {
@@ -18,7 +20,13 @@ class AddressSelectionFragment : Fragment() {
         FragmentAddressSelectionBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SaleViewModel by viewModels()
+    private val viewModel: SaleViewModel by viewModels{
+        ViewModelFactory(
+            sneakersRepository = (requireContext() as SneakersApplication).sneakersRepository,
+            addressRepository = (requireContext() as SneakersApplication).addressRepository,
+            owner = this
+        )
+    }
 
     private val addressSelectionAdapter = AddressSelectionAdapter(object : (Address, Int) -> Unit {
         override fun invoke(address: Address, pos: Int) {

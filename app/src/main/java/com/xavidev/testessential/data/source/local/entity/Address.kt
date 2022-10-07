@@ -22,5 +22,5 @@ data class Address(
 ) : BaseEntity() {
 
     val completeAddress: String
-        get() = "${this.street}, ${this.zip}, ${this.suburb}, ${this.municipality}"
+        get() = "${this.street} ${this.extNumber}, ${this.suburb}, ${this.zip}, ${this.municipality} - ${this.name} - ${this.contactNumber}"
 }

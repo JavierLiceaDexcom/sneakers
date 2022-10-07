@@ -38,6 +38,16 @@ class SneakersResources internal constructor(
         }
     }
 
+    override suspend fun getSneakersByIds(ids: List<String>): Flow<Result<List<SneakerComplete>>> =
+        flow {
+            emit(Result.Loading)
+            try {
+                emit(Result.Success(sneakersDao.getSneakersByIds(ids)))
+            } catch (ex: Exception) {
+                emit(Result.Error(ex))
+            }
+        }
+
     override suspend fun getSneakersByBrand(brandId: String): Flow<Result<List<SneakerComplete>>> =
         flow {
             emit(Result.Loading)
@@ -108,7 +118,7 @@ class SneakersResources internal constructor(
             val result = sneakersDao.searchSneakersByName(query)
             Log.i("KK", "$result")
             emit(Result.Success(result))
-        } catch (ex: Exception){
+        } catch (ex: Exception) {
             emit(Result.Error(ex))
         }
     }

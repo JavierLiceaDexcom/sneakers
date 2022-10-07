@@ -63,7 +63,9 @@ class ViewModelFactory constructor(
             isAssignableFrom(PurchasesViewModel::class.java) -> purchaseRepository?.let {
                 PurchasesViewModel(it)
             }
-            isAssignableFrom(SaleViewModel::class.java) -> SaleViewModel()
+            isAssignableFrom(SaleViewModel::class.java) -> SaleViewModel(
+                sneakersRepository!!, addressRepository!!
+            )
             isAssignableFrom(SearchViewModel::class.java) -> sneakersRepository?.let {
                 SearchViewModel(it)
             }

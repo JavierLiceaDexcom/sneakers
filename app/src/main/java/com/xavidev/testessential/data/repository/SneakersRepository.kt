@@ -11,6 +11,8 @@ interface SneakersRepository {
 
     suspend fun getAllCompleteSneakers(): Flow<Result<List<SneakerComplete>>>
 
+    suspend fun getSneakersByIds(ids: List<String>): Flow<Result<List<SneakerComplete>>>
+
     suspend fun getSneakersByBrand(brandId: String): Flow<Result<List<SneakerComplete>>>
 
     suspend fun getSneakersByType(typeId: String): Flow<Result<List<Sneaker>>>

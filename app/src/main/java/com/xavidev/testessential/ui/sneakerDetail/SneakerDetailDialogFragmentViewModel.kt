@@ -1,5 +1,6 @@
 package com.xavidev.testessential.ui.sneakerDetail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
@@ -13,9 +14,11 @@ import com.xavidev.testessential.data.source.local.entity.Cart
 import com.xavidev.testessential.data.source.local.entity.Images
 import com.xavidev.testessential.data.source.local.entity.SneakerComplete
 import com.xavidev.testessential.data.source.local.entity.toCart
+import com.xavidev.testessential.ui.sale.SaleOrderActivity
 import com.xavidev.testessential.utils.Event
 import com.xavidev.testessential.utils.NavigationViewModel
 import com.xavidev.testessential.utils.startNewActivity
+import com.xavidev.testessential.utils.startNewActivityWithExtras
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -197,7 +200,10 @@ class SneakerDetailDialogFragmentViewModel(
     }
 
     fun startBuySneaker(fragment: FragmentActivity, destiny: AppCompatActivity) {
-        fragment.startNewActivity(targetActivity = destiny, finish = false)
+        sneaker.value?.let {
+            val extras = mapOf(SaleOrderActivity.SNEAKER_ID_EXTRA to listOf(it.id))
+            fragment.startNewActivityWithExtras(targetActivity = destiny, finish = false, extras)
+        }
     }
 
     fun setColorSelected() {

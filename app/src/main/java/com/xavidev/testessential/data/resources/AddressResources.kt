@@ -42,6 +42,14 @@ class AddressResources internal constructor(
         }
     }
 
+    override suspend fun getDefaultAddress(): Result<Address?> = withContext(ioDispatcher) {
+        return@withContext try {
+            Success(addressDao.getDefaultAddress())
+        } catch (ex: Exception) {
+            Error(ex)
+        }
+    }
+
     override suspend fun getAddressById(addressId: String): Result<Address> =
         withContext(ioDispatcher) {
             try {

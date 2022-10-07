@@ -94,6 +94,17 @@ fun FragmentActivity.startNewActivity(targetActivity: Activity, finish: Boolean 
     if (finish) this.finish()
 }
 
+fun FragmentActivity.startNewActivityWithExtras(
+    targetActivity: Activity,
+    finish: Boolean = true,
+    extras: Map<String, List<String>>
+) {
+    val intent = Intent(this, targetActivity::class.java)
+    extras.forEach { (key, value) -> intent.putExtra(key, value.toTypedArray()) }
+    this.startActivity(intent)
+    if (finish) this.finish()
+}
+
 fun View.setElementError(errorMessage: String?) {
     when (this) {
         is TextInputLayout -> {

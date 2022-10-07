@@ -31,6 +31,9 @@ interface SneakersDao {
     @Query(SNEAKER_JOIN)
     suspend fun getAllCompleteSneakers(): List<SneakerComplete>
 
+    @Query("$SNEAKER_JOIN WHERE sneaker.id IN (:ids)")
+    suspend fun getSneakersByIds(ids: List<String>): List<SneakerComplete>
+
     @Query("SELECT count(*) FROM sneaker")
     suspend fun getSneakersCount(): Int
 

@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.FragmentOrderAddressBinding
+import com.xavidev.testessential.utils.ViewModelFactory
 
 
 class OrderAddressFragment : Fragment() {
@@ -15,7 +18,7 @@ class OrderAddressFragment : Fragment() {
         FragmentOrderAddressBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SaleViewModel by viewModels()
+    private val viewModel: SaleViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +32,9 @@ class OrderAddressFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
         }
+
+        viewModel.getDefaultAddress()
+        viewModel.getSelectedSneakers()
 
         binding.tbrDeliveryMethod.setNavigationOnClickListener {
             requireActivity().finish()

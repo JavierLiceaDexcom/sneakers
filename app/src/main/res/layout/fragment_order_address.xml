@@ -61,6 +61,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:text="@{vm.deliveryAddress.completeAddress}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -194,6 +195,7 @@
                 android:id="@+id/tv_order_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text='@{@string/text_price_currency(vm.totalPrice, "MXN")}'
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

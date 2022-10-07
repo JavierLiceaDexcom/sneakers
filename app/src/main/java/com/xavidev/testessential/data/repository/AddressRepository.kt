@@ -11,6 +11,8 @@ interface AddressRepository {
 
     suspend fun getAllAddresses(): Result<List<Address>>
 
+    suspend fun getDefaultAddress(): Result<Address?>
+
     suspend fun getAddressById(addressId: String): Result<Address>
 
     fun observeAddressById(addressId: String): LiveData<Result<Address>>
