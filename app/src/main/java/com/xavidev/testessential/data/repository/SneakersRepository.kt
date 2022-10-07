@@ -22,4 +22,6 @@ interface SneakersRepository {
     suspend fun updateSneakerInCart(sneakerId: String, value: Boolean): Flow<Result<Boolean>>
 
     suspend fun getSneakerImages(imagesId: String): Flow<Result<Images>>
+
+    fun searchSneakerByName(query: String): Flow<Result<List<SneakerComplete>>>
 }

@@ -46,7 +46,7 @@
     </style>
 
     <style name="SearchInputStyle" parent="InputStyle">
-        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:imeOptions">actionDone</item>
         <item name="android:hint">@string/text_search</item>
         <item name="android:drawableStart">@drawable/ic_search</item>
     </style>
@@ -82,6 +82,7 @@
         <item name="chipStrokeWidth">0dp</item>
         <item name="android:textColor">@color/green</item>
         <item name="android:elevation">1dp</item>
+        <item name="android:clickable">false</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Caption</item>
     </style>
 

@@ -1,21 +1,21 @@
 package com.xavidev.testessential.data.resources
 
+import android.util.Log
 import com.xavidev.testessential.data.Result
-import com.xavidev.testessential.data.source.local.dao.BrandsDao
+import com.xavidev.testessential.data.repository.SneakersRepository
 import com.xavidev.testessential.data.source.local.dao.SneakersDao
-import com.xavidev.testessential.data.source.local.entity.Brand
 import com.xavidev.testessential.data.source.local.entity.Images
 import com.xavidev.testessential.data.source.local.entity.Sneaker
 import com.xavidev.testessential.data.source.local.entity.SneakerComplete
-import com.xavidev.testessential.data.repository.BrandsRepository
-import com.xavidev.testessential.data.repository.SneakersRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
 const val INSERTED = 1
 
-class SneakersResources internal constructor(private val sneakersDao: SneakersDao) :
+class SneakersResources internal constructor(
+    private val sneakersDao: SneakersDao
+) :
     SneakersRepository {
     override suspend fun populateSneakersTable(sneakers: List<Sneaker>): Flow<Result<Unit>> =
         flow {
@@ -98,6 +98,17 @@ class SneakersResources internal constructor(private val sneakersDao: SneakersDa
             val response = sneakersDao.getSneakerImages(imagesId)
             emit(Result.Success(response))
         } catch (ex: IOException) {
+            emit(Result.Error(ex))
+        }
+    }
+
+    override fun searchSneakerByName(query: String): Flow<Result<List<SneakerComplete>>> = flow {
+        emit(Result.Loading)
+        try {
+            val result = sneakersDao.searchSneakersByName(query)
+            Log.i("KK", "$result")
+            emit(Result.Success(result))
+        } catch (ex: Exception){
             emit(Result.Error(ex))
         }
     }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="sneaker"
+            type="com.xavidev.testessential.data.source.local.entity.SneakerComplete" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Material3.CardView.Elevated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="6dp"
+        android:layout_marginVertical="8dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sneakerGridItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="12dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chp_discount"
+                style="@style/ChipDiscountStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginStart="16dp"
+                android:text='@{String.valueOf(sneaker.discountPercentage) + "% OFF"}'
+                android:visibility="@{sneaker.discountPercentage > 0 ? View.VISIBLE: View.GONE }"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_price"
+                app:layout_constraintStart_toEndOf="@+id/tv_price"
+                app:layout_constraintTop_toTopOf="@+id/tv_price"
+                tools:text="18% OFF" />
+
+            <ImageView
+                android:id="@+id/img_thumbnail"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/text_sneaker_thumbnail"
+                app:imageUrl="@{sneaker.thumbnail}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tv_brand"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{sneaker.brand}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_thumbnail"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Adidas" />
+
+            <TextView
+                android:id="@+id/tv_model"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{sneaker.model}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toEndOf="@+id/tv_brand"
+                app:layout_constraintStart_toStartOf="@+id/tv_brand"
+                app:layout_constraintTop_toBottomOf="@+id/tv_brand"
+                tools:text="Forum 84" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{@string/text_price_currency(sneaker.price, sneaker.currency)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/primaryDark"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_model"
+                app:layout_constraintTop_toBottomOf="@+id/tv_model"
+                tools:text="$2,600.00 MXN" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_colors"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_thumbnail"
+                app:layout_constraintTop_toBottomOf="@+id/tv_price"
+                tools:listitem="@layout/item_sneaker_color" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
