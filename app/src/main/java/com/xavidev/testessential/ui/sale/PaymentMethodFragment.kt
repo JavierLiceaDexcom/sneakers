@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
-import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Card
 import com.xavidev.testessential.databinding.FragmentPaymentMethodBinding
 import com.xavidev.testessential.ui.sale.adapters.PaymentMethodSelectionAdapter
-import com.xavidev.testessential.utils.ViewModelFactory
-
 
 class PaymentMethodFragment : Fragment() {
 
@@ -20,13 +18,7 @@ class PaymentMethodFragment : Fragment() {
         FragmentPaymentMethodBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SaleViewModel by viewModels{
-        ViewModelFactory(
-            sneakersRepository = (requireContext().applicationContext as SneakersApplication).sneakersRepository,
-            addressRepository = (requireContext().applicationContext as SneakersApplication).addressRepository,
-            owner = this
-        )
-    }
+    private val viewModel: SaleViewModel by activityViewModels()
 
     private val paymentMethodSelectionAdapter =
         PaymentMethodSelectionAdapter(object : (Card, Int) -> Unit {
@@ -50,6 +42,20 @@ class PaymentMethodFragment : Fragment() {
 
         binding.tbrPaymentMethodSelection.setNavigationOnClickListener {
             viewModel.navigateTo(view, R.id.action_paymentMethodFragment2_to_orderAddressFragment2)
+        }
+
+        viewModel.getAllCards()
+        loadCardsList()
+    }
+
+    private fun loadCardsList() {
+        binding.recyclerCards.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = paymentMethodSelectionAdapter
+        }
+
+        viewModel.allCards.observe(viewLifecycleOwner) { list ->
+            paymentMethodSelectionAdapter.submitList(list)
         }
     }
 }

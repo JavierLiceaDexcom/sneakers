@@ -6,15 +6,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.xavidev.testessential.data.source.local.entity.Card
-import com.xavidev.testessential.databinding.ItemAddressSelectionBinding
+import com.xavidev.testessential.databinding.ItemPaymentMethodSelectionBinding
+import kotlin.math.exp
 
-class PaymentMethodSelectionAdapter(private val itemListener: (Card, Int) -> Unit) :
+typealias PaymentItemClickListener = (Card, Int) -> Unit
+
+class PaymentMethodSelectionAdapter(private val itemListener: PaymentItemClickListener) :
     ListAdapter<Card, PaymentMethodSelectionAdapter.ViewHolder>(CardSelectionCallback) {
 
-    inner class ViewHolder(binding: ItemAddressSelectionBinding) :
+    inner class ViewHolder(private val binding: ItemPaymentMethodSelectionBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(cardItem: Card, itemListener: (Card, Int) -> Unit) {
-            // Bind element
+        fun bind(cardItem: Card, itemListener: PaymentItemClickListener) = with(binding){
+            card = cardItem
+            executePendingBindings()
         }
     }
 
@@ -29,7 +33,7 @@ class PaymentMethodSelectionAdapter(private val itemListener: (Card, Int) -> Uni
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemAddressSelectionBinding.inflate(inflater, parent, false)
+        val binding = ItemPaymentMethodSelectionBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 

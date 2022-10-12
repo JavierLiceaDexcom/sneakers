@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class SaleViewModel(
     private val sneakersRepository: SneakersRepository,
     private val addressRepository: AddressRepository,
-    private val cardRepository: CardRepository
+    private val cardRepository: CardRepository,
 ) : NavigationViewModel() {
 
     private var sneakerIds = mutableListOf<String>()

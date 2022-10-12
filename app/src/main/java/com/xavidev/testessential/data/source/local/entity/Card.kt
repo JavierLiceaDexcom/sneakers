@@ -17,5 +17,8 @@ data class Card(
     @ColumnInfo(name = "is_default") val isDefault: Boolean,
 ) : BaseEntity() {
     val lastDigits: String
-        get() = this.cardNumber.takeLast(4)
+        get() = "End with ${this.cardNumber.takeLast(4)}"
+
+    val expirationDateFormatted: String
+        get() = "${this.expirationDate.take(2)}/${this.expirationDate.takeLast(2)}"
 }
