@@ -13,14 +13,39 @@ typealias CardSelectionListener = (Address, Int) -> Unit
 class AddressSelectionAdapter(private val itemListener: CardSelectionListener) :
     ListAdapter<Address, AddressSelectionAdapter.ViewHolder>(AddressSelectionCallback) {
 
+    var selectedItemPos = -1
+    var lastItemSelectedPos = -1
+
     inner class ViewHolder(private val binding: ItemAddressSelectionBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(addressItem: Address, itemListener: CardSelectionListener) = with(binding) {
             address = addressItem
-            rdbAddressSelection.setOnClickListener {
-                itemListener(addressItem, adapterPosition)
+            if (addressItem.isDefault) {
+                selectedItemPos = adapterPosition
+                selectAddress()
             }
+            rdbAddressSelection.setOnClickListener { handleItemClick(addressItem) }
+            clAddressItem.setOnClickListener { handleItemClick(addressItem) }
             executePendingBindings()
+        }
+
+        private fun handleItemClick(addressItem: Address) {
+            itemListener(addressItem, adapterPosition)
+            selectedItemPos = adapterPosition
+            lastItemSelectedPos = if (lastItemSelectedPos == -1) selectedItemPos else {
+                notifyItemChanged(lastItemSelectedPos)
+                selectedItemPos
+            }
+            notifyItemChanged(selectedItemPos)
+        }
+
+        fun selectAddress() {
+            binding.rdbAddressSelection.isChecked = true
+        }
+
+        fun unselectAddress() {
+            binding.rdbAddressSelection.isChecked = false
         }
     }
 
@@ -40,6 +65,7 @@ class AddressSelectionAdapter(private val itemListener: CardSelectionListener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (position == selectedItemPos) holder.selectAddress() else holder.unselectAddress()
         holder.bind(currentList[position], itemListener)
     }
 }

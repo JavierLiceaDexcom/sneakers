@@ -82,6 +82,13 @@ class SaleViewModel(
         }
     }
 
+    fun setDefaultAddress(addressId: String) = viewModelScope.launch {
+        val result = addressRepository.updateDefaultAddress(addressId)
+        if (result is Result.Success){
+            getAllAddresses()
+        }
+    }
+
     fun getDefaultCard() = viewModelScope.launch {
         cardRepository.getDefaultCard().flowOn(Dispatchers.IO)
             .collect { result ->

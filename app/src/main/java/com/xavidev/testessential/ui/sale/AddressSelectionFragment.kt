@@ -13,7 +13,9 @@ import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.databinding.FragmentAddressSelectionBinding
 import com.xavidev.testessential.ui.sale.adapters.AddressSelectionAdapter
+import com.xavidev.testessential.ui.sale.adapters.CardSelectionListener
 import com.xavidev.testessential.utils.ViewModelFactory
+import com.xavidev.testessential.utils.toast
 
 
 class AddressSelectionFragment : Fragment() {
@@ -24,9 +26,9 @@ class AddressSelectionFragment : Fragment() {
 
     private val viewModel: SaleViewModel by activityViewModels()
 
-    private val addressSelectionAdapter = AddressSelectionAdapter(object : (Address, Int) -> Unit {
+    private val addressSelectionAdapter = AddressSelectionAdapter(object : CardSelectionListener {
         override fun invoke(address: Address, pos: Int) {
-
+            viewModel.setDefaultAddress(address.id)
         }
     })
 
@@ -61,19 +63,11 @@ class AddressSelectionFragment : Fragment() {
 
     private fun handleListeners() = with(binding) {
         btnSelectAddress.setOnClickListener {
-            // Do something here
-            viewModel.navigateTo(
-                root.rootView,
-                R.id.action_addressSelectionFragment2_to_orderAddressFragment2
-            )
+            viewModel.navigateTo(root, R.id.action_addressSelectionFragment2_to_orderAddressFragment2)
         }
 
         tbrSelectAddress.setNavigationOnClickListener {
-            viewModel.navigateTo(
-                root.rootView,
-                R.id.action_addressSelectionFragment2_to_orderAddressFragment2
-            )
+            viewModel.navigateTo(root, R.id.action_addressSelectionFragment2_to_orderAddressFragment2)
         }
     }
-
 }
