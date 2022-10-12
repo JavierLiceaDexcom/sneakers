@@ -33,6 +33,10 @@ class SneakersRepositoryFake : SneakersRepository {
         }
     }
 
+    override suspend fun getSneakersByIds(ids: List<String>): Flow<Result<List<SneakerComplete>>> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getSneakersByBrand(brandId: String): Flow<Result<List<SneakerComplete>>> =
         flow {
             emit(Loading)

@@ -39,10 +39,11 @@
                 android:layout_marginStart="16dp"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:text="@{address.street}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cbx_address_selection"
+                app:layout_constraintStart_toEndOf="@+id/rdb_address_selection"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Av Zoquipan 1959" />
 
@@ -51,6 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:text="@{address.completeAddress}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_address_name"

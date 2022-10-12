@@ -1,17 +1,17 @@
 package com.xavidev.testessential
-/*
+
 import org.hamcrest.Matchers.*
 import org.junit.Test
 
 import org.junit.Assert.*
-*/
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 
-/*
+
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
@@ -67,4 +67,4 @@ class ExampleUnitTest {
         assertThat("The list must contain the element 1", list, hasItem(3))
         assertThat(list, hasItems(3, 4))
     }
-}*/
+}

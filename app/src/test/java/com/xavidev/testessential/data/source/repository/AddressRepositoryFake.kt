@@ -34,6 +34,10 @@ class AddressRepositoryFake : AddressRepository {
         }
     }
 
+    override suspend fun getDefaultAddress(): Result<Address?> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getAddressById(addressId: String): Result<Address> {
         return try {
             val address = addressServiceData.getValue(addressId)

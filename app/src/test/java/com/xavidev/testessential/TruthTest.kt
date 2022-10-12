@@ -1,11 +1,10 @@
 package com.xavidev.testessential
-/*
+
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-*/
 
 //Example of the use of truth library
-/*
+
 class TruthTest {
 
     @Test
@@ -51,4 +50,4 @@ class TruthTest {
         assertThat(emptyList).isEmpty()
         assertThat(result2).isNotEmpty()
     }
-}*/
+}

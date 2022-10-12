@@ -15,5 +15,7 @@ interface CardRepository {
 
     suspend fun getCardById(cardId: String): Flow<Result<Card>>
 
+    suspend fun getDefaultCard(): Flow<Result<Card?>>
+
     suspend fun updateDefaultCard(cardId: String): Flow<Result<Unit>>
 }

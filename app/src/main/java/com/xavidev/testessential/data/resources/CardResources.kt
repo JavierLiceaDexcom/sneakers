@@ -60,6 +60,16 @@ class CardResources internal constructor(private val cardDao: CardDao) : CardRep
         }
     }
 
+    override suspend fun getDefaultCard(): Flow<Result<Card?>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = cardDao.getDefaultCard()
+            emit(Result.Success(response))
+        } catch (ex: IOException) {
+            emit(Result.Error(ex))
+        }
+    }
+
     override suspend fun updateDefaultCard( cardId: String): Flow<Result<Unit>> =
         flow {
             emit(Result.Loading)

@@ -22,8 +22,8 @@ class PaymentMethodFragment : Fragment() {
 
     private val viewModel: SaleViewModel by viewModels{
         ViewModelFactory(
-            sneakersRepository = (requireContext() as SneakersApplication).sneakersRepository,
-            addressRepository = (requireContext() as SneakersApplication).addressRepository,
+            sneakersRepository = (requireContext().applicationContext as SneakersApplication).sneakersRepository,
+            addressRepository = (requireContext().applicationContext as SneakersApplication).addressRepository,
             owner = this
         )
     }

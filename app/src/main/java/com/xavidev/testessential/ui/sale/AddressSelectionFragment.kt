@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.data.source.local.entity.Address
@@ -20,13 +22,7 @@ class AddressSelectionFragment : Fragment() {
         FragmentAddressSelectionBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SaleViewModel by viewModels{
-        ViewModelFactory(
-            sneakersRepository = (requireContext() as SneakersApplication).sneakersRepository,
-            addressRepository = (requireContext() as SneakersApplication).addressRepository,
-            owner = this
-        )
-    }
+    private val viewModel: SaleViewModel by activityViewModels()
 
     private val addressSelectionAdapter = AddressSelectionAdapter(object : (Address, Int) -> Unit {
         override fun invoke(address: Address, pos: Int) {
@@ -47,17 +43,34 @@ class AddressSelectionFragment : Fragment() {
             vm = viewModel
         }
 
-        binding.btnSelectAddress.setOnClickListener {
+        viewModel.getAllAddresses()
+
+        handleListeners()
+        loadAddressesList()
+    }
+
+    private fun loadAddressesList() {
+        binding.recyclerAddresses.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = addressSelectionAdapter
+        }
+        viewModel.allAddresses.observe(viewLifecycleOwner) { list ->
+            addressSelectionAdapter.submitList(list)
+        }
+    }
+
+    private fun handleListeners() = with(binding) {
+        btnSelectAddress.setOnClickListener {
             // Do something here
             viewModel.navigateTo(
-                view,
+                root.rootView,
                 R.id.action_addressSelectionFragment2_to_orderAddressFragment2
             )
         }
 
-        binding.tbrSelectAddress.setNavigationOnClickListener {
+        tbrSelectAddress.setNavigationOnClickListener {
             viewModel.navigateTo(
-                view,
+                root.rootView,
                 R.id.action_addressSelectionFragment2_to_orderAddressFragment2
             )
         }

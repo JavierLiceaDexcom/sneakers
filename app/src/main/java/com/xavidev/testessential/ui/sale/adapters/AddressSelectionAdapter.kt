@@ -8,13 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.databinding.ItemAddressSelectionBinding
 
-class AddressSelectionAdapter(private val itemListener: (Address, Int) -> Unit) :
+typealias CardSelectionListener = (Address, Int) -> Unit
+
+class AddressSelectionAdapter(private val itemListener: CardSelectionListener) :
     ListAdapter<Address, AddressSelectionAdapter.ViewHolder>(AddressSelectionCallback) {
 
-    inner class ViewHolder(binding: ItemAddressSelectionBinding) :
+    inner class ViewHolder(private val binding: ItemAddressSelectionBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(addressItem: Address, itemListener: (Address, Int) -> Unit) {
-            // Bind element
+        fun bind(addressItem: Address, itemListener: CardSelectionListener) = with(binding) {
+            address = addressItem
+            rdbAddressSelection.setOnClickListener {
+                itemListener(addressItem, adapterPosition)
+            }
+            executePendingBindings()
         }
     }
 

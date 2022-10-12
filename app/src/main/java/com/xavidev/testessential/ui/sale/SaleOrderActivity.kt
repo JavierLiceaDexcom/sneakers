@@ -24,6 +24,7 @@ class SaleOrderActivity : AppCompatActivity() {
         ViewModelFactory(
             sneakersRepository = (this.applicationContext as SneakersApplication).sneakersRepository,
             addressRepository = (this.applicationContext as SneakersApplication).addressRepository,
+            cardsRepository = (this.applicationContext as SneakersApplication).cardRepository,
             owner = this
         )
     }
