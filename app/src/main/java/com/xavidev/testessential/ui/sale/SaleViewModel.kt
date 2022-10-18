@@ -11,6 +11,8 @@ import com.xavidev.testessential.data.repository.CardRepository
 import com.xavidev.testessential.data.repository.SneakersRepository
 import com.xavidev.testessential.data.source.local.entity.Address
 import com.xavidev.testessential.data.source.local.entity.Card
+import com.xavidev.testessential.data.source.local.entity.SneakerComplete
+import com.xavidev.testessential.utils.Event
 import com.xavidev.testessential.utils.NavigationViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -44,6 +46,18 @@ class SaleViewModel(
     private val _allCardsEmpty = MutableLiveData<Boolean>()
     val allCardsEmpty: LiveData<Boolean> get() = _allCardsEmpty
 
+    private var selectedCardId: String? = null
+
+    private val _orderSneakers = MutableLiveData<List<SneakerComplete>>()
+    val orderSneakers: LiveData<List<SneakerComplete>> get() = _orderSneakers
+
+    // Events
+    private val _deliveryErrorEvent = MutableLiveData<Event<Int>>()
+    val deliveryErrorEvent: LiveData<Event<Int>> get() = _deliveryErrorEvent
+
+    private val _noCardErrorEvent = MutableLiveData<Event<Unit>>()
+    val noCardErrorEvent: LiveData<Event<Unit>> get() = _noCardErrorEvent
+
     fun setSneakerIds(ids: List<String>) {
         sneakerIds.addAll(ids)
     }
@@ -54,8 +68,10 @@ class SaleViewModel(
                 when (result) {
                     is Result.Loading -> {}
                     is Result.Success -> {
+                        val sneakers = result.data
+                        _orderSneakers.postValue(sneakers)
                         val subtotal =
-                            result.data.map { sneaker -> sneaker.price - ((sneaker.price * sneaker.discountPercentage) / 100) }
+                            sneakers.map { sneaker -> sneaker.price - ((sneaker.price * sneaker.discountPercentage) / 100) }
                                 .first()
                         _totalPrice.postValue(subtotal)
                     }
@@ -84,7 +100,7 @@ class SaleViewModel(
 
     fun setDefaultAddress(addressId: String) = viewModelScope.launch {
         val result = addressRepository.updateDefaultAddress(addressId)
-        if (result is Result.Success){
+        if (result is Result.Success) {
             getAllAddresses()
         }
     }
@@ -124,13 +140,23 @@ class SaleViewModel(
     }
 
     fun onDelivery(view: View) {
+        if (!validateDeliveryAddress()) return
         _deliveryType.value = DeliveryType.DELIVER_HOME
         navigateTo(view, R.id.action_orderAddressFragment_to_paymentMethodFragment)
     }
 
     fun onPickUp(view: View) {
+        if (!validateDeliveryAddress()) return
         _deliveryType.value = DeliveryType.PICK_UP
         navigateTo(view, R.id.action_orderAddressFragment_to_paymentMethodFragment)
+    }
+
+    fun onCardSelectedContinue(view: View) {
+        if (selectedCardId == null) {
+            _noCardErrorEvent.postValue(Event(Unit))
+            return
+        }
+        navigateTo(view, R.id.action_paymentMethodFragment2_to_orderConfirmationFragment)
     }
 
     fun onConfirmOrder(view: View) {
@@ -140,7 +166,20 @@ class SaleViewModel(
 
     fun onOrderCompleteClose(view: View) {
         //Code here
+    }
 
+    private fun validateDeliveryAddress(): Boolean {
+        val isAddressSelected = deliveryAddress.value
+        return if (isAddressSelected != null) {
+            true
+        } else {
+            _deliveryErrorEvent.postValue(Event(R.string.text_select_delivery_address_error))
+            false
+        }
+    }
+
+    fun setSelectedCardId(id: String) {
+        selectedCardId = id
     }
 }
 

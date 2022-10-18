@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="sneaker"
+            type="com.xavidev.testessential.data.source.local.entity.SneakerComplete" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/FilledCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_sneaker_item"
+                imageUrl="@{sneaker.thumbnail}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:padding="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                app:strokeColor="@color/green"
+                app:strokeWidth="2dp"
+                tools:srcCompat="@drawable/adidas_forum_bad_bunny" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/ic_check_green"
+                app:layout_constraintBottom_toBottomOf="@+id/img_sneaker_item"
+                app:layout_constraintEnd_toEndOf="@+id/img_sneaker_item" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@{sneaker.brand}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv_sneaker_model"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_sneaker_item"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Adidas" />
+
+            <TextView
+                android:id="@+id/tv_sneaker_model"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{sneaker.model}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textView24"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/textView24"
+                app:layout_constraintTop_toBottomOf="@+id/textView24"
+                tools:text="Adidas Bad Bunny" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

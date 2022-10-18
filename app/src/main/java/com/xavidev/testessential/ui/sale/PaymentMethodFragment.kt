@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
 import com.xavidev.testessential.data.source.local.entity.Card
 import com.xavidev.testessential.databinding.FragmentPaymentMethodBinding
+import com.xavidev.testessential.ui.sale.adapters.PaymentItemClickListener
 import com.xavidev.testessential.ui.sale.adapters.PaymentMethodSelectionAdapter
+import com.xavidev.testessential.utils.EventObserver
+import com.xavidev.testessential.utils.setupSnackbar
+import com.xavidev.testessential.utils.toast
 
 class PaymentMethodFragment : Fragment() {
 
@@ -21,9 +25,9 @@ class PaymentMethodFragment : Fragment() {
     private val viewModel: SaleViewModel by activityViewModels()
 
     private val paymentMethodSelectionAdapter =
-        PaymentMethodSelectionAdapter(object : (Card, Int) -> Unit {
+        PaymentMethodSelectionAdapter(object : PaymentItemClickListener {
             override fun invoke(card: Card, pos: Int) {
-                // Code here
+                setSelectedCardId(card.id)
             }
         })
 
@@ -45,6 +49,9 @@ class PaymentMethodFragment : Fragment() {
         }
 
         viewModel.getAllCards()
+        viewModel.noCardErrorEvent.observe(viewLifecycleOwner, EventObserver {
+            requireContext().toast(getString(R.string.text_no_card_selected_error))
+        })
         loadCardsList()
     }
 
@@ -57,5 +64,9 @@ class PaymentMethodFragment : Fragment() {
         viewModel.allCards.observe(viewLifecycleOwner) { list ->
             paymentMethodSelectionAdapter.submitList(list)
         }
+    }
+
+    private fun setSelectedCardId(id: String) {
+        viewModel.setSelectedCardId(id)
     }
 }

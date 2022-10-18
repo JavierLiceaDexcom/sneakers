@@ -73,7 +73,10 @@
         <entry key="app/src/main/res/layout/fragment_card_form.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_cart.xml" value="0.38491674828599415" />
         <entry key="app/src/main/res/layout/fragment_order_address.xml" value="0.3675925925925926" />
+        <entry key="app/src/main/res/layout/fragment_order_confirmation.xml" value="0.3386868209730751" />
+        <entry key="app/src/main/res/layout/fragment_payment_method.xml" value="0.39427083333333335" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.409375" />
+        <entry key="app/src/main/res/layout/fragment_purchase_finished_dialog.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/fragment_purchases.xml" value="0.39427083333333335" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.409375" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.409375" />
@@ -85,6 +88,9 @@
         <entry key="app/src/main/res/layout/item_card.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/item_carousel_image.xml" value="0.4083333333333333" />
         <entry key="app/src/main/res/layout/item_onboarding_container.xml" value="0.39427083333333335" />
+        <entry key="app/src/main/res/layout/item_order_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_payment_method_selection.xml" value="0.3734375" />
+        <entry key="app/src/main/res/layout/item_purchase.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/item_sneaker.xml" value="0.4083333333333333" />
         <entry key="app/src/main/res/layout/item_sneaker_cart.xml" value="0.409375" />
         <entry key="app/src/main/res/layout/item_sneaker_color.xml" value="0.409375" />

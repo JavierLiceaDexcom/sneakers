@@ -9,7 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.xavidev.testessential.SneakersApplication
 import com.xavidev.testessential.databinding.FragmentOrderAddressBinding
+import com.xavidev.testessential.utils.EventObserver
 import com.xavidev.testessential.utils.ViewModelFactory
+import com.xavidev.testessential.utils.setupSnackbar
 
 
 class OrderAddressFragment : Fragment() {
@@ -35,6 +37,9 @@ class OrderAddressFragment : Fragment() {
 
         viewModel.getDefaultAddress()
         viewModel.getSelectedSneakers()
+        viewModel.deliveryErrorEvent.observe(viewLifecycleOwner, EventObserver {
+            requireView().setupSnackbar(viewLifecycleOwner, viewModel.deliveryErrorEvent)
+        })
 
         binding.tbrDeliveryMethod.setNavigationOnClickListener {
             requireActivity().finish()

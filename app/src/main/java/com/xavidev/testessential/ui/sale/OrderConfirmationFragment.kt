@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.xavidev.testessential.R
 import com.xavidev.testessential.databinding.FragmentOrderConfirmationBinding
+import com.xavidev.testessential.ui.sale.adapters.OrderReviewAdapter
 
 class OrderConfirmationFragment : Fragment() {
 
@@ -15,7 +18,9 @@ class OrderConfirmationFragment : Fragment() {
         FragmentOrderConfirmationBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SaleViewModel by viewModels()
+    private val viewModel: SaleViewModel by activityViewModels()
+
+    private val orderAdapter = OrderReviewAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +39,18 @@ class OrderConfirmationFragment : Fragment() {
             val action = R.id.action_orderConfirmationFragment_to_paymentMethodFragment2
             viewModel.navigateTo(view, action)
         }
+
+        viewModel.getSelectedSneakers()
+        loadOrderItemsList()
     }
 
+    private fun loadOrderItemsList() {
+        binding.rvOrderItems.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = orderAdapter
+        }
+        viewModel.orderSneakers.observe(viewLifecycleOwner) { list ->
+            orderAdapter.submitList(list)
+        }
+    }
 }

@@ -198,4 +198,6 @@
     <string name="text_sigout_message">You are about to delete all the data and signed out from the application ¿do you want to continue?</string>
     <string name="text_sneaker_details">Sneaker details</string>
     <string name="text_save_changes">Save changes</string>
+    <string name="text_select_delivery_address_error">Select a delivery address</string>
+    <string name="text_no_card_selected_error">Select a payment method</string>
 </resources>

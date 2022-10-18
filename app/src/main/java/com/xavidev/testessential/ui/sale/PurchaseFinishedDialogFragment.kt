@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -17,7 +18,7 @@ class PurchaseFinishedDialogFragment : BottomSheetDialogFragment() {
         FragmentPurchaseFinishedDialogBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: SaleViewModel by viewModels()
+    private val viewModel: SaleViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,5 +43,5 @@ class PurchaseFinishedDialogFragment : BottomSheetDialogFragment() {
         (dialog as BottomSheetDialog).behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    //override fun getTheme() = R.style.ModalBottomSheetDialog
+    override fun getTheme() = R.style.ModalBottomSheetDialog
 }
